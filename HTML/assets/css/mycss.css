@@ -1,0 +1,199 @@
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.navbar span.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  color: white;
+}
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+    outline: none;
+    box-shadow: none;
+}
+header{
+	background-color: #525252;
+	z-index: 99;
+}
+header img{
+	width: 73px; 
+	height: 54px;
+}
+nav ul li a{
+	text-decoration: none;
+	color: #ffffff;
+	font-size: 14px;
+	font-family: Roboto;
+	border-radius: 20px;
+}
+nav ul li a:hover{
+	color: rgba(255, 255, 255, 0.5);
+}
+.navOnlyBorder{
+	border: 1px solid rgba(255, 255, 255, 0.5);
+}
+.navBorderWBack{
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	background-color: #29626d;
+}
+.title{
+	color: #4f4f4f;
+	font-size: 30px;
+	text-align: center;
+	font-weight: bold;
+}
+.starline{
+	width: 62px;
+	color: #cccccc;
+}
+table.center {
+  margin-left: auto; 
+  margin-right: auto;
+}
+.ffc
+{
+	font-family: Roboto;
+	color: #646464;
+	text-align: justify;
+}
+.fs1{
+	font-size: 16px;
+}
+.fs2{
+	font-size: 18px;
+}
+.fs3{
+	font-size: 24px;
+}
+.fw{
+	font-weight: bold;
+}
+.slide{
+	width: 472px; 
+	height: 66px; 
+	box-sizing: border-box; 
+	border-bottom: 3px solid #1d7a8c; 
+	cursor: pointer;
+}
+.slide1{
+	background-color: #1d7a8c;
+	color: #ffffff;
+}
+.slide2{
+	background-color: #f6f6f6;
+	color: #646464;
+}
+.slidecontent{
+	width: 944px;
+}
+.newsletter {
+    font-size: 18px;
+    font-family: Roboto;
+    color: #353548;
+    font-weight: bold;
+}
+.textbox {
+    border: 1px solid lightgrey;
+}
+.textbox:focus {
+    outline: none;
+}
+.submit {
+    background-color: #ff7b6d;
+    color: white;
+    font-size: 12px;
+}
+.footer1 {
+    background-color: #111111;
+}
+a {
+    text-decoration: none;
+    color: #f1f1f1;
+    font-size: 14px;
+    font-family: Roboto;
+    padding: 16px;
+}
+a:hover {
+  color: #f1f1f1;
+}
+.fttext{
+	color: #737381;
+	font-size: 14px;
+	font-family: Roboto;
+}
+.hrclr{
+	color: #f4f5f8;
+}
+.accordion-button::after{
+    content: none;
+}
+.accordion-button::before{
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    content: "";
+    background-image: url(../../../assets/images/faq/right-arrow.png);
+    background-repeat: no-repeat;
+    background-size: 1.25rem;
+    transition: transform .2s ease-in-out;
+    margin-right: 10px;
+}
+.accordion-button:not(.collapsed)::before {
+    background-image: url(../../../assets/images/faq/right-arrow.png);
+    transform: rotate(90deg);   
+}
+.accordion-button{
+    font-size: 15px;
+    color: #646464;
+    font-weight: bold;
+}
+.accordion-button:focus{
+    border: none;
+    box-shadow: none;
+}
+.accordion-button:not(.collapsed){
+    border: none;
+    box-shadow: none;
+    color: #646464;
+    background-color: white;
+}
+.accordion-item{
+    border: none;
+    font-family: Roboto;
+}
+.accordion-item h2 .collapsed{
+    transform: rotate(0 de);
+}
+.accordion-item h2 button{
+    padding-left: 0 ;
+}
+.accordion-item .accordion-body{
+    font-size: 15px;
+    color: #646464;
+    padding-top: 0px;
+    padding-left: 30px;
+    text-align: justify;
+}
+@media (max-width:800px){
+	.fs3{
+		font-size: 14px;
+		font-weight: bold;
+	}
+	.fs1{
+		font-size: 14px;
+	}
+	.fs2{
+		font-size: 16px;
+	}
+	#myHeader{
+		position: fixed;
+		top: 0;
+		z-index: 1;
+		width: 100%;
+	}
+	#myImg{
+		margin-top: 100px;
+	}
+}

@@ -1,0 +1,308 @@
+html{
+    scroll-behavior: smooth;
+}
+.home {
+    background-image: url('../images/Home/group-35.png');
+    width: 100%;
+    height: auto;
+}
+.sticky {
+    position: fixed;
+    top: 0;
+    background-color: #525252; 
+    width: 100%;
+    margin:-15px;
+    transition: 1s;
+}
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+nav li {
+    float: left;
+}
+nav li a {
+    display: block;
+    color: white;
+    padding: 16px;
+    text-decoration: none;
+}
+nav .drop-down {
+    list-style: none; 
+    overflow: hidden; /* When ul height is reduced, ensure overflowing li are not shown */
+    height: auto; /* 172px = (38 (li) + 5 (li border)) * 4 (number of li) */
+    width: 93px;
+    -webkit-transition: height 0.3s ease;
+    transition: height 0.3s ease;
+    position: absolute; 
+    top: 1;
+    right: 0;
+    z-index: 2;
+}
+nav .drop-down.closed {
+  height: 43px;
+}
+nav .drop-down li a {
+  display: block;
+  color: #ecf0f1;
+  text-decoration: none;
+  padding: 10px; /* Larger touch target area */
+}
+.navbar span.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  color: white;
+}
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+    outline: none;
+    box-shadow: none;
+}
+.navOption a {
+    color: #ffffff;
+    font-size: 15px;
+    font-family: Roboto;
+    font-weight: lighter;
+    margin-left: 30px;
+    padding: 6px 15px 6px 15px;
+}
+.navOptionOutline {
+    border: 1px solid white;
+    border-radius: 20px;
+}
+.hometext {
+    margin-top: 10%;
+    padding-left: 35px;
+}
+.hometext p {
+    color: #ffffff;
+    font-size: 45px;
+    font-family: Roboto;
+    font-weight: medium;
+}
+.hometext ul {
+    padding-left: 0px;
+    list-style-type: none;
+    color: #ffffff;
+    font-size: 16px;
+    font-family: Roboto;
+}
+.btnBookCleaner {  
+    background: rgba(0, 96, 114, 0.4);
+    font-size: 14px;
+    font-family: Roboto;
+    border: 1px solid #ffffff;
+    border-radius: 20px;
+    padding: 8px 25px 8px 25px;
+    color: white;
+    margin-bottom: 3%;
+     margin-top: 3%;
+}
+.stickynavtext {
+    background: rgba(0, 96, 114, 0.4);
+    font-size: 14px;
+    font-family: Roboto;
+    border: 1px solid #ffffff;
+    border-radius: 20px;
+    color: white;
+}
+.subtasks {
+    color: #ffffff;
+    font-size: 18px;
+    font-family: Roboto;
+    word-wrap: normal;
+}
+.arrows {
+    margin-top: -13%;
+}
+.bottomnav {
+    background: radial-gradient( 5px -9px, circle, white 8%, red 26px );
+    border: 2px solid white;
+    border-radius: 50%; 
+    color: white;
+    font: bold 20px Roboto;
+    height: 40px; 
+    min-width: 40px;
+    padding: 6px 3px 0 3px;
+    text-align: center;
+    margin-bottom: 5%;
+}
+.secTitle {
+    font-size: 40px;
+    font-weight: bold;
+    font-family: Roboto;
+    color: #4f4f4f;
+    margin-bottom: 3%;
+}
+.secSubTitle {
+    font-size: 25px;
+    font-weight: bold;
+    font-family: Roboto;
+    color: #565656;
+}
+.outerBlog {
+    box-sizing: border-box;
+    border-left: 40px solid transparent;
+    border-right: 40px solid transparent;
+    background-clip: padding-box;
+}
+.innerBlog {
+    box-shadow: rgba(100,100,10,0.2) 0px 7px 29px 0px;
+    margin-bottom: 10%;
+}
+.blog {
+    box-sizing: border-box;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    background-clip: padding-box;
+}
+.blogCaption {
+	font-size: 20px;
+    font-weight: bold;
+    font-family: Roboto;
+    color: #3d4046;
+}
+.blogDate {
+	font-size: 13px;
+    font-family: Roboto;
+    color: #565656;
+}
+.blogDetail {
+	font-size: 22px;
+    font-family: Roboto;
+    color: #565656;
+}
+.blogReadPost {
+	font-size: 18px;
+    font-family: Roboto;
+    color: #4f4f4f;
+}
+.blogArrow {
+    font-weight: bold;
+    font-size: 25px;
+}
+.fifthSecBack {
+    background-color: #f4f5f8;
+}
+.feedbackOuter {
+    box-sizing: border-box;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    background-clip: padding-box;
+    padding: 20px;
+    border-radius: 35px;
+}
+.feedbackInner {
+    border-radius: 5px;
+    background-color: white;
+    padding: 20px;
+    border-left: 3px solid #1d7a8c;
+}
+.cusTitle {
+    margin-top: 10px;
+    margin-left: 90px; 
+    overflow-wrap: normal;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: Roboto;
+    color: #4f4f4f;
+}
+.cusSubTitle {
+    margin-left: 90px; 
+    overflow-wrap: normal;
+    font-size: 12px;
+    font-family: Roboto;
+    color: #8e8e8e;
+}
+.cusDetail {
+    font-size: 14px;
+    font-family: Roboto;
+    color: #565656;
+}
+.cusReadMore {
+    color: #565656;
+    font-size: 16px;
+    font-family: Roboto;
+} 
+.topnav {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #525252;
+    color: #f4f5f8;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+    box-sizing: border-box;
+}
+.newsletter {
+    font-size: 18px;
+    font-family: Roboto;
+    color: #353548;
+    font-weight: bold;
+}
+.textbox {
+    border: 1px solid lightgrey;
+}
+.textbox:focus {
+    outline: none;
+}
+.submit {
+    background-color: #ff7b6d;
+    color: white;
+    font-size: 12px;
+}
+.footer1 {
+    background-color: #111111;
+    padding: 20px;
+}
+.footer2 {
+    background-color: #292929;
+    padding: 10px;
+    color: #f1f1f1;
+    font-size: 14px;
+}
+.footer2 .privacypolicy {
+    color: #6eabef;
+    padding-left: 0;
+    font-size: 12px;
+}
+a {
+    text-decoration: none;
+    color: #f1f1f1;
+    font-size: 14px;
+    font-family: Roboto;
+    padding: 16px;
+}
+a:hover {
+  color: #f1f1f1;
+}
+.btnok {
+    background-color: #eed507;
+    font-size: 16px;
+    color: #4f4f4f;
+    border-radius: 20px;
+    border: 0.5px solid #f4f5f8;
+    padding: 5px 30px 5px 30px;
+}
+@media (max-width:800px) {
+    .blogimg{
+        width: 100%;
+    }
+    .arrows{
+        display: none;
+    }
+    .ddcountry{
+        position: relative;
+        background-color: #525252;
+        padding-bottom: 30px;
+    }
+    .ddcountry2{
+        position: relative;
+        background-color: transparent;
+        padding-bottom: 30px;
+    }
+}
