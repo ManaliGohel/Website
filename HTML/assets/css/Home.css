@@ -1,19 +1,24 @@
-html{
+html, body{
+    height: 100%;
+    margin: 0;
     scroll-behavior: smooth;
 }
-.home {
-    background-image: url('../images/Home/group-35.png');
-    width: 100%;
-    height: auto;
+.home{
+    background-image: url("../images/home/banner-bg.jpg");
+    height: 100%; 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
 }
-.sticky {
-    position: fixed;
-    top: 0;
-    background-color: #525252; 
+.home-content{
     width: 100%;
-    margin:-15px;
-    transition: 1s;
+    height: 100%;            
+    position: absolute;
+    background-color: rgba(0,0,0,0.3);
 }
+
+/* Header */
 nav ul {
     list-style-type: none;
     margin: 0;
@@ -65,16 +70,25 @@ nav .drop-down li a {
     font-size: 15px;
     font-family: Roboto;
     font-weight: lighter;
-    margin-left: 30px;
+    margin-left: 5px; 
     padding: 6px 15px 6px 15px;
+    text-decoration: none;
 }
 .navOptionOutline {
-    border: 1px solid white;
+    border: 1px solid transparent;
     border-radius: 20px;
+    box-sizing: border-box;
+}
+.navOptionOutline:hover, .ot1{
+    border-color: white;
+}
+.ot1:hover{
+    background-color: white;
+    color: #006072;
 }
 .hometext {
-    margin-top: 10%;
-    padding-left: 35px;
+    margin-top: 5%;
+    padding-left: 50px;
 }
 .hometext p {
     color: #ffffff;
@@ -90,141 +104,198 @@ nav .drop-down li a {
     font-family: Roboto;
 }
 .btnBookCleaner {  
-    background: rgba(0, 96, 114, 0.4);
-    font-size: 14px;
+    background: rgba(0, 96, 114, 0.5);
+    font-size: 18px;
     font-family: Roboto;
     border: 1px solid #ffffff;
-    border-radius: 20px;
+    border-radius: 25px;
     padding: 8px 25px 8px 25px;
     color: white;
     margin-bottom: 3%;
-     margin-top: 3%;
 }
-.stickynavtext {
-    background: rgba(0, 96, 114, 0.4);
-    font-size: 14px;
+.btnBookCleaner:hover, .bottomnav:hover{
+    background: rgba(255, 255, 255, 1);
+    color: rgba(0, 96, 114, 1);
+}
+.subtask-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+}
+.dv-subtask{
+    text-align: center;
+    width: 178px;
+    height: auto;
     font-family: Roboto;
-    border: 1px solid #ffffff;
-    border-radius: 20px;
-    color: white;
 }
-.subtasks {
-    color: #ffffff;
+.dvimg-subtask{
+    height: 64px;
+    width: 64px;
+    margin-left: 57px;
+    margin-bottom: 10px;
+}
+.subtask-desc{
+    color: white;
     font-size: 18px;
     font-family: Roboto;
-    word-wrap: normal;
-}
-.arrows {
-    margin-top: -13%;
 }
 .bottomnav {
     background: radial-gradient( 5px -9px, circle, white 8%, red 26px );
-    border: 2px solid white;
+    border: 1px solid white;
     border-radius: 50%; 
     color: white;
-    font: bold 20px Roboto;
-    height: 40px; 
-    min-width: 40px;
-    padding: 6px 3px 0 3px;
+    font: bold 18px Roboto;
+    height: 35px; 
+    min-width: 35px;
+    padding: 8px 3px 0 3px;
     text-align: center;
-    margin-bottom: 5%;
 }
-.secTitle {
+.title{
     font-size: 40px;
-    font-weight: bold;
+    color: #4F4F4F;
     font-family: Roboto;
-    color: #4f4f4f;
-    margin-bottom: 3%;
-}
-.secSubTitle {
-    font-size: 25px;
+    text-align: center;
     font-weight: bold;
+}
+.whyhelperland-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+}
+.dv-whyhelperland{
+    width: 350px;
+    height: auto;
+    color: #4F4F4F;
     font-family: Roboto;
-    color: #565656;
+    margin: 19px;
+    text-align: center;
+    padding-top: 15px;
 }
-.outerBlog {
-    box-sizing: border-box;
-    border-left: 40px solid transparent;
-    border-right: 40px solid transparent;
-    background-clip: padding-box;
+.whyhelperland-img{
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-.innerBlog {
-    box-shadow: rgba(100,100,10,0.2) 0px 7px 29px 0px;
-    margin-bottom: 10%;
+.whyhelperland-desc-title{
+    font-size: 30px;
+    font-weight: bold;
 }
-.blog {
-    box-sizing: border-box;
-    border-left: 20px solid transparent;
-    border-right: 20px solid transparent;
-    background-clip: padding-box;
+.whyhelperland-desc{
+    font-size: 17px;
+}
+.ourblog-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+}
+.right{
+    right: 0;
+    position: absolute;
+}
+.left{
+    left: 0;
+    position: absolute;
+}
+.ourblog-inner-container{
+    width: 1162px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    height: auto;
+}
+.dv-consectetur{
+    width: 641px;
+    height: auto;
+    font-family: Roboto;
+    color: #4F4F4F;
+}
+.dv-consectetur-img
+{
+    width: 521px;
+    height: auto;
+}
+.dv-ourblog{
+    width: 357px;
+    height: auto;
+    font-family: Roboto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .blogCaption {
 	font-size: 20px;
     font-weight: bold;
-    font-family: Roboto;
     color: #3d4046;
 }
 .blogDate {
 	font-size: 13px;
-    font-family: Roboto;
     color: #565656;
 }
 .blogDetail {
-	font-size: 22px;
-    font-family: Roboto;
+	font-size: 16px;
     color: #565656;
 }
 .blogReadPost {
 	font-size: 18px;
-    font-family: Roboto;
     color: #4f4f4f;
 }
 .blogArrow {
     font-weight: bold;
     font-size: 25px;
 }
-.fifthSecBack {
-    background-color: #f4f5f8;
+.customer-outer-container{
+    background-color: #F4F5F8;
 }
-.feedbackOuter {
-    box-sizing: border-box;
-    border-left: 20px solid transparent;
-    border-right: 20px solid transparent;
-    background-clip: padding-box;
-    padding: 20px;
-    border-radius: 35px;
+.customer-inner-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    height: auto;
 }
-.feedbackInner {
-    border-radius: 5px;
+.dv-customer-say{
+    width: 357px;
+    height: auto;
     background-color: white;
-    padding: 20px;
     border-left: 3px solid #1d7a8c;
+    border-radius: 3px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+    font-family: Roboto;
 }
 .cusTitle {
     margin-top: 10px;
     margin-left: 90px; 
     overflow-wrap: normal;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
-    font-family: Roboto;
-    color: #4f4f4f;
+    color: #4F4F4F;
 }
 .cusSubTitle {
     margin-left: 90px; 
     overflow-wrap: normal;
-    font-size: 12px;
-    font-family: Roboto;
-    color: #8e8e8e;
+    font-size: 14px;
+    color: #8E8E8E;
 }
 .cusDetail {
-    font-size: 14px;
-    font-family: Roboto;
+    font-size: 16px;
     color: #565656;
 }
 .cusReadMore {
     color: #565656;
-    font-size: 16px;
-    font-family: Roboto;
+    font-size: 18px;
 } 
 .topnav {
     width: 48px;
@@ -246,6 +317,7 @@ nav .drop-down li a {
 }
 .textbox {
     border: 1px solid lightgrey;
+    background-color: #F4F5F8;
 }
 .textbox:focus {
     outline: none;
@@ -270,14 +342,14 @@ nav .drop-down li a {
     padding-left: 0;
     font-size: 12px;
 }
-a {
+.footer1 a, .footer2 a{
     text-decoration: none;
     color: #f1f1f1;
     font-size: 14px;
     font-family: Roboto;
     padding: 16px;
 }
-a:hover {
+.footer1 a:hover, .footer2 a:hover {
   color: #f1f1f1;
 }
 .btnok {
@@ -288,21 +360,156 @@ a:hover {
     border: 0.5px solid #f4f5f8;
     padding: 5px 30px 5px 30px;
 }
-@media (max-width:800px) {
-    .blogimg{
-        width: 100%;
-    }
-    .arrows{
+.sticky {
+    position: fixed;
+    top: 0;
+    background-color: #525252; 
+    width: 100%;
+    transition: 1s;
+    z-index: 1;
+}
+.changeNavColor{
+    background-color: rgba(82, 82, 82, 0.7);
+}
+
+@media (max-width:1450px) {
+    .blog-left-bg, .blog-right-bg{
         display: none;
     }
-    .ddcountry{
-        position: relative;
-        background-color: #525252;
-        padding-bottom: 30px;
+}
+@media (max-width:1095px) {
+    .arrow{
+        display: none;
     }
-    .ddcountry2{
-        position: relative;
-        background-color: transparent;
-        padding-bottom: 30px;
+    .dv-consectetur{
+        text-align: center;
+    }
+    .navOption a {
+        padding: 5px 12px 5px 12px;
+    }
+}
+@media (max-width:991px) {
+    .navOption a {
+        margin-left: 0px;
+        margin-top: 5px;
+        margin-right: 20px;
+    }
+    #navlogo{
+        width: 80px;
+        height: 60px;
+    }
+    #navbar{
+        position: fixed;
+        top: 0;
+        z-index: 9;
+        width: 100%;
+    }
+    .hometext {
+        margin-top: 20%;
+    }
+    .hometext{
+        text-align: center;
+        padding-left: 0px;
+    }
+    .hometext p{
+        font-size: 30px;
+    }
+    .btnBookCleaner{
+        font-size: 16px;
+        margin-bottom: 0%;
+    }
+    .dv-subtask{
+        width: 150px;
+    }
+    .dvimg-subtask{
+        height: 50px;
+        width: 50px;
+        margin-left: 50px;
+        margin-bottom: 5px;
+    }
+    .subtask-desc{
+        font-size: 14px;
+    }
+    .subtask-container{
+        margin-top: 8%;
+    }
+    .bottomnav{
+        margin-top: 5%;
+    }
+    .title{
+        font-size: 30px;
+    }
+    .whyhelperland-img{
+        width: 280px;
+        height: 280px;
+    }
+    .whyhelperland-desc-title{
+        font-size: 25px;
+    }
+    .whyhelperland-desc{
+        font-size: 16px;
+    }
+}
+@media (max-width:766px) {
+    .hometext p{
+        font-size: 25px;
+    }
+    .hometext ul{
+        font-size: 14px;
+    }
+    .btnBookCleaner{
+        font-size: 14px;
+    }
+    .dv-consectetur{
+        width: 400px;
+    }
+    .dv-consectetur-img{
+        width: 400px;
+    }
+    .img-consectetur{
+        width: 350px;
+    }
+    .hometext {
+        margin-top: 22%;
+    }
+}
+@media (max-width:572px) {
+    .hometext {
+        margin-top: 30%;
+    }
+}
+@media (max-width:445px) {
+    .hometext {
+        margin-top: 40%;
+    }
+}
+@media (max-width:365px){
+    .hometext {
+        margin-top: 45%;
+    }
+    .dv-subtask{
+        width: 100px;
+    }
+    .dvimg-subtask{
+        height: 40px;
+        width: 40px;
+        margin-left: 30px;
+        margin-bottom: 5px;
+    }
+    .subtask-desc{
+        font-size: 12px;
+    }
+    .dv-consectetur{
+        width: 300px;
+    }
+    .dv-consectetur-img{
+        width: 300px;
+    }
+    .img-consectetur{
+        width: 280px;
+    }
+    .whyhelperland-img{
+        width: 250px;
+        height: 250px;
     }
 }

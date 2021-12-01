@@ -37,8 +37,18 @@ function countryddclick() {
     z.classList.remove("ddcountry2");
     z.classList.add("ddcountry");
   }
+    responsiveMenuClick();
   });
 }
 function topnavigation(){
   document.body.scrollTop= document.documentElement.scrollTop=0;
+}
+function changeNavColor(){
+  var nav=document.getElementById("navbar");
+  if(nav.classList.contains("changeNavColor")){
+    nav.classList.remove("changeNavColor");
+  }
+  else{
+    nav.classList.add("changeNavColor");
+  }
 }

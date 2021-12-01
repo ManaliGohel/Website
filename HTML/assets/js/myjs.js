@@ -28,3 +28,12 @@ function myFunction() {
     header.classList.remove("sticky");
   }
 }
+function changeNavColor(){
+  var nav=document.getElementById("myHeader");
+  if(nav.classList.contains("changeNavColor")){
+    nav.classList.remove("changeNavColor");
+  }
+  else{
+    nav.classList.add("changeNavColor");
+  }
+}

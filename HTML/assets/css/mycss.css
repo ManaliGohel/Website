@@ -1,3 +1,8 @@
+html, body{
+    margin: 0;
+}
+
+/* Header */
 .sticky {
   position: fixed;
   top: 0;
@@ -352,7 +357,35 @@ a:hover {
     z-index: 1;
 }
 
+/* About CSS */
+.about-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.about-container .about-desc{
+    text-align: center;
+    color: #646464;
+    font-size: 16px;
+    font-family: Roboto;
+    width: 991px;
+    height: auto;
+}
+.changeNavColor{
+    background-color: rgba(82, 82, 82, 0.8);
+}
+
 /* Responsive */
+@media (max-width:992px){
+    #myHeader{
+        position: fixed;
+        top: 0;
+        z-index: 1;
+        width: 100%;
+    }
+}
 @media (max-width:800px){
 	.fs3{
 		font-size: 20px;
@@ -373,12 +406,6 @@ a:hover {
     .onetime ul{
         padding-left: 50px;
     }
-	#myHeader{
-		position: fixed;
-		top: 0;
-		z-index: 1;
-		width: 100%;
-	}
 	#myImg{
 		margin-top: 100px;
 	}
