@@ -476,16 +476,16 @@ a:hover {
 .ser-provider-submenu-list{
     width: 100%;
 }
-#tblUpcomingServices{
+#tblUpcomingServices, #tblcusServiceHistory, #tblUserManagement, #tblSerReq{
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     color: #646464;
     border: 1px solid #e1e1e1;
-    font-size: 16px;
+    font-size: 16px;    
 }
-#tblUpcomingServices thead{
+#tblUpcomingServices thead, #tblcusServiceHistory thead, #tblUserManagement thead, #tblSerReq thead{
     height: 50px;
 }
-#tblUpcomingServices tbody tr{
+#tblUpcomingServices tbody tr, #tblcusServiceHistory tbody tr, #tblUserManagement tbody tr, #tblSerReq tbody tr{
     height: 71px;
 }
 table.dataTable thead th{
@@ -508,18 +508,259 @@ table.dataTable tbody td{
     color: white;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
 }
-#dv-upcoming-services{
+#dv-upcoming-services, #dvcus-serhistory, .dv-user-management-data, .dv-ser-req-data{
     overflow-x: auto;
+}
+
+/* Service History CSS */
+.serhisPageTitle{
+    font-size: 22px;
+    color: #646464;
+    font-weight: bold;
+}
+.btnExport{
+    color: white;
+    background-color: #1d7a8c;
+    font-size: 14px;
+    border: 1px solid #6da9b5;
+    border-radius: 20px;
+    padding: 5px 15px 5px 15px;
+    margin-bottom: 8px;
+}
+.btnExport:hover{
+    background-color: #146371;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+.dvProimgContainer{
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid #e1e1e1;
+}
+.spnEuro{
+    font-size: 24px;
+    font-weight: bold;
+    color: #1d7a8c;
+}
+.lblserstatus{
+    border: 1px solid #e1e1e1;
+    color: white;
+    font-size: 12px;
+}
+.completed, .active{
+    background-color: #67b644;    
+}
+.cancelled, .inactive{
+    background-color: #ff6b6b;
+}
+.btnratesp{
+    background-color: #1d7a8c;
+    color: white;
+    font-size: 14px;
+    border: 1px solid #e1e1e1;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+.btnratesp:hover{
+    background-color: #146371;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+.btnratespdisabled{
+    cursor: no-drop;
+    background-color: #6da9b5;
+    color: white;
+    font-size: 14px;
+    border: 1px solid #e1e1e1;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+.stars-container {
+    position: relative;
+    display: inline-block;
+    color: lightgray;
+}
+.stars-container::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '★★★★★';
+    color: lightgray;
+    overflow: hidden;
+}
+.stars-0::before { width: 0%; }
+#rateSPModal{
+    font-size: 14px;
+    color: #646464;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+#rateSPModal .dvProimgContainer{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 2px solid #e1e1e1;
+}
+#rateSPModal .dvProimgContainer img{
+    width: 40px;
+    height: 25px;
+}
+
+/* Admin- User Management CSS */
+.admin_management{
+	background-color: #1fb6ff;
+	z-index: 99;
+}
+@font-face {
+    font-family: SwitzeraADF-Bold;
+    src: url("../external-fonts/SwitzeraADF-Bold.otf") format("opentype");
+}
+.um_logo_name{
+    font-family: SwitzeraADF-Bold;
+    font-size: 38px;
+    font-weight: bold;
+    color: white;
+}
+.pro-user-name{
+    font-size: 16px;
+    color: white;
+}
+.img-um-profile{
+    width: 36px;
+    height: 36px;
+}
+.img-um-logout{
+    width: 28px;
+    height: 30px;
+    margin-top: 3%;
+}
+.admin-menu{
+    width: 275px;
+    background-color: white;
+    box-shadow: 0 0px 20px 0 rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0);
+    display: block;
+}
+.admin-menu a{
+    display: block;
+    width: 100%;
+    height: 55px;
+    border-bottom: 1px solid #e5e5e5;
+    background-color: white;
+    font-size: 16px;
+    color: #646464;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.admin-container{
+    width: 100%;
+    background-color: #f2f4f5;
+    color: #646464;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.changeNavColorAdmin{
+    background-color: rgba(31, 182, 255, 0.8);
+}
+.admin-hdr-menu{
+    display: none;
+}
+.admin-hdr-menu a{
+    background-color: white;
+}
+.admin-container .title{
+    font-size: 22px;
+    font-weight: bold;
+    display: flex;
+    align-items: flex-start;
+}
+.admin-container .addNewUser{
+    color: white;
+    background-color: #1fb6ff;
+    border-radius: 5px;
+    word-break: normal;
+}
+.admin-container .addNewUser:hover{
+    background-color: rgba(31, 182, 255, 0.8);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+.dv-searchItems-container{
+    background-color: white;
+    width: 100%;
+    border: 1px solid #e1e1e1;
+    border-radius: 5px;
+    clear: both;
+}
+.dv-searchItems-container .btnSearch{
+    background-color: #1fb6ff;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+    height: 45px;
+}
+.dv-searchItems-container .btnSearch:hover{
+    background-color: rgba(31, 182, 255, 0.8);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+.dv-searchItems-container .btnClear{
+    background-color: white;
+    color: #646464;
+    border-radius: 5px;
+    border: 1px solid #dedddd;
+    width: 100%;
+    height: 45px;
+}
+.dv-searchItems-container .btnClear:hover{
+    background-color: #f2f4f5;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+.dv-um-top{
+    height: 60px;
+}
+.dv-searchItems-container select, .dv-searchItems-container input{
+    height: 45px;
+}
+.threeVerDotMenuLayer{
+    width: 30px;
+    height: 30px;    
+    border-radius: 50%;
+}
+.threeVerDotMenuLayer:hover{
+    background-color: #f4f4f4;
+}
+.threeVerDotMenu{
+    width: 15px;
+    height: 15px;
+    background-image: radial-gradient(circle, #646464 1px, transparent 2px);
+    background-size: 100% 33.33%;
+}
+.ddActions{
+    width: 200px;
+    font-size: 14px;
+    z-index: 1;
+    box-shadow: 0 4px 8px 0 rgba(100, 100, 100, 0.2), 0 6px 20px 0 rgba(100, 100, 100, 0.2);
+}
+.pending{
+    background-color: #1fb6ff;
+}
+.new{
+    background-color: #f2bb37;
+}
+.lblcopyright{
+    font-size: 14px;
+    color: #A2A6A8;
 }
 
 /* Responsive */
 @media (max-width:991px){
+    .um_logo_name{
+        font-size: 30px;
+    }
     #myHeader{
         position: fixed;
         top: 0;
         z-index: 1;
         width: 100%;    
     }
+    #myImg{
+		margin-top: 80px;
+	}
     .dv-not-border{
         border-left: 1px solid transparent;
         border-right: 1px solid transparent;
@@ -534,8 +775,20 @@ table.dataTable tbody td{
     .dv-ser-pro-menu{
         display: none;
     }  
+    .admin-main-container{
+        margin-top: 80px;
+    }
+    .admin-hdr-menu{
+        display: block;
+    }    
+    .admin-menu{
+        display: none;
+    }
 }
 @media (max-width:800px){
+    .um_logo_name{
+        font-size: 25px;
+    }
 	.fs3{
 		font-size: 20px;
 		font-weight: bold;
@@ -555,9 +808,6 @@ table.dataTable tbody td{
     .onetime ul{
         padding-left: 50px;
     }
-	#myImg{
-		margin-top: 100px;
-	}
     .dv-whyhelperland{
         text-align: center !important;
     }

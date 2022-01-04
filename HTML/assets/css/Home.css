@@ -372,6 +372,14 @@ nav .drop-down li a {
 .changeNavColor{
     background-color: rgba(82, 82, 82, 0.7);
 }
+.liddCountry{
+    clear: both;
+    width: 94%;
+}
+#ddCountryImgContainer{
+    display: flex;
+    align-items: center;
+}
 
 @media (max-width:1450px) {
     .blog-left-bg, .blog-right-bg{

@@ -149,24 +149,31 @@ function showBlockCustomer(id){
 
 function setActive(linkid)
 {
-  var sidebarlinks = [];
-  if(window.outerWidth<=991){
-    sidebarlinks = ['lnk-dashboard1', 'lnk-new-ser-req1', 'lnk-upcoming-services1', 'lnk-ser-schedule1', 'lnk-ser-history1', 'lnk-myratings1', 'lnk-block-cus1'];
-  }
-  else{
-    sidebarlinks = ['lnk-dashboard', 'lnk-new-ser-req', 'lnk-upcoming-services', 'lnk-ser-schedule', 'lnk-ser-history', 'lnk-myratings', 'lnk-block-cus'];
-  }
-  for(i=0;i<sidebarlinks.length;i++)
+  var sidebarlinks1 = ['lnk-dashboard1', 'lnk-new-ser-req1', 'lnk-upcoming-services1', 'lnk-ser-schedule1', 'lnk-ser-history1', 'lnk-myratings1', 'lnk-block-cus1'];
+  var sidebarlinks2 = ['lnk-dashboard', 'lnk-new-ser-req', 'lnk-upcoming-services', 'lnk-ser-schedule', 'lnk-ser-history', 'lnk-myratings', 'lnk-block-cus'];
+  giveHoverEffectToLinks(sidebarlinks1);
+  giveHoverEffectToLinks(sidebarlinks2);
+  activateShowLink(linkid);
+  if(linkid.includes(1))
+    linkid=linkid.substring(0,linkid.length-1);
+  else
+    linkid+='1';
+  activateShowLink(linkid);
+}
+function giveHoverEffectToLinks(links){
+  for(i=0;i<links.length;i++)
   { 
-    document.getElementById(sidebarlinks[i]).style.backgroundColor="#1d7a8c";
-    document.getElementById(sidebarlinks[i]).style.pointerEvents = "auto";
-    document.getElementById(sidebarlinks[i]).onmouseover = function() {ChangeColorBack(this.id)};  
-    document.getElementById(sidebarlinks[i]).onmouseout = function() {ChangeColorBack2(this.id)}; 
+    document.getElementById(links[i]).style.backgroundColor="#1d7a8c";
+    document.getElementById(links[i]).style.pointerEvents = "auto";
+    document.getElementById(links[i]).onmouseover = function() {ChangeColorBack(this.id)};  
+    document.getElementById(links[i]).onmouseout = function() {ChangeColorBack2(this.id)}; 
   }
-  document.getElementById(linkid).style.backgroundColor="#146371";
-  document.getElementById(linkid).style.pointerEvents = "none";
-  document.getElementById(linkid).setAttribute("onmouseover", "");
-  document.getElementById(linkid).setAttribute("onmouseout", "");
+}
+function activateShowLink(linkid){
+    document.getElementById(linkid).style.backgroundColor="#146371";
+    document.getElementById(linkid).style.pointerEvents = "none";
+    document.getElementById(linkid).setAttribute("onmouseover", "");
+    document.getElementById(linkid).setAttribute("onmouseout", "");
 }
 function ChangeColorBack(id)
 {
@@ -175,4 +182,18 @@ function ChangeColorBack(id)
 function ChangeColorBack2(id)
 {
   document.getElementById(id).style.backgroundColor="#1d7a8c";
+}
+
+function changeNavColorAdmin(){
+  alert("hello")
+  var nav=document.getElementById("myHeader");
+  var navMenu=document.getElementById("navbarCollapse");
+  if(nav.classList.contains("changeNavColorAdmin")){
+    nav.classList.remove("changeNavColorAdmin"); 
+    navMenu.classList.remove("navMenu");   
+  }
+  else{
+    nav.classList.add("changeNavColorAdmin");
+    navMenu.classList.add("navMenu");
+  }  
 }
