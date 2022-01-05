@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Service History | Helperland</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Helperland, Customer, Service History, HTML, CSS, JavaScript, Bootstrap">
+    <meta http-equiv="content-type" content="text/plain; charset=UTF-8"/>
+    <link rel="icon" type="image/x-icon" href="assets/images/logo/favicon_img.png">
+    <link rel="stylesheet" href="jsRapStar.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+    <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.1.2/css/star-rating.min.css" media="all" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="assets/css/mycss.css">
+    <link rel="stylesheet" href="assets/css/jsRapStar.css">
+    <!-- Data table CSS -->
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css">
+</head>
+<body onload="checkForAdminWindowSize();" onresize="navcusMenuSize();">
+    <header id="myHeader">
+		<div class="dv-mynav">
+		<nav class="navbar navbar-expand-lg py-0">
+        	<a href="#">
+          		<img src="assets/images/logo/logo.png" alt="logo">
+        	</a>
+        	<button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" onclick="changeNavColor();"><span class="navbar-toggler-icon"></span></button>
+        	<div class="collapse navbar-collapse" id="navbarCollapse" >       
+          		<div class="navbar-nav ms-auto">
+          			<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                        <li class="mt-3 mx-2"><a class="py-2 px-3 navBorderWBack" href="#">Book now</a></li>
+      					<li class="mt-3 mx-2"><a class="py-2 px-3 navApplyBorder" href="#">Prices & services</a></li>
+      					<li class="mt-3 mx-2"><a class="py-2 px-3 navApplyBorder" href="#">Warranty</a></li>
+      					<li class="mt-3 mx-2"><a class="py-2 px-3 navApplyBorder" href="#">Blog</a></li>
+      					<li class="mt-3 mx-2"><a class="py-2 px-3 navApplyBorder" href="#">Contact</a></li>
+      					<li><a class="px-3" href="#"><div class="dv-upser-not-pro dv-not-border d-flex justify-content-center align-items-center"><div class="dv-notification d-flex justify-content-center align-items-center">0</div><img class="img-upser-not" src="assets/images/upcoming-service/icon-notification.png"></div></a></li>						
+      					<li>
+							<a class="px-3" href="#" id="ddProfile" role="button" data-bs-toggle="dropdown" aria-expanded="false"><div class="dv-upser-not-pro d-flex justify-content-center align-items-center"><img class="img-upser-pro" src="assets/images/upcoming-service/profile.png"><div class="dv-downarr"><img class="img-pro-downarr" src="assets/images/upcoming-service/down-arrow.png"></div></div></a>
+							<ul class="dropdown-menu p-3 ddProfile" aria-labelledby="ddProfile" style="right: 10px; left: auto;">
+								<li class="dropdown-item ddProfileNoHover">Welcome,<br><span id="proname">Gaurang Patel</span></li>
+								<li><hr></li>
+								<li><a class="dropdown-item" href="#">My Dashboard</a></li>
+								<li><a class="dropdown-item" href="#">My Settings</a></li>
+								<li><a class="dropdown-item" href="#">Logout</a></li>
+							</ul>
+						</li>
+						<li class="ser-pro-submenu mt-3 mx-2"><hr></li>
+						<li class="ser-pro-submenu mt-3 mx-2"><a id="lnkcus-dashboard1" href="#" class="py-2 px-3" onclick="showcusDashboard('lnkcus-dashboard1');">Dashboard</a></li>
+						<li class="ser-pro-submenu mt-3 mx-2"><a id="lnkcus-serhistory1" href="#" class="py-2 px-3" onclick="showcusSerhistory('lnkcus-serhistory1');">Service History</a></li>
+						<li class="ser-pro-submenu mt-3 mx-2"><a id="lnkcus-serschedule1" href="#" class="py-2 px-3" onclick="showcusSerschedule('lnkcus-serschedule1');">Service Schedule</a></li>
+						<li class="ser-pro-submenu mt-3 mx-2"><a id="lnkcus-favpros1" href="#" class="py-2 px-3" onclick="showcusFavpros('lnkcus-favpros1');">Favourite Pros</a></li>
+						<li class="ser-pro-submenu mt-3 mx-2"><a id="lnkcus-invoices1" href="#" class="py-2 px-3" onclick="showcusInvoices('lnkcus-invoices1');">Invoices</a></li>
+						<li class="ser-pro-submenu mt-3 mx-2"><a id="lnkcus-notifications1" href="#" class="py-2 px-3" onclick="showcusNotifications('lnkcus-notifications1');">Notifications</a></li>
+    				</ul>
+          		</div>
+        	</div>
+    	</nav>
+		</div>
+	</header>
+	<div class="dvWelcome d-flex justify-content-center align-items-center">
+		Welcome,&nbsp;<span id="cusname" class="fw-bold">Gaurang!</span>
+	</div>
+	<section class="container my-4 d-flex justify-content-center">
+		<div class="x dv-ser-pro-menu me-3">
+			<a id="lnkcus-dashboard" href="#" onclick="showcusDashboard('lnkcus-dashboard');">Dashboard</a>
+			<a id="lnkcus-serhistory" href="#" onclick="showcusSerhistory('lnkcus-serhistory');">Service History</a>
+			<a id="lnkcus-serschedule" href="#" onclick="showcusSerschedule('lnkcus-serschedule');">Service Schedule</a>
+			<a id="lnkcus-favpros" href="#" onclick="showcusFavpros('lnkcus-favpros');">Favourite Pros</a>
+			<a id="lnkcus-invoices" href="#" onclick="showcusInvoices('lnkcus-invoices');">Invoices</a>
+			<a id="lnkcus-notifications" href="#" onclick="showcusNotifications('lnkcus-notifications');">Notifications</a>
+		</div>
+		<div id="sidebarlink_container" class="ser-provider-submenu-list">
+			<div id="dvcus-dashboard">Dashboard</div>
+			<div id="dvcus-serhistory">
+                <label class="serhisPageTitle pb-2">Service History</label>
+                <table id="tblcusServiceHistory" class="table-data mb-3" style="width:100%">
+					<thead>
+						<tr>
+                            <th>Service ID</th>
+							<th>Service Details</th>
+							<th>Service Provider</th>
+							<th>Payment</th>
+							<th>Status</th>
+							<th data-orderable="false">Rate SP</th>
+						</tr>
+					</thead>
+					<tbody>
+                        <tr>
+                            <td>8475</td>
+							<td>
+								<div><img src="assets/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">09/04/2018</span></div>
+								<div><img src="assets/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
+							</td>
+                            <td>
+                                <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-2"><img src="assets/images/service-history/imghatprofile.png"></div>
+                                <div>
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/greystar.png">
+                                        <label class="ps-1">4</label>
+                                    </div>
+                                </div>
+                            </td>
+							<td>
+                                <label class="spnEuro">&euro;&nbsp;63</label>
+							</td>
+							<td><label class="lblserstatus completed py-1 px-3">Completed</label></td>
+							<td>
+                                <a href="#" class="btnratesp px-3 py-2">Rate SP</a>
+                            </td>
+						</tr>
+                        <tr>
+                            <td>8477</td>
+							<td>
+								<div><img src="assets/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">09/04/2018</span></div>
+								<div><img src="assets/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
+							</td>
+                            <td>
+                                <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-2"><img src="assets/images/service-history/imghatprofile.png"></div>
+                                <div>
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/greystar.png">
+                                        <label class="ps-1">4</label>
+                                    </div>
+                                </div>
+                            </td>
+							<td>
+                                <label class="spnEuro">&euro;&nbsp;63</label>
+							</td>
+							<td><label class="lblserstatus cancelled py-1 px-3">Cancelled</label></td>
+							<td>
+                                <a href="#" class="btnratespdisabled disabled px-3 py-2">Rate SP</a>
+                            </td>
+						</tr>
+                        <tr>
+                            <td>8479</td>
+							<td>
+								<div><img src="assets/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">09/04/2018</span></div>
+								<div><img src="assets/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
+							</td>
+                            <td>
+                                <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-2"><img src="assets/images/service-history/imghatprofile.png"></div>
+                                <div>
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/greystar.png">
+                                        <label class="ps-1">4</label>
+                                    </div>
+                                </div>
+                            </td>
+							<td>
+                                <label class="spnEuro">&euro;&nbsp;63</label>
+							</td>
+							<td><label class="lblserstatus completed py-1 px-3">Completed</label></td>
+							<td>
+                                <a href="#" class="btnratesp px-3 py-2">Rate SP</a>
+                            </td>
+						</tr>
+                        <tr>
+                            <td>8472</td>
+							<td>
+								<div><img src="assets/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">09/04/2018</span></div>
+								<div><img src="assets/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
+							</td>
+                            <td>
+                                <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-2"><img src="assets/images/service-history/imghatprofile.png"></div>
+                                <div>
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/greystar.png">
+                                        <label class="ps-1">4</label>
+                                    </div>
+                                </div>
+                            </td>
+							<td>
+                                <label class="spnEuro">&euro;&nbsp;63</label>
+							</td>
+							<td><label class="lblserstatus completed py-1 px-3">Completed</label></td>
+							<td>
+                                <a class="btnratesp px-3 py-2" data-bs-toggle="modal" data-bs-target="#rateSPModal" href="#" role="button">Rate SP</a>
+                            </td>
+						</tr>
+                        <tr>
+                            <td>8474</td>
+							<td>
+								<div><img src="assets/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">09/04/2018</span></div>
+								<div><img src="assets/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
+							</td>
+                            <td>
+                                <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-2"><img src="assets/images/service-history/imghatprofile.png"></div>
+                                <div>
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/greystar.png">
+                                        <label class="ps-1">4</label>
+                                    </div>
+                                </div>
+                            </td>
+							<td>
+                                <label class="spnEuro">&euro;&nbsp;63</label>
+							</td>
+							<td><label class="lblserstatus cancelled disabled py-1 px-3">Cancelled</label></td>
+							<td>
+                                <a href="#" class="btnratespdisabled disabled px-3 py-2">Rate SP</a>
+                            </td>
+						</tr>
+                    </tbody>
+                </table>
+            </div>
+			<div id="dvcus-serschedule">Service Schedule</div>
+			<div id="dvcus-favpros">Favourite Pros</div>
+			<div id="dvcus-invoices">Invoices</div>
+			<div id="dvcus-notifications">Notifications</div>
+		</div>
+		<input type="hidden" id="hdncusActiveMenu" value="">
+	</section>
+	<div class="footer1 mt-5 py-2" id="footer">
+        <div class="container">
+            <footer>
+                <table class="table table-borderless">
+                    <tr class="row align-items-center text-center">
+                        <td class="col-md-2">
+                            <a href="#"><img src="assets/images/logo/logo.png" alt="logo.png"></a>
+                        </td>
+                        <td class="col-md-8">
+                            <a href="#">HOME</a></li>
+                            <a href="#">ABOUT</a>
+                            <a href="#">TESTIMONIALS</a>
+                            <a href="#">FAQs</a></li>
+                            <a href="#">INSURANCE POLICY</a>
+                            <a href="#">IMPRESSUM</a>
+                        </td>
+                        <td class="col-md-2">
+                            <a href="#" class="pe-2"><img src="assets/images/faq/fb.png" alt="fb"></a>
+                            <a href="#"><img src="assets/images/faq/insta.png" alt="insta"></a>
+                        </td>
+                    </tr>
+                </table>
+                <hr class="hrclr">
+                <p class="fttext text-center">©2018 Helperland. All rights reserved. Terms and Conditions | Privacy Policy</p>
+            </footer>
+        </div>
+    </div>
+    <!-- Modal 5 -->
+    <div class="modal fade" id="rateSPModal" aria-hidden="true" aria-labelledby="rateSPModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+                <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-3"><img src="assets/images/service-history/imghatprofile.png"></div>
+                <div>
+                    <label class="fs1 fw-bold">Lyum Watson</label>
+                    <div>
+                        <span id="rateSPfinal" class="stars-container stars-0">★★★★★</span>
+                        <label class="ps-1" id="lblrateSP">0</label>
+                    </div>
+                </div>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <label class="fs1 fw-bold mb-2">Rate your service provider</label>
+                <div class="row">
+                    <div class="col-md-4"><label class="mt-2">On time arrival</label></div>
+                    <div class="col-md-4"><label id="rtOnTimeArr" class="m-0 p-0"></label></div>
+                    <div class="col-md-4"><label class="mt-2" id="lblrtOnTimeArr">0</label></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><label class="mt-2">Friendly</label></div>
+                    <div class="col-md-4"><label id="rtFriendly" class="m-0 p-0"></label></div>
+                    <div class="col-md-4"><label class="mt-2" id="lblrtFriendly">0</label></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><label class="mt-2">Quality of service</label></div>
+                    <div class="col-md-4"><label id="rtQltyofSer" class="m-0 p-0"></label></div>
+                    <div class="col-md-4"><label class="mt-2" id="lblrtQltyofSer">0</label></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12"><label class="mt-2">Feedback on service provider</label></div>
+                </div>
+                <div class="row mt-1">
+                    <div class="col-md-12">
+                        <textarea class="form-control" id="txtFeedbackToSP"></textarea>
+                    </div>
+                </div>
+                <button class="btnExport mt-2 fw-bold py-2 px-3" data-bs-toggle="modal" data-bs-dismiss="modal">Submit</button>
+            </div>
+        </div>
+    </div> 
+    <!-- Modal end -->
+	<!-- Script -->
+	<script src="assets/js/myjs.js"></script> 
+    <script src="assets/js/service_history.js"></script> 
+	<!-- jquery -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> 
+	<!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/ae6d6e0254.js" crossorigin="anonymous"></script>
+	<!-- Data Table -->
+	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.print.min.js"></script>
+    <script>
+      	$(document).ready(function() {
+			$('#tblcusServiceHistory').DataTable( {
+            "dom": 'Bt<"bottom"flp i><"clear">',
+        	"order": [[ 3, "desc" ]],
+        	"bPaginate": true, //hide pagination
+        	"bFilter": false, //hide Search bar
+        	"bInfo": true, // hide showing entries
+            buttons: {
+                dom: {
+                    button: {
+                        tag: 'button',
+                        className: ''
+                    }
+                },
+                buttons: [{
+                    extend : 'excel',
+                    text : 'Export',
+                    className: "btnExport",
+                    exportOptions: {
+                        columns: [0,1,2,3]
+                    },
+                }]
+            }
+    		});
+		});
+    </script>
+</body>
+<script src="assets/js/jsRapStar.js"></script>
+<script>
+         $(document).ready(function () {
+            /* -- make export button align right -- */
+            $("div#tblcusServiceHistory_wrapper").find($(".dt-buttons")).attr('style','float:right !important');
+            /* ----- */ 
+            $('#rtOnTimeArr').jsRapStar({
+                 step: false,
+                 value: 5,
+                 length: 5,
+                 starHeight: 25,
+                 onClick: function (score) {
+                     this.StarF.css({ color: 'gold' });
+                     if(score.toFixed(2)>=4.85)
+                        score=5;
+                     $('#lblrtOnTimeArr').html(score.toFixed(2));
+                     calcFinalRate();
+                     yellowRateStars();
+                 },
+                 onMousemove: function (score) {
+                     $(this).attr('title', 'Rate ' + score.toFixed(2));
+                 }
+             });
+             $('#rtFriendly').jsRapStar({
+                 step: false,
+                 value: 5,
+                 length: 5,
+                 starHeight: 25,
+                 onClick: function (score) {
+                     this.StarF.css({ color: 'gold' });
+                     if(score.toFixed(2)>=4.85)
+                        score=5;
+                     $('#lblrtFriendly').html(score.toFixed(2));
+                     calcFinalRate();
+                     yellowRateStars();
+                 },
+                 onMousemove: function (score) {
+                     $(this).attr('title', 'Rate ' + score.toFixed(2));
+                 }
+             });
+             $('#rtQltyofSer').jsRapStar({
+                 step: false,
+                 value: 5,
+                 length: 5,
+                 starHeight: 25,
+                 onClick: function (score) {
+                     this.StarF.css({ color: 'gold' });
+                     if(score.toFixed(2)>=4.85)
+                        score=5;
+                     $('#lblrtQltyofSer').html(score.toFixed(2));
+                     calcFinalRate();
+                     yellowRateStars();
+                 },
+                 onMousemove: function (score) {
+                     $(this).attr('title', 'Rate ' + score.toFixed(2));
+                 }
+             });
+         });
+         $(function() {
+         function addScore(score, $domElement) {
+           $("<span class='stars-container'>")
+           .addClass("stars-" + score.toString())
+           .text("★★★★★")
+           .appendTo($domElement);
+         }
+         addScore(70, $("#fixture"));
+         });   
+         function calcFinalRate(){
+             var y=((parseFloat($("#lblrtOnTimeArr").html())+parseFloat($("#lblrtFriendly").html())+parseFloat($("#lblrtQltyofSer").html()))/3).toFixed(2);
+             var x=((y*100)/5).toFixed(2);
+             $('#lblrateSP').html(y);
+             document.getElementById("rateSPfinal").classList.remove("stars-0");
+               var style = document.createElement('style');
+               style.type = 'text/css';
+               style.innerHTML = '.stars-my:after { width: '+x+'%; }';
+               document.getElementsByTagName('head')[0].appendChild(style);
+               document.getElementById('rateSPfinal').classList.add("stars-my");
+         }
+         function yellowRateStars()
+         {
+            var style = document.createElement('style');
+            style.type = 'text/css';
+            style.innerHTML = '.stars-container:after { color: gold; }';
+            document.getElementsByTagName('head')[0].appendChild(style);
+            document.getElementById('rateSPfinal').classList.add("stars-container");
+         }
+</script> 
