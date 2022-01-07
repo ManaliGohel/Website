@@ -20,6 +20,7 @@ function stickyNavbar(){
     document.getElementById('btnBookCleaner').classList.remove("stickynavtext");
     document.getElementById('btnLogin').classList.remove("stickynavtext");
     document.getElementById('btnBecomeHelper').classList.remove("stickynavtext");
+    setLogoByWinSize();
 	}
 }
 function countryddclick() {
@@ -43,12 +44,27 @@ function countryddclick() {
 function topnavigation(){
   document.body.scrollTop= document.documentElement.scrollTop=0;
 }
-function changeNavColor(){
-  var nav=document.getElementById("navbar");
-  if(nav.classList.contains("changeNavColor")){
-    nav.classList.remove("changeNavColor");
+
+document.addEventListener("click", (evt) => {
+  const navbar = document.getElementById("navbarCollapse");
+  let targetElement = evt.target;
+  do {
+      if (targetElement == navbar) {
+          return;
+      }
+      targetElement = targetElement.parentNode;
+  } while (targetElement);
+  $("#navbarCollapse").removeClass("show");
+});
+
+function setLogoByWinSize(){
+  var navlogo = document.getElementById('navlogo');
+  if(window.outerWidth<=991){  
+    navlogo.style.width = "73px";
+    navlogo.style.height = "54px";
   }
   else{
-    nav.classList.add("changeNavColor");
+    navlogo.style.width = "175px";
+    navlogo.style.height = "130px";
   }
 }

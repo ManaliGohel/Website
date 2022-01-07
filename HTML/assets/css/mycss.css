@@ -381,9 +381,9 @@ a:hover {
     width: 991px;
     height: auto;
 }
-.changeNavColor{
+/*.changeNavColor{
     background-color: rgba(82, 82, 82, 0.8);
-}
+}*/
 .navMenu{
     height: 400px;
     overflow-y: scroll;
@@ -746,11 +746,45 @@ table.dataTable tbody td{
     font-size: 14px;
     color: #A2A6A8;
 }
+#dvadmintitle{
+    float: left;
+}
+#dvadminaddnewuser{
+    float: right;
+}
+.navbar .background_disable_effect {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    background-color: #000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .3s ease;
+    z-index: 9;
+    display: none;
+}
+#imgnotification{
+    display: block;
+}
+#imgprofile{
+    display: block;
+}
+#imgnotification-black{
+    display: none;
+}
+#imgprofile-black{
+    display: none;
+}
 
 /* Responsive */
 @media (max-width:991px){
     .um_logo_name{
         font-size: 30px;
+    }
+    .admin-main-container{
+        margin-top: 73px;
     }
     #myHeader{
         position: fixed;
@@ -775,19 +809,61 @@ table.dataTable tbody td{
     .dv-ser-pro-menu{
         display: none;
     }  
-    .admin-main-container{
-        margin-top: 80px;
-    }
     .admin-hdr-menu{
         display: block;
     }    
     .admin-menu{
         display: none;
     }
+    .navbar-collapse{
+        position: fixed;
+        right: -250px;
+        height: 100%;
+        width: 250px;
+        top: 0;
+        background: #fff;
+        box-shadow: none;
+        z-index: 10;
+        transition: all .3s ease;
+        overflow: auto;
+    }
+    .show{
+        right: 0px;
+    }
+    .navbar .background_disable_effect.open {
+        visibility: visible;
+        opacity: .5;
+        display: block;
+    }
+    .navApplyBorder, .navOnlyBorder, .navBorderWBack{
+        color: #646464;
+        background-color: white;
+        border: 1px solid transparent;
+    }
+    .navApplyBorder:hover , .navOnlyBorder:hover, .navBorderWBack:hover{
+        color: #006072;
+        border: 1px solid #006072;
+    }
+    #imgnotification{
+        display: none;
+    }
+    #imgprofile{
+        display: none;
+    }
+    #imgnotification-black{
+        display: block;
+        margin-left: 2%;
+    }
+    #imgprofile-black{
+        display: block;
+    }
 }
 @media (max-width:800px){
     .um_logo_name{
         font-size: 25px;
+    }
+    .admin-main-container{
+        margin-top: 65px;
     }
 	.fs3{
 		font-size: 20px;
@@ -823,5 +899,143 @@ table.dataTable tbody td{
     }
     .mapindicator-img{
         z-index: 0;
+    }
+}
+@media (max-width:400px){
+    .dv-um-top{
+        margin-bottom: 10%;
+    }
+    #dvadmintitle{
+        float: none;
+        margin-bottom: 2%;
+    }
+    #dvadminaddnewuser{
+        float: none;
+    }
+}
+
+/* Datatable CSS */
+.bottom{
+    display: flex;
+    justify-content: space-between !important;
+}
+.paginate_button{
+    border-radius: 50% !important;
+    color: white;
+}
+.paginate_button:hover{
+    background: #1D7A8C !important;
+    color: white;
+}
+.paginate_button.current{
+    background: #1D7A8C !important;
+    color: white;
+}
+.dataTables_paginate{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 0px !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.first{
+    content: url(../images/upcoming-service/first-page.png);
+    padding: 15px 16px 15px 16px;
+    border-radius: 50%;
+    border: 1px solid #e1e1e1;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.first:hover{
+    content: url(../images/upcoming-service/first-page-white.png);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button{
+    border-radius: 50%;
+    border: 1px solid #e1e1e1;
+    position: relative !important;
+    margin-left: 3px !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button{
+    border-radius: 50%;
+    border: 1px solid #e1e1e1;
+    position: relative !important;
+    margin-left: 3px !important;
+}
+.dataTables_wrapper .dataTables_paginate span .paginate_button{
+    top: 0px;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.next{
+    content: url(../images/upcoming-service/keyboard-right-arrow-button-copy.png);
+    padding: 15px 16px 15px 16px;
+    border-radius: 50%;
+    border: 1px solid #e1e1e1;
+    transform: rotate(180deg);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.next:hover{
+    content: url(../images/upcoming-service/keyboard-right-arrow-button-copy-white.png);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.last{
+    content: url(../images/upcoming-service/first-page.png);
+    padding: 15px 16px 15px 16px;
+    border-radius: 50%;
+    border: 1px solid #e1e1e1;
+    transform: rotate(180deg);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.last:hover{
+    content: url(../images/upcoming-service/first-page-white.png);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.first{
+    content: url(../images/upcoming-service/first-page.png);
+    padding: 15px 16px 15px 16px;
+    border-radius: 50%;
+    border: 1px solid #e1e1e1;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.first:hover{
+    content: url(../images/upcoming-service/first-page-white.png);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.previous{
+    content: url(../images/upcoming-service/keyboard-right-arrow-button-copy.png);
+    padding: 15px 16px 15px 16px;
+    border-radius: 50%;
+    border: 1px solid #e1e1e1;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.previous:hover{
+    content: url(../images/upcoming-service/keyboard-right-arrow-button-copy-white.png);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    color: white !important;
+    border: 1px solid #979797;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    color: white !important;
+    border: 1px solid #979797;
+}
+@media (max-width: 768px){
+    #tblUpcomingServices, #tblcusServiceHistory{
+        border: 1px solid transparent;
+    }
+    #tblUpcomingServices thead, #tblcusServiceHistory thead{
+        display: none;
+    }
+    #tblUpcomingServices tbody tr, #tblcusServiceHistory tbody tr{
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        margin: 3%;
+        border: 1px solid #e1e1e1;
+        padding-right: 15px;
+        padding-left: 15px;
+        box-shadow: 0 4px 8px 0 rgba(100, 100, 100, 0.2), 0 6px 20px 0 rgba(100, 100, 100, 0.19);
+        color: #646464;
+        font-size: 16px;
+        text-align: center;
+    }
+    #tblUpcomingServices tbody tr td, #tblcusServiceHistory tbody tr td{
+        padding: 20px;
+    }
+    .media-object{
+        display: flex;
+        justify-content: center;
+    }
+    .bottom{
+        display: block;
     }
 }

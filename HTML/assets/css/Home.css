@@ -2,7 +2,7 @@ html, body{
     height: 100%;
     margin: 0;
     scroll-behavior: smooth;
-    /*font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;*/
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 .home{
     background-image: url("../images/home/banner-bg.jpg");
@@ -369,9 +369,6 @@ nav .drop-down li a {
     transition: 1s;
     z-index: 1;
 }
-.changeNavColor{
-    background-color: rgba(82, 82, 82, 0.7);
-}
 .liddCountry{
     clear: both;
     width: 94%;
@@ -379,6 +376,19 @@ nav .drop-down li a {
 #ddCountryImgContainer{
     display: flex;
     align-items: center;
+}
+.navbar .background_disable_effect {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    background-color: #000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .3s ease;
+    z-index: 9;
+    display: none;
 }
 
 @media (max-width:1450px) {
@@ -402,10 +412,11 @@ nav .drop-down li a {
         margin-left: 0px;
         margin-top: 5px;
         margin-right: 20px;
+        color: #646464;
     }
     #navlogo{
-        width: 80px;
-        height: 60px;
+        width: 73px;
+        height: 54px;
     }
     #navbar{
         position: fixed;
@@ -457,6 +468,33 @@ nav .drop-down li a {
     }
     .whyhelperland-desc{
         font-size: 16px;
+    }
+    .navbar-collapse{
+        position: fixed;
+        right: -250px;
+        height: 100%;
+        width: 250px;
+        top: 0;
+        background: #fff;
+        box-shadow: none;
+        z-index: 10;
+        transition: all .3s ease;
+        overflow: auto;
+    }
+    .show{
+        right: 0px;
+    }
+    .navbar .background_disable_effect.open {
+        visibility: visible;
+        opacity: .5;
+        display: block;
+    }
+    .navOption a{
+        margin-left: 4%;
+    }
+    .navOptionOutline:hover, .ot1:hover{
+        color: #006072;
+        border: 1px solid #006072;        
     }
 }
 @media (max-width:766px) {

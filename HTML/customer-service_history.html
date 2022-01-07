@@ -25,7 +25,7 @@
         	<a href="#">
           		<img src="assets/images/logo/logo.png" alt="logo">
         	</a>
-        	<button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" onclick="changeNavColor();"><span class="navbar-toggler-icon"></span></button>
+        	<button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"><span class="navbar-toggler-icon"></span></button>
         	<div class="collapse navbar-collapse" id="navbarCollapse" >       
           		<div class="navbar-nav ms-auto">
           			<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -34,11 +34,22 @@
       					<li class="mt-3 mx-2"><a class="py-2 px-3 navApplyBorder" href="#">Warranty</a></li>
       					<li class="mt-3 mx-2"><a class="py-2 px-3 navApplyBorder" href="#">Blog</a></li>
       					<li class="mt-3 mx-2"><a class="py-2 px-3 navApplyBorder" href="#">Contact</a></li>
-      					<li><a class="px-3" href="#"><div class="dv-upser-not-pro dv-not-border d-flex justify-content-center align-items-center"><div class="dv-notification d-flex justify-content-center align-items-center">0</div><img class="img-upser-not" src="assets/images/upcoming-service/icon-notification.png"></div></a></li>						
+      					<!--<li><a class="px-5" href="#"><div class="dv-upser-not-pro dv-not-border d-flex justify-content-center align-items-center"><div class="dv-notification d-flex justify-content-center align-items-center">0</div><img class="img-upser-not" src="assets/images/upcoming-service/icon-notification.png"></div></a></li>						
       					<li>
-							<a class="px-3" href="#" id="ddProfile" role="button" data-bs-toggle="dropdown" aria-expanded="false"><div class="dv-upser-not-pro d-flex justify-content-center align-items-center"><img class="img-upser-pro" src="assets/images/upcoming-service/profile.png"><div class="dv-downarr"><img class="img-pro-downarr" src="assets/images/upcoming-service/down-arrow.png"></div></div></a>
+							<a class="px-5" href="#" id="ddProfile" role="button" data-bs-toggle="dropdown" aria-expanded="false"><div class="dv-upser-not-pro d-flex justify-content-center align-items-center"><img class="img-upser-pro" src="assets/images/upcoming-service/profile.png"><div class="dv-downarr"><img class="img-pro-downarr" src="assets/images/upcoming-service/down-arrow.png"></div></div></a>
 							<ul class="dropdown-menu p-3 ddProfile" aria-labelledby="ddProfile" style="right: 10px; left: auto;">
 								<li class="dropdown-item ddProfileNoHover">Welcome,<br><span id="proname">Gaurang Patel</span></li>
+								<li><hr></li>
+								<li><a class="dropdown-item" href="#">My Dashboard</a></li>
+								<li><a class="dropdown-item" href="#">My Settings</a></li>
+								<li><a class="dropdown-item" href="#">Logout</a></li>
+							</ul>
+						</li>-->
+                        <li><a class="px-5" href="#"><div class="dv-upser-not-pro dv-not-border d-flex justify-content-center align-items-center"><div class="dv-notification d-flex justify-content-center align-items-center">0</div><img class="img-upser-not" src="assets/images/upcoming-service/icon-notification.png" id="imgnotification"><img class="img-upser-not" src="assets/images/upcoming-service/icon-notification-black.png" id="imgnotification-black"></div></a></li>						
+      					<li>
+							<a class="px-5" href="#" id="ddProfile" role="button" data-bs-toggle="dropdown" aria-expanded="false"><div class="dv-upser-not-pro d-flex justify-content-center align-items-center"><img class="img-upser-pro" src="assets/images/upcoming-service/profile.png" id="imgprofile"><img class="img-upser-pro" src="assets/images/upcoming-service/profile-black.png" id="imgprofile-black"><div class="dv-downarr"><img class="img-pro-downarr" src="assets/images/upcoming-service/down-arrow.png"></div></div></a>
+							<ul class="dropdown-menu p-3 ms-2 ddProfile" aria-labelledby="ddProfile" style="right: 10px; left: auto;">
+								<li class="dropdown-item ddProfileNoHover">Welcome,<br><span id="proname">Sandip Patel</span></li>
 								<li><hr></li>
 								<li><a class="dropdown-item" href="#">My Dashboard</a></li>
 								<li><a class="dropdown-item" href="#">My Settings</a></li>
@@ -55,6 +66,7 @@
     				</ul>
           		</div>
         	</div>
+            <div class="background_disable_effect"></div>
     	</nav>
 		</div>
 	</header>
@@ -93,6 +105,7 @@
 								<div><img src="assets/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
 							</td>
                             <td>
+                                <div class="media-object">
                                 <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-2"><img src="assets/images/service-history/imghatprofile.png"></div>
                                 <div>
                                     <label>Lyum Watson</label>
@@ -104,6 +117,7 @@
                                         <img src="assets/images/service-history/greystar.png">
                                         <label class="ps-1">4</label>
                                     </div>
+                                </div>
                                 </div>
                             </td>
 							<td>
@@ -121,6 +135,7 @@
 								<div><img src="assets/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
 							</td>
                             <td>
+                                <div class="media-object">
                                 <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-2"><img src="assets/images/service-history/imghatprofile.png"></div>
                                 <div>
                                     <label>Lyum Watson</label>
@@ -132,6 +147,7 @@
                                         <img src="assets/images/service-history/greystar.png">
                                         <label class="ps-1">4</label>
                                     </div>
+                                </div>
                                 </div>
                             </td>
 							<td>
@@ -149,6 +165,7 @@
 								<div><img src="assets/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
 							</td>
                             <td>
+                                <div class="media-object">
                                 <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-2"><img src="assets/images/service-history/imghatprofile.png"></div>
                                 <div>
                                     <label>Lyum Watson</label>
@@ -160,6 +177,7 @@
                                         <img src="assets/images/service-history/greystar.png">
                                         <label class="ps-1">4</label>
                                     </div>
+                                </div>
                                 </div>
                             </td>
 							<td>
@@ -177,6 +195,7 @@
 								<div><img src="assets/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
 							</td>
                             <td>
+                                <div class="media-object">
                                 <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-2"><img src="assets/images/service-history/imghatprofile.png"></div>
                                 <div>
                                     <label>Lyum Watson</label>
@@ -188,6 +207,7 @@
                                         <img src="assets/images/service-history/greystar.png">
                                         <label class="ps-1">4</label>
                                     </div>
+                                </div>
                                 </div>
                             </td>
 							<td>
@@ -205,6 +225,7 @@
 								<div><img src="assets/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
 							</td>
                             <td>
+                                <div class="media-object">
                                 <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-2"><img src="assets/images/service-history/imghatprofile.png"></div>
                                 <div>
                                     <label>Lyum Watson</label>
@@ -216,6 +237,460 @@
                                         <img src="assets/images/service-history/greystar.png">
                                         <label class="ps-1">4</label>
                                     </div>
+                                </div>
+                                </div>
+                            </td>
+							<td>
+                                <label class="spnEuro">&euro;&nbsp;63</label>
+							</td>
+							<td><label class="lblserstatus cancelled disabled py-1 px-3">Cancelled</label></td>
+							<td>
+                                <a href="#" class="btnratespdisabled disabled px-3 py-2">Rate SP</a>
+                            </td>
+						</tr>
+                        
+                        <tr>
+                            <td>8475</td>
+							<td>
+								<div><img src="assets/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">09/04/2018</span></div>
+								<div><img src="assets/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
+							</td>
+                            <td>
+                                <div class="media-object">
+                                <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-2"><img src="assets/images/service-history/imghatprofile.png"></div>
+                                <div>
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/greystar.png">
+                                        <label class="ps-1">4</label>
+                                    </div>
+                                </div>
+                                </div>
+                            </td>
+							<td>
+                                <label class="spnEuro">&euro;&nbsp;63</label>
+							</td>
+							<td><label class="lblserstatus completed py-1 px-3">Completed</label></td>
+							<td>
+                                <a href="#" class="btnratesp px-3 py-2">Rate SP</a>
+                            </td>
+						</tr>
+                        <tr>
+                            <td>8477</td>
+							<td>
+								<div><img src="assets/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">09/04/2018</span></div>
+								<div><img src="assets/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
+							</td>
+                            <td>
+                                <div class="media-object">
+                                <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-2"><img src="assets/images/service-history/imghatprofile.png"></div>
+                                <div>
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/greystar.png">
+                                        <label class="ps-1">4</label>
+                                    </div>
+                                </div>
+                                </div>
+                            </td>
+							<td>
+                                <label class="spnEuro">&euro;&nbsp;63</label>
+							</td>
+							<td><label class="lblserstatus cancelled py-1 px-3">Cancelled</label></td>
+							<td>
+                                <a href="#" class="btnratespdisabled disabled px-3 py-2">Rate SP</a>
+                            </td>
+						</tr>
+                        <tr>
+                            <td>8479</td>
+							<td>
+								<div><img src="assets/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">09/04/2018</span></div>
+								<div><img src="assets/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
+							</td>
+                            <td>
+                                <div class="media-object">
+                                <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-2"><img src="assets/images/service-history/imghatprofile.png"></div>
+                                <div>
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/greystar.png">
+                                        <label class="ps-1">4</label>
+                                    </div>
+                                </div>
+                                </div>
+                            </td>
+							<td>
+                                <label class="spnEuro">&euro;&nbsp;63</label>
+							</td>
+							<td><label class="lblserstatus completed py-1 px-3">Completed</label></td>
+							<td>
+                                <a href="#" class="btnratesp px-3 py-2">Rate SP</a>
+                            </td>
+						</tr>
+                        <tr>
+                            <td>8472</td>
+							<td>
+								<div><img src="assets/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">09/04/2018</span></div>
+								<div><img src="assets/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
+							</td>
+                            <td>
+                                <div class="media-object">
+                                <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-2"><img src="assets/images/service-history/imghatprofile.png"></div>
+                                <div>
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/greystar.png">
+                                        <label class="ps-1">4</label>
+                                    </div>
+                                </div>
+                                </div>
+                            </td>
+							<td>
+                                <label class="spnEuro">&euro;&nbsp;63</label>
+							</td>
+							<td><label class="lblserstatus completed py-1 px-3">Completed</label></td>
+							<td>
+                                <a class="btnratesp px-3 py-2" data-bs-toggle="modal" data-bs-target="#rateSPModal" href="#" role="button">Rate SP</a>
+                            </td>
+						</tr>
+                        <tr>
+                            <td>8474</td>
+							<td>
+								<div><img src="assets/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">09/04/2018</span></div>
+								<div><img src="assets/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
+							</td>
+                            <td>
+                                <div class="media-object">
+                                <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-2"><img src="assets/images/service-history/imghatprofile.png"></div>
+                                <div>
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/greystar.png">
+                                        <label class="ps-1">4</label>
+                                    </div>
+                                </div>
+                                </div>
+                            </td>
+							<td>
+                                <label class="spnEuro">&euro;&nbsp;63</label>
+							</td>
+							<td><label class="lblserstatus cancelled disabled py-1 px-3">Cancelled</label></td>
+							<td>
+                                <a href="#" class="btnratespdisabled disabled px-3 py-2">Rate SP</a>
+                            </td>
+						</tr>
+                        
+                        <tr>
+                            <td>8475</td>
+							<td>
+								<div><img src="assets/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">09/04/2018</span></div>
+								<div><img src="assets/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
+							</td>
+                            <td>
+                                <div class="media-object">
+                                <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-2"><img src="assets/images/service-history/imghatprofile.png"></div>
+                                <div>
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/greystar.png">
+                                        <label class="ps-1">4</label>
+                                    </div>
+                                </div>
+                                </div>
+                            </td>
+							<td>
+                                <label class="spnEuro">&euro;&nbsp;63</label>
+							</td>
+							<td><label class="lblserstatus completed py-1 px-3">Completed</label></td>
+							<td>
+                                <a href="#" class="btnratesp px-3 py-2">Rate SP</a>
+                            </td>
+						</tr>
+                        <tr>
+                            <td>8477</td>
+							<td>
+								<div><img src="assets/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">09/04/2018</span></div>
+								<div><img src="assets/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
+							</td>
+                            <td>
+                                <div class="media-object">
+                                <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-2"><img src="assets/images/service-history/imghatprofile.png"></div>
+                                <div>
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/greystar.png">
+                                        <label class="ps-1">4</label>
+                                    </div>
+                                </div>
+                                </div>
+                            </td>
+							<td>
+                                <label class="spnEuro">&euro;&nbsp;63</label>
+							</td>
+							<td><label class="lblserstatus cancelled py-1 px-3">Cancelled</label></td>
+							<td>
+                                <a href="#" class="btnratespdisabled disabled px-3 py-2">Rate SP</a>
+                            </td>
+						</tr>
+                        <tr>
+                            <td>8479</td>
+							<td>
+								<div><img src="assets/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">09/04/2018</span></div>
+								<div><img src="assets/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
+							</td>
+                            <td>
+                                <div class="media-object">
+                                <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-2"><img src="assets/images/service-history/imghatprofile.png"></div>
+                                <div>
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/greystar.png">
+                                        <label class="ps-1">4</label>
+                                    </div>
+                                </div>
+                                </div>
+                            </td>
+							<td>
+                                <label class="spnEuro">&euro;&nbsp;63</label>
+							</td>
+							<td><label class="lblserstatus completed py-1 px-3">Completed</label></td>
+							<td>
+                                <a href="#" class="btnratesp px-3 py-2">Rate SP</a>
+                            </td>
+						</tr>
+                        <tr>
+                            <td>8472</td>
+							<td>
+								<div><img src="assets/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">09/04/2018</span></div>
+								<div><img src="assets/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
+							</td>
+                            <td>
+                                <div class="media-object">
+                                <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-2"><img src="assets/images/service-history/imghatprofile.png"></div>
+                                <div>
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/greystar.png">
+                                        <label class="ps-1">4</label>
+                                    </div>
+                                </div>
+                                </div>
+                            </td>
+							<td>
+                                <label class="spnEuro">&euro;&nbsp;63</label>
+							</td>
+							<td><label class="lblserstatus completed py-1 px-3">Completed</label></td>
+							<td>
+                                <a class="btnratesp px-3 py-2" data-bs-toggle="modal" data-bs-target="#rateSPModal" href="#" role="button">Rate SP</a>
+                            </td>
+						</tr>
+                        <tr>
+                            <td>8474</td>
+							<td>
+								<div><img src="assets/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">09/04/2018</span></div>
+								<div><img src="assets/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
+							</td>
+                            <td>
+                                <div class="media-object">
+                                <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-2"><img src="assets/images/service-history/imghatprofile.png"></div>
+                                <div>
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/greystar.png">
+                                        <label class="ps-1">4</label>
+                                    </div>
+                                </div>
+                                </div>
+                            </td>
+							<td>
+                                <label class="spnEuro">&euro;&nbsp;63</label>
+							</td>
+							<td><label class="lblserstatus cancelled disabled py-1 px-3">Cancelled</label></td>
+							<td>
+                                <a href="#" class="btnratespdisabled disabled px-3 py-2">Rate SP</a>
+                            </td>
+						</tr>
+                        
+                        <tr>
+                            <td>8475</td>
+							<td>
+								<div><img src="assets/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">09/04/2018</span></div>
+								<div><img src="assets/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
+							</td>
+                            <td>
+                                <div class="media-object">
+                                <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-2"><img src="assets/images/service-history/imghatprofile.png"></div>
+                                <div>
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/greystar.png">
+                                        <label class="ps-1">4</label>
+                                    </div>
+                                </div>
+                                </div>
+                            </td>
+							<td>
+                                <label class="spnEuro">&euro;&nbsp;63</label>
+							</td>
+							<td><label class="lblserstatus completed py-1 px-3">Completed</label></td>
+							<td>
+                                <a href="#" class="btnratesp px-3 py-2">Rate SP</a>
+                            </td>
+						</tr>
+                        <tr>
+                            <td>8477</td>
+							<td>
+								<div><img src="assets/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">09/04/2018</span></div>
+								<div><img src="assets/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
+							</td>
+                            <td>
+                                <div class="media-object">
+                                <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-2"><img src="assets/images/service-history/imghatprofile.png"></div>
+                                <div>
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/greystar.png">
+                                        <label class="ps-1">4</label>
+                                    </div>
+                                </div>
+                                </div>
+                            </td>
+							<td>
+                                <label class="spnEuro">&euro;&nbsp;63</label>
+							</td>
+							<td><label class="lblserstatus cancelled py-1 px-3">Cancelled</label></td>
+							<td>
+                                <a href="#" class="btnratespdisabled disabled px-3 py-2">Rate SP</a>
+                            </td>
+						</tr>
+                        <tr>
+                            <td>8479</td>
+							<td>
+								<div><img src="assets/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">09/04/2018</span></div>
+								<div><img src="assets/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
+							</td>
+                            <td>
+                                <div class="media-object">
+                                <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-2"><img src="assets/images/service-history/imghatprofile.png"></div>
+                                <div>
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/greystar.png">
+                                        <label class="ps-1">4</label>
+                                    </div>
+                                </div>
+                                </div>
+                            </td>
+							<td>
+                                <label class="spnEuro">&euro;&nbsp;63</label>
+							</td>
+							<td><label class="lblserstatus completed py-1 px-3">Completed</label></td>
+							<td>
+                                <a href="#" class="btnratesp px-3 py-2">Rate SP</a>
+                            </td>
+						</tr>
+                        <tr>
+                            <td>8472</td>
+							<td>
+								<div><img src="assets/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">09/04/2018</span></div>
+								<div><img src="assets/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
+							</td>
+                            <td>
+                                <div class="media-object">
+                                <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-2"><img src="assets/images/service-history/imghatprofile.png"></div>
+                                <div>
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/greystar.png">
+                                        <label class="ps-1">4</label>
+                                    </div>
+                                </div>
+                                </div>
+                            </td>
+							<td>
+                                <label class="spnEuro">&euro;&nbsp;63</label>
+							</td>
+							<td><label class="lblserstatus completed py-1 px-3">Completed</label></td>
+							<td>
+                                <a class="btnratesp px-3 py-2" data-bs-toggle="modal" data-bs-target="#rateSPModal" href="#" role="button">Rate SP</a>
+                            </td>
+						</tr>
+                        <tr>
+                            <td>8474</td>
+							<td>
+								<div><img src="assets/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">09/04/2018</span></div>
+								<div><img src="assets/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
+							</td>
+                            <td>
+                                <div class="media-object">
+                                <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-2"><img src="assets/images/service-history/imghatprofile.png"></div>
+                                <div>
+                                    <label>Lyum Watson</label>
+                                    <div>
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/yellowstar.png">
+                                        <img src="assets/images/service-history/greystar.png">
+                                        <label class="ps-1">4</label>
+                                    </div>
+                                </div>
                                 </div>
                             </td>
 							<td>
@@ -327,7 +802,7 @@
     <script>
       	$(document).ready(function() {
 			$('#tblcusServiceHistory').DataTable( {
-            "dom": 'Bt<"bottom"flp i><"clear">',
+            /*"dom": 'Bt<"bottom"flp i><"clear">',
         	"order": [[ 3, "desc" ]],
         	"bPaginate": true, //hide pagination
         	"bFilter": false, //hide Search bar
@@ -347,10 +822,63 @@
                         columns: [0,1,2,3]
                     },
                 }]
+            },*/
+            "dom": '<"top"i>rt<"bottom"flp><"clear">',
+        		"columnDefs": [
+            		{ "orderable": false, "targets": 4 }
+        		],       
+        		"bFilter": false, //hide Search bar
+        		"pagingType": "full_numbers",
+        		paging: true,
+        		"pagingType": "full_numbers",
+        		// bFilter: false,
+        		ordering: true,
+        		searching: false,
+        		info: true,
+        		"columnDefs": [
+            		{ "orderable": false, "targets": 4 }
+        		],
+        		"oLanguage": {
+            		"sInfo": "Total Records: _TOTAL_"
+        		},
+        		"dom": '<"top">rt<"bottom"lip><"clear">',
+        			responsive: true,
+        		"order":[],
+                buttons: {
+                dom: {
+                    button: {
+                        tag: 'button',
+                        className: ''
+                    }
+                },
+                buttons: [{
+                    extend : 'excel',
+                    text : 'Export',
+                    className: "btnExport",
+                    exportOptions: {
+                        columns: [0,1,2,3]
+                    },
+                }]
             }
     		});
 		});
     </script>
+    <!-- script for sidebar navigation -->
+	<script>
+    	$(document).ready(function () {
+    	$(window).scroll(function () {
+        	$(".navbar .navbar-collapse").removeClass("show");
+        	$('.background_disable_effect').removeClass("open");
+    	});
+    	});
+    	$('.navbar-toggler').click(function () {
+        	$('.background_disable_effect').addClass("open");
+    	});
+    	$('.background_disable_effect').click(function () {
+        	$(".navbar .navbar-collapse").removeClass("show");
+        	$('.background_disable_effect').removeClass("open");
+    	});
+	</script>
 </body>
 <script src="assets/js/jsRapStar.js"></script>
 <script>

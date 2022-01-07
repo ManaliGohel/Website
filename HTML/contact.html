@@ -19,7 +19,7 @@
         	<a href="#">
           		<img src="assets/images/logo/logo.png" alt="logo">
         	</a>
-        	<button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" onclick="changeNavColor();"><span class="navbar-toggler-icon"></span></button>
+        	<button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"><span class="navbar-toggler-icon"></span></button>
         	<div class="collapse navbar-collapse" id="navbarCollapse">       
           		<div class="navbar-nav ms-auto">
           			<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -27,12 +27,13 @@
       					<li class="my-2 mx-2"><a class="navOnlyBorder py-2 px-3" href="#">Prices & services</a></li>
       					<li class="my-2 mx-2"><a class="py-2 px-3 navApplyBorder" href="#">Warranty</a></li>
       					<li class="my-2 mx-2"><a class="py-2 px-3 navApplyBorder" href="#">Blog</a></li>
-      					<li class="my-2 me-2"><a class="py-2 px-3 navApplyBorder" href="#">Contact</a></li>
+      					<li class="my-2 mx-2"><a class="py-2 px-3 navApplyBorder" href="#">Contact</a></li>
       					<li class="my-2 mx-2"><a class="navBorderWBack py-2 px-3" href="#">Login</a></li>
       					<li class="my-2 mx-2"><a class="navBorderWBack py-2 px-3" href="#">Become a Helper</a></li>
     				  </ul>
           		</div>
         	</div>
+          <div class="background_disable_effect"></div>
     	</nav>
 	</header>
     <img src="assets/images/contact/contact-background.png" class="img-fluid" id="myImg">
@@ -155,4 +156,21 @@
     </div>
     <!-- script -->
 	<script type="text/javascript" src="assets/js/myjs.js"></script>
+  <!-- script for sidebar navigation -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function () {
+    $(window).scroll(function () {
+        $(".navbar .navbar-collapse").removeClass("show");
+        $('.background_disable_effect').removeClass("open");
+    });
+    });
+    $('.navbar-toggler').click(function () {
+        $('.background_disable_effect').addClass("open");
+    });
+    $('.background_disable_effect').click(function () {
+        $(".navbar .navbar-collapse").removeClass("show");
+        $('.background_disable_effect').removeClass("open");
+    });
+  </script>
 </body>

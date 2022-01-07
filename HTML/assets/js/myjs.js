@@ -28,7 +28,7 @@ function myFunction() {
     header.classList.remove("sticky");
   }
 }
-function changeNavColor(){
+/*function changeNavColor(){
   var nav=document.getElementById("myHeader");
   var navMenu=document.getElementById("navbarCollapse");
   if(nav.classList.contains("changeNavColor")){
@@ -39,7 +39,7 @@ function changeNavColor(){
     nav.classList.add("changeNavColor");
     navMenu.classList.add("navMenu");
   }  
-}
+}*/
 function navMenuSize(){
   var navMenu=document.getElementById("navbarCollapse");
   if(window.outerWidth>=991){
@@ -185,7 +185,6 @@ function ChangeColorBack2(id)
 }
 
 function changeNavColorAdmin(){
-  alert("hello")
   var nav=document.getElementById("myHeader");
   var navMenu=document.getElementById("navbarCollapse");
   if(nav.classList.contains("changeNavColorAdmin")){
@@ -197,3 +196,15 @@ function changeNavColorAdmin(){
     navMenu.classList.add("navMenu");
   }  
 }
+
+document.addEventListener("click", (evt) => {
+  const navbar = document.getElementById("navbarCollapse");
+  let targetElement = evt.target;
+  do {
+      if (targetElement == navbar) {
+          return;
+      }
+      targetElement = targetElement.parentNode;
+  } while (targetElement);
+  $("#navbarCollapse").removeClass("show");
+});
