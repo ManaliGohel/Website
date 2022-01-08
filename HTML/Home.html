@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="assets/css/home.css">
 </head>
-<body onscroll="stickyNavbar();" onresize="setLogoByWinSize();">
+<body onload="checkForLoginModal();checkForPasswordModal();" onscroll="stickyNavbar();" onresize="setLogoByWinSize();">
 <div class="home">
     <div class="home-content">
         <header>
@@ -28,7 +28,7 @@
                     <a href="#" class="navOptionOutline">Our Guarantee</a>
                     <a href="#" class="navOptionOutline">Blog</a>
 					<a href="#" class="navOptionOutline">Contact us</a>
-					<a href="#" class="navOptionOutline ot1" id="btnLogin">Login</a>
+					<a href="#" class="navOptionOutline ot1" id="btnLogin" data-bs-toggle="modal" data-bs-target="#loginModal" role="button">Login</a>
 					<a href="#" class="navOptionOutline ot1" id="btnBecomeHelper">Become a Helper</a>
                     <div id="navcountry">
                         <a id="ddCountry" class="p-0 m-0" role="button" data-bs-toggle="dropdown" aria-expanded="false"><div id="ddCountryImgContainer"><img src="assets/images/Home/india.jpg" class="ps-4 pe-2 pt-2"><div class="dv-downarr"><img class="img-pro-downarr" src="assets/images/upcoming-service/down-arrow.png"></div></div></a>
@@ -238,7 +238,68 @@
             </tr>
         </table>
     </footer>
-</div>
+    <!-- Modal 5 Login -->
+    <div class="modal fade" id="loginModal" aria-hidden="true" aria-labelledby="loginModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+                <div class="mdlheader">Login to your Account</div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row m-2">
+                    <div class="col-md-12">
+                        <input type="email" id="loginmodal_email" onkeyup="checkForLoginModal();" class="form-control img-modal-icon img-email" autocomplete="off" placeholder="Email">
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-md-12">
+                        <input type="password" id="loginmodal_password" onkeyup="checkForLoginModal();" class="form-control img-modal-icon img-password" autocomplete="off" placeholder="Password">
+                    </div>
+                </div>
+                <div class="row m-2 my-3">
+                    <div class="col-md-12">
+                        <input class="form-check-input" type="checkbox" value="" id="">
+                        <label class="form-check-label" for="">
+                            Remember me
+                        </label>
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-md-12">
+                        <button id="btnloginmodal">Login</button>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center align-items-center mt-4"><a href="#" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#forgorpasswordModal" role="button">Forgot password?</a></div>
+                <div class="d-flex justify-content-center align-items-center mt-1 mb-4">Don't have an account?&nbsp;<a href="customer_signup.html">Create an Account</a></div>
+            </div>
+          </div>
+        </div> 
+    </div>
+    <!-- Modal 5 Forgot Password -->
+    <div class="modal fade" id="forgorpasswordModal" aria-hidden="true" aria-labelledby="forgorpasswordModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+                <div class="mdlheader">Forgot password</div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row m-2">
+                    <div class="col-md-12">
+                        <input type="email" id="passwordmodal_email" autocomplete="off" onkeyup="checkForPasswordModal();" class="form-control img-modal-icon img-email" placeholder="Email Address">
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col-md-12">
+                        <button id="btnpasswordmodal">Send</button>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center align-items-center mt-4"><a href="#" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#loginModal" role="button">Login Now</a></div>
+            </div>
+          </div>
+        </div> 
+    </div>
 <!-- script -->
 <script src="assets/js/home.js"></script>
 <!-- script for sidebar navigation -->

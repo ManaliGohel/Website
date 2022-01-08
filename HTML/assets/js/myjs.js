@@ -183,3 +183,26 @@ document.addEventListener("click", (evt) => {
   } while (targetElement);
   $("#navbarCollapse").removeClass("show");
 });
+
+function checkForCustomerSignup(){
+  var fn=document.getElementById("txtFirstName").value.trim().length;
+  var ln=document.getElementById("txtLastName").value.trim().length;
+  var email=document.getElementById("txtEmail").value.trim().length;
+  var mbl=document.getElementById("txtMobile").value.trim().length;
+  var pwd=document.getElementById("pwd").value.trim().length;
+  var cpwd=document.getElementById("confirmpwd").value.trim().length;
+  var privacypolicy=document.getElementById("cbprivacypolicy").checked;
+  var reg=document.getElementById("sbmtcusreg");
+  if(fn>0 && ln>0 && email>0 && mbl>0 && pwd>0 && cpwd>0 && privacypolicy){
+    reg.disabled=false;
+    if(reg.classList.contains('btndisable'))
+      reg.classList.remove('btndisable');
+    reg.classList.add('btnCustomerSignup');
+  }
+  else{
+    reg.disabled=true;
+    if(reg.classList.contains('btnCustomerSignup'))
+      reg.classList.remove('btnCustomerSignup');
+    reg.classList.add('btndisable');
+  }
+}

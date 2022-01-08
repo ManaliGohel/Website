@@ -50,3 +50,42 @@ function setLogoByWinSize(){
     navlogo.style.height = "130px";
   }
 }
+
+function checkForLoginModal(){
+  var loginemail=document.getElementById("loginmodal_email").value.trim().length;
+  var loginpassword=document.getElementById("loginmodal_password").value.trim().length;
+  var btnlogin=document.getElementById("btnloginmodal");
+  if(loginemail>0 && loginpassword>0){
+    btnlogin.disabled=false;
+    if(btnlogin.classList.contains('btndisable'))
+      btnlogin.classList.remove('btndisable');
+    btnlogin.classList.add('btnLogin');
+  }
+  else{
+    btnlogin.disabled=true;
+    if(btnlogin.classList.contains('btnLogin'))
+      btnlogin.classList.remove('btnLogin');
+    btnlogin.classList.add('btndisable');
+  }
+}
+
+function checkForPasswordModal(){
+  var passwordemail=document.getElementById("passwordmodal_email").value.trim().length;
+  var btnpassword=document.getElementById("btnpasswordmodal");
+  if(passwordemail>0){
+    btnpassword.disabled=false;
+    if(btnpassword.classList.contains('btndisable'))
+      btnpassword.classList.remove('btndisable');
+    btnpassword.classList.add('btnLogin');
+  }
+  else{
+    btnpassword.disabled=true;
+    if(btnpassword.classList.contains('btnLogin'))
+      btnpassword.classList.remove('btnLogin');
+    btnpassword.classList.add('btndisable');
+  }
+}
+
+function openLoginModal(){
+  $('#loginModal').modal('show');
+}

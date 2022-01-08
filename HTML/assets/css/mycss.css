@@ -353,6 +353,10 @@ a:hover {
     border-radius: 20px;
     padding: 5px 40px 5px 40px;
 }
+.sbmtContactForm:hover{
+    background-color: rgba(0, 96, 114, 1);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.19);
+}
 .map-img-container{
     position: relative;
     margin-top: 18%;
@@ -768,6 +772,40 @@ table.dataTable tbody td{
 #imgadminuser, #imgadminuserlogout{
     display: inline-block;
 }
+.customer_signup{
+    margin-top: 5%;
+}
+.customer_signup input[type=text], .customer_signup input[type=email], .customer_signup input[type=password]{
+    height: 40px;
+}
+.customer_signup a{
+    color: #1d7a8c;
+    text-decoration: none;
+    font-weight: bold;
+}
+.customer_signup a:hover{
+    color: rgba(31, 182, 255, 1);
+}
+.btnCustomerSignup{
+    color: white;
+    background-color: rgba(0, 96, 114, 1);
+    border: 1px solid #e1e1e1;
+    border-radius: 20px;
+    padding: 8px;
+}
+.btnCustomerSignup:hover{
+    background-color: rgba(0, 96, 114, 0.9);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+    border: 1px solid transparent;    
+}
+.btndisable{
+    cursor: not-allowed !important;
+    color: white;
+    border: 1px solid #e1e1e1;
+    border-radius: 20px;
+    padding: 8px;
+    background-color: rgba(0, 96, 114, 0.6);
+}
 
 /* Responsive */
 @media (max-width:991px){
@@ -852,6 +890,12 @@ table.dataTable tbody td{
     #imgadminuser-black, #imgadminuserlogout-black{
         display: inline-block;
     }
+    .form{
+        width: 60%;
+    }
+    .customer_signup{
+        margin-top: 25%;
+    }
 }
 @media (max-width:800px){
     .um_logo_name{
@@ -885,9 +929,6 @@ table.dataTable tbody td{
     .title{
         font-size: 28px;
     }
-    .form{
-        width: 100%;
-    }
     .mapindicator-img{
         width: 25px;
         height: 37px;
@@ -895,8 +936,14 @@ table.dataTable tbody td{
     .mapindicator-img{
         z-index: 0;
     }
+    .form{
+        width: 80%;
+    }
 }
 @media (max-width:400px){
+    .contact-form-title{
+        font-size: 20px !important;
+    }
     .dv-um-top{
         margin-bottom: 10%;
     }
@@ -907,9 +954,15 @@ table.dataTable tbody td{
     #dvadminaddnewuser{
         float: none;
     }
+    .customer_signup{
+        margin-top: 35%;
+    }
 }
 
 @media (max-width: 768px){
+    .contact-form-title{
+        font-size: 25px;
+    }
     #tblUpcomingServices, #tblcusServiceHistory{
         border: 1px solid transparent;
     }
