@@ -381,9 +381,6 @@ a:hover {
     width: 991px;
     height: auto;
 }
-/*.changeNavColor{
-    background-color: rgba(82, 82, 82, 0.8);
-}*/
 .navMenu{
     height: 400px;
     overflow-y: scroll;
@@ -654,9 +651,6 @@ table.dataTable tbody td{
     color: #646464;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
-.changeNavColorAdmin{
-    background-color: rgba(31, 182, 255, 0.8);
-}
 .admin-hdr-menu{
     display: none;
 }
@@ -765,17 +759,14 @@ table.dataTable tbody td{
     z-index: 9;
     display: none;
 }
-#imgnotification{
+#imgnotification, #imgprofile{
     display: block;
 }
-#imgprofile{
-    display: block;
-}
-#imgnotification-black{
+#imgnotification-black, #imgprofile-black, #imgadminuser-black, #imgadminuserlogout-black{
     display: none;
 }
-#imgprofile-black{
-    display: none;
+#imgadminuser, #imgadminuserlogout{
+    display: inline-block;
 }
 
 /* Responsive */
@@ -789,7 +780,7 @@ table.dataTable tbody td{
     #myHeader{
         position: fixed;
         top: 0;
-        z-index: 1;
+        z-index: 99;
         width: 100%;    
     }
     #myImg{
@@ -844,18 +835,22 @@ table.dataTable tbody td{
         color: #006072;
         border: 1px solid #006072;
     }
-    #imgnotification{
-        display: none;
-    }
-    #imgprofile{
-        display: none;
-    }
     #imgnotification-black{
         display: block;
         margin-left: 2%;
     }
+    #imgnotification, #imgprofile, #imgadminuser, #imgadminuserlogout{
+        display: none;
+    }
     #imgprofile-black{
         display: block;
+    }
+    .pro-user-name{
+        font-size: 16px;
+        color: #646464;
+    }
+    #imgadminuser-black, #imgadminuserlogout-black{
+        display: inline-block;
     }
 }
 @media (max-width:800px){
@@ -914,100 +909,6 @@ table.dataTable tbody td{
     }
 }
 
-/* Datatable CSS */
-.bottom{
-    display: flex;
-    justify-content: space-between !important;
-}
-.paginate_button{
-    border-radius: 50% !important;
-    color: white;
-}
-.paginate_button:hover{
-    background: #1D7A8C !important;
-    color: white;
-}
-.paginate_button.current{
-    background: #1D7A8C !important;
-    color: white;
-}
-.dataTables_paginate{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: 0px !important;
-}
-.dataTables_wrapper .dataTables_paginate .paginate_button.first{
-    content: url(../images/upcoming-service/first-page.png);
-    padding: 15px 16px 15px 16px;
-    border-radius: 50%;
-    border: 1px solid #e1e1e1;
-}
-
-.dataTables_wrapper .dataTables_paginate .paginate_button.first:hover{
-    content: url(../images/upcoming-service/first-page-white.png);
-}
-.dataTables_wrapper .dataTables_paginate .paginate_button{
-    border-radius: 50%;
-    border: 1px solid #e1e1e1;
-    position: relative !important;
-    margin-left: 3px !important;
-}
-.dataTables_wrapper .dataTables_paginate .paginate_button{
-    border-radius: 50%;
-    border: 1px solid #e1e1e1;
-    position: relative !important;
-    margin-left: 3px !important;
-}
-.dataTables_wrapper .dataTables_paginate span .paginate_button{
-    top: 0px;
-}
-.dataTables_wrapper .dataTables_paginate .paginate_button.next{
-    content: url(../images/upcoming-service/keyboard-right-arrow-button-copy.png);
-    padding: 15px 16px 15px 16px;
-    border-radius: 50%;
-    border: 1px solid #e1e1e1;
-    transform: rotate(180deg);
-}
-.dataTables_wrapper .dataTables_paginate .paginate_button.next:hover{
-    content: url(../images/upcoming-service/keyboard-right-arrow-button-copy-white.png);
-}
-.dataTables_wrapper .dataTables_paginate .paginate_button.last{
-    content: url(../images/upcoming-service/first-page.png);
-    padding: 15px 16px 15px 16px;
-    border-radius: 50%;
-    border: 1px solid #e1e1e1;
-    transform: rotate(180deg);
-}
-.dataTables_wrapper .dataTables_paginate .paginate_button.last:hover{
-    content: url(../images/upcoming-service/first-page-white.png);
-}
-.dataTables_wrapper .dataTables_paginate .paginate_button.first{
-    content: url(../images/upcoming-service/first-page.png);
-    padding: 15px 16px 15px 16px;
-    border-radius: 50%;
-    border: 1px solid #e1e1e1;
-}
-.dataTables_wrapper .dataTables_paginate .paginate_button.first:hover{
-    content: url(../images/upcoming-service/first-page-white.png);
-}
-.dataTables_wrapper .dataTables_paginate .paginate_button.previous{
-    content: url(../images/upcoming-service/keyboard-right-arrow-button-copy.png);
-    padding: 15px 16px 15px 16px;
-    border-radius: 50%;
-    border: 1px solid #e1e1e1;
-}
-.dataTables_wrapper .dataTables_paginate .paginate_button.previous:hover{
-    content: url(../images/upcoming-service/keyboard-right-arrow-button-copy-white.png);
-}
-.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-    color: white !important;
-    border: 1px solid #979797;
-}
-.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-    color: white !important;
-    border: 1px solid #979797;
-}
 @media (max-width: 768px){
     #tblUpcomingServices, #tblcusServiceHistory{
         border: 1px solid transparent;
@@ -1034,8 +935,5 @@ table.dataTable tbody td{
     .media-object{
         display: flex;
         justify-content: center;
-    }
-    .bottom{
-        display: block;
     }
 }

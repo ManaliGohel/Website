@@ -23,24 +23,6 @@ function stickyNavbar(){
     setLogoByWinSize();
 	}
 }
-function countryddclick() {
-  var x = window.matchMedia("(max-width: 800px)");
-  var z = document.getElementById('navcountry');
-  document.querySelector('.nav-button').addEventListener("click", function(){
-  this.parentNode.parentNode.classList.toggle('closed');
-  if (x.matches)
-  {
-    z.classList.remove("ddcountry");
-    z.classList.add("ddcountry2");
-  }
-  else
-  {
-    z.classList.remove("ddcountry2");
-    z.classList.add("ddcountry");
-  }
-    responsiveMenuClick();
-  });
-}
 function topnavigation(){
   document.body.scrollTop= document.documentElement.scrollTop=0;
 }

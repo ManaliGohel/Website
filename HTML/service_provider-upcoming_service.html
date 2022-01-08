@@ -11,6 +11,7 @@
     <!-- Data table CSS -->
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="assets/css/mycss.css">
+	<link rel="stylesheet" href="assets/css/datatable.css">
 </head>
 <body onload="checkForWindowSize();" onresize="navMenuSize();">
     <header id="myHeader">
@@ -497,13 +498,6 @@
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script>
       	$(document).ready(function() {
-			/*$('#tblUpcomingServices').DataTable( {
-			"dom": 't<"bottom"flp i><"clear">',
-        	"order": [[ 3, "desc" ]],
-        	"bPaginate": true, //hide pagination
-        	"bFilter": false, //hide Search bar
-        	"bInfo": true, // hide showing entries
-    		});*/
 			$('#tblUpcomingServices').DataTable( {
        	 		"dom": '<"top"i>rt<"bottom"flp><"clear">',
         		"columnDefs": [

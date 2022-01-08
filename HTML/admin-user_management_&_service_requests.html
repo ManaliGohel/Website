@@ -27,18 +27,19 @@
         	<a href="#">
           		<span class="um_logo_name font-face">helperland</span>
         	</a>
-        	<button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" onclick="changeNavColorAdmin();"><span class="navbar-toggler-icon"></span></button>
+        	<button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"><span class="navbar-toggler-icon"></span></button>
         	<div class="collapse navbar-collapse" id="navbarCollapse" >       
           		<div class="navbar-nav ms-auto">
           			<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-						<li><a href="#"><img class="img-um-profile" src="assets/images/admin-user_management/admin-user.png"><span class="ps-2 pro-user-name">James Smith</span></a></li>
-						<li><a href="#"><img class="img-um-logout pt-1 ps-1" src="assets/images/admin-user_management/logout.png"></a></li>
+						<li class="m-2"><a href="#"><img class="img-um-profile" id="imgadminuser" src="assets/images/admin-user_management/admin-user.png"><img class="img-um-profile" id="imgadminuser-black" src="assets/images/admin-user_management/admin-user-black.png"><span class="ps-2 pro-user-name">James Smith</span></a></li>
+						<li class="m-2"><a href="#"><img class="img-um-logout pt-1 ps-1" id="imgadminuserlogout" src="assets/images/admin-user_management/logout.png"><img class="img-um-logout pt-1 ps-1" id="imgadminuserlogout-black" src="assets/images/admin-user_management/logout-black.png"></a></li>
 						<li class="pt-3 admin-hdr-menu"><hr></li>
 						<li class="py-3 ps-2 admin-hdr-menu"><a id="lnkadmin-ser-req1" href="#" onclick="showAdminSerReq('lnkadmin-ser-req1');">Service Requests</a></li>
 						<li class="pt-3 ps-2 admin-hdr-menu"><a id="lnkadmin-user-management1" href="#" onclick="showAdminUserManagement('lnkadmin-user-management1');">User Management</a></li>
 					</ul>
           		</div>
         	</div>
+			<div class="background_disable_effect"></div>
     	</nav>
 		</div>
 	</header>
@@ -50,8 +51,7 @@
 		<div class="admin-container">
 			<div id="dvadmin-ser-req" class="p-4">
 				<div class="dv-um-top">
-					<div class="title " id="dvadmintitle">Service Requests</div>
-					<div class="pt-2" id="dvadminaddnewuser"><a href="#" class="addNewUser"><img class="pe-2" src="assets/images/admin-user_management/add.png">Add New User</a></div>
+					<div class="title float-start">Service Requests</div>
 				</div>
 				<div class="dv-searchItems-container p-3 mb-4">
 					<div class="row">
@@ -485,8 +485,8 @@
 			</div>
 			<div id="dvadmin-user-management" class="p-4">
 				<div class="dv-um-top">
-					<div class="title float-start">User Management</div>
-					<div class="pt-2"><a href="#" class="addNewUser"><img class="pe-2" src="assets/images/admin-user_management/add.png">Add New User</a></div>
+					<div class="title" id="dvadmintitle">User Management</div>
+					<div class="pt-2" id="dvadminaddnewuser"><a href="#" class="addNewUser"><img class="pe-2" src="assets/images/admin-user_management/add.png">Add New User</a></div>
 				</div>
 				<div class="dv-searchItems-container p-3 mb-4">
 					<div class="row">
@@ -764,5 +764,21 @@
         	"bInfo": true, // hide showing entries
     		});
 		});
+    </script>
+	<!-- script for sidebar navigation -->
+    <script>
+      $(document).ready(function () {
+      $(window).scroll(function () {
+          $(".navbar .navbar-collapse").removeClass("show");
+          $('.background_disable_effect').removeClass("open");
+      });
+      });
+      $('.navbar-toggler').click(function () {
+          $('.background_disable_effect').addClass("open");
+      });
+      $('.background_disable_effect').click(function () {
+          $(".navbar .navbar-collapse").removeClass("show");
+          $('.background_disable_effect').removeClass("open");
+      });
     </script>
 </body>

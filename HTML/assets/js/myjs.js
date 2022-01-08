@@ -19,27 +19,15 @@ function showServiceProviderBlock(){
     document.getElementById("dvSlide2").classList.add("slide1");
 }
 window.onscroll = function() {myFunction()};
-var header = document.getElementById("myHeader");
-var sticky = header.offsetTop;
 function myFunction() {
+  var header = document.getElementById("myHeader");
+  var sticky = header.offsetTop;
   if (window.pageYOffset > sticky) {
     header.classList.add("sticky");
   } else {
     header.classList.remove("sticky");
   }
 }
-/*function changeNavColor(){
-  var nav=document.getElementById("myHeader");
-  var navMenu=document.getElementById("navbarCollapse");
-  if(nav.classList.contains("changeNavColor")){
-    nav.classList.remove("changeNavColor"); 
-    navMenu.classList.remove("navMenu");   
-  }
-  else{
-    nav.classList.add("changeNavColor");
-    navMenu.classList.add("navMenu");
-  }  
-}*/
 function navMenuSize(){
   var navMenu=document.getElementById("navbarCollapse");
   if(window.outerWidth>=991){
@@ -182,19 +170,6 @@ function ChangeColorBack(id)
 function ChangeColorBack2(id)
 {
   document.getElementById(id).style.backgroundColor="#1d7a8c";
-}
-
-function changeNavColorAdmin(){
-  var nav=document.getElementById("myHeader");
-  var navMenu=document.getElementById("navbarCollapse");
-  if(nav.classList.contains("changeNavColorAdmin")){
-    nav.classList.remove("changeNavColorAdmin"); 
-    navMenu.classList.remove("navMenu");   
-  }
-  else{
-    nav.classList.add("changeNavColorAdmin");
-    navMenu.classList.add("navMenu");
-  }  
 }
 
 document.addEventListener("click", (evt) => {
