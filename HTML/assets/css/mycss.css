@@ -852,6 +852,10 @@ table.dataTable tbody td{
     width: 100px;
     float: left;
 }
+.sel-timeforser{
+    width: 150px;
+    float: left;
+}
 .hr-setup-ser{
     border: 1px solid #C8C8C8;
     background-color: #C8C8C8;
