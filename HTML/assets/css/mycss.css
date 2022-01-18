@@ -234,7 +234,7 @@ a:hover {
     font-size: 14px;
     padding-left: 150px;
 }
-.extra-services-container, .cleaning-container, .whyhelperland-container{
+.extra-services-container, .cleaning-container, .whyhelperland-container, .dv-setupser-extrasers-container{
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -806,6 +806,203 @@ table.dataTable tbody td{
     padding: 8px;
     background-color: rgba(0, 96, 114, 0.6);
 }
+#dv-setup-service-steps{ 
+    width: 70%;
+    color: #646464;
+}
+#dv-payment-summary-container{ 
+    width: 30%;
+    display: block;
+}
+.setupcleaningsertab{
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    height: 60px;
+    font-size: 16px;
+    border-radius: 2px;
+    border: 1px solid #e1e1e1;
+    border-bottom: 1px solid #1D7A8C;
+}
+.nonactive-setupcleaningsertab{
+    background-color: #F3F3F3;
+    color: #646464;
+}
+.active-setupcleaningsertab{
+    background-color: #1D7A8C;
+    color: white;  
+    position: relative;
+}
+.active-setupcleaningsertab:after{
+    position: absolute;
+    content:"";
+    display:block;
+	border-left: 12px solid transparent;
+	border-right: 12px solid transparent;
+	border-top: 12px solid #1D7A8C;
+    left: 43%;
+    top: 58px;
+}
+.setup-cleaningser-steps-text{
+    display: block;
+}
+.sel-rooms-baths{
+    width: 100px;
+    float: left;
+}
+.hr-setup-ser{
+    border: 1px solid #C8C8C8;
+    background-color: #C8C8C8;
+    clear: both;
+}
+.calender-icon{
+    background: transparent url(../images/book-service/icon-calendar-blue.png) 9px center no-repeat!important;
+    position: relative;
+    z-index: 1;
+    padding-left: 37px;
+}
+.dateForService, .timeForService{
+    position: relative;
+    padding-left: 35px;
+    padding-right: 0px !important;
+    width: 150px;
+    float: left;
+}
+.dateForService::-webkit-inner-spin-button,
+.dateForService::-webkit-calendar-picker-indicator {
+    font-size: 30px;
+    background: transparent url(../images/book-service/icon-calendar-blue.png) 9px center no-repeat!important;
+    left: -25px;
+    position: absolute;
+}
+.cock-icon{
+    background: transparent url(../images/upcoming-service/clock.png) 9px center no-repeat!important;
+    position: relative;
+    z-index: 1;
+    padding-left: 37px;
+}
+.timeForService::-webkit-inner-spin-button,
+.timeForService::-webkit-calendar-picker-indicator {
+    font-size: 30px;
+    background: transparent url(../images/upcoming-service/clock.png) 9px center no-repeat!important;
+    left: -10px;
+    position: absolute;
+}
+.dv-setupsers-extra-services{
+    text-align: center;
+    width: 150px;
+    height: auto;
+    display: block;
+    cursor: pointer;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
+}
+.setupser-extrasers{
+    height: 108px;
+    width: 108px;
+    border: 1px solid #F1F1F1;
+    border-radius: 50%;
+    margin-left: 21px;
+}
+.serselected-border{
+    border: 3px solid #1D7A8C;
+}
+.btnContinueSetupSerProc{
+    color: white;
+    background-color: #1d7a8c;
+    font-size: 16px;
+    border: 1px solid #6da9b5;
+    border-radius: 20px;
+    margin-bottom: 8px;
+}
+.btnContinueSetupSerProc:hover{
+    background-color: #146371;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+.dv-payment-summary{
+    width: 100%;
+    height: auto;
+    box-shadow: 0 0px 4px 0 rgba(100, 100, 100, 0.2), 0 4px 20px 0 rgba(100, 100, 100, 0.19);
+    color: #646464;
+    font-size: 15px;
+}
+.dv-payment-summary .head{
+    width: 100%;
+    height: 60px;
+    background-color: #1D7A8C;
+    color: white;
+    font-size: 16px;
+}
+.dv-payment-summary .foot{
+    width: 100%;
+    height: 40px;
+    background-color: #F1F1F1;
+    color: #646464;
+    font-size: 14px;
+}
+.dv-percleaning{
+    color: #1d7a8c;
+}
+.formorehelp{
+    text-decoration: none;
+    color: #1d7a8c;
+}
+.formorehelp:hover{
+    color: #146371;
+}
+.accordionFAQ .accordion-button::after{
+    content: none;
+}
+.accordionFAQ .accordion-button::before{
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    content: "";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f054";
+    background-image: none;
+    background-repeat: no-repeat;
+    background-size: 1.25rem;
+    margin-left: 0px;
+}
+.accordionFAQ .accordion-button:not(.collapsed)::before {
+    transform: rotate(90deg);   
+}
+.accordionFAQ .accordion-button{
+    font-size: 15px;
+    color: #646464;
+    font-weight: normal !important;
+}
+.accordionFAQ .accordion-button:focus{
+    border: none;
+    box-shadow: none;
+}
+.accordionFAQ .accordion-button:not(.collapsed){
+    border: none;
+    box-shadow: none;
+    color: #646464;
+    background-color: white;
+}
+.accordionFAQ .accordion-item{
+    border-bottom: 2px solid #e1e1e1 !important;
+    border: none;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
+}
+.accordionFAQ .accordion-item h2 .collapsed{
+    transform: rotate(0 de);
+}
+.accordionFAQ .accordion-item h2 button{
+    padding-left: 0 ;
+}
+.accordionFAQ .accordion-item .accordion-body{
+    font-size: 15px;
+    color: #646464;
+    padding-top: 0px;
+    padding-left: 30px;
+    text-align: justify;
+}
 
 /* Responsive */
 @media (max-width:991px){
@@ -896,6 +1093,15 @@ table.dataTable tbody td{
     .customer_signup{
         margin-top: 25%;
     }
+    #dv-payment-summary-container{
+        display: none;
+    }
+    #dv-setup-service-steps{
+        width: 100%;
+    }
+    .setup-cleaningser-steps-text{
+        display: none;
+    }
 }
 @media (max-width:800px){
     .um_logo_name{
@@ -940,26 +1146,11 @@ table.dataTable tbody td{
         width: 80%;
     }
 }
-@media (max-width:400px){
-    .contact-form-title{
-        font-size: 20px !important;
-    }
-    .dv-um-top{
-        margin-bottom: 10%;
-    }
-    #dvadmintitle{
-        float: none;
-        margin-bottom: 2%;
-    }
-    #dvadminaddnewuser{
-        float: none;
-    }
-    .customer_signup{
-        margin-top: 35%;
-    }
-}
 
 @media (max-width: 768px){
+    .title{
+        font-size: 26px;
+    }
     .contact-form-title{
         font-size: 25px;
     }
@@ -988,5 +1179,30 @@ table.dataTable tbody td{
     .media-object{
         display: flex;
         justify-content: center;
+    }
+}
+
+@media (max-width:400px){
+    .title{
+        font-size: 20px;
+    }
+    .contact-form-title{
+        font-size: 20px !important;
+    }
+    .dv-um-top{
+        margin-bottom: 10%;
+    }
+    #dvadmintitle{
+        float: none;
+        margin-bottom: 2%;
+    }
+    #dvadminaddnewuser{
+        float: none;
+    }
+    .customer_signup{
+        margin-top: 35%;
+    }
+    .active-setupcleaningsertab:after{
+        left: 35%;
     }
 }
