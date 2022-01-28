@@ -1,0 +1,16 @@
+﻿<!-- script for sidebar navigation -->
+<script>
+        $(document).ready(function () {
+            $(window).scroll(function () {
+                $(".navbar .navbar-collapse").removeClass("show");
+                $('.background_disable_effect').removeClass("open");
+            });
+        });
+        $('.navbar-toggler').click(function () {
+            $('.background_disable_effect').addClass("open");
+        });
+        $('.background_disable_effect').click(function () {
+            $(".navbar .navbar-collapse").removeClass("show");
+            $('.background_disable_effect').removeClass("open");
+        });
+</script>

@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Sign Up";
+    Layout = "_CustomerLayout";
+}
+
+<div class="container-fluid customer_signup">
+    <div class="contact-form-title">Create an Account</div>
+    <table class="center mb-4">
+        <tr class="align-items-center">
+            <td width="65px"><hr class="starline"></td>
+            <td width="40px" class="text-center"><img src="~/images/faq/star.png"></td>
+            <td width="65px"><hr class="starline"></td>
+        </tr>
+    </table>
+    <div class="contact-container">
+        <form class="form">
+            <div class="row">
+                <div class="col-md-6 my-1">
+                    <input type="text" id="txtFirstName" maxlength="100" class="form-control" placeholder="First name" onkeyup="checkForCustomerSignup();" autocomplete="off">
+                </div>
+                <div class="col-md-6 my-1">
+                    <input type="text" id="txtLastName" maxlength="100" class="form-control" placeholder="Last name" onkeyup="checkForCustomerSignup();" autocomplete="off">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 my-1">
+                    <input type="email" id="txtEmail" maxlength="100" class="form-control" placeholder="Email" onkeyup="checkForCustomerSignup();" autocomplete="off">
+                </div>
+                <div class="col-md-6 my-1">
+                    <div class="input-group">
+                        <div class="input-group-text">+49</div>
+                        <input type="text" id="txtMobile" maxlength="20" class="form-control" placeholder="Mobile number" onkeyup="checkForCustomerSignup();" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 my-1">
+                    <input type="password" id="pwd" maxlength="100" class="form-control" placeholder="Password" onkeyup="checkForCustomerSignup();" autocomplete="off">
+                </div>
+                <div class="col-md-6 my-1">
+                    <input type="password" id="confirmpwd" maxlength="100" class="form-control" placeholder="Confirm Password" onkeyup="checkForCustomerSignup();" autocomplete="off">
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-md-12 my-1 mb-3">
+                    <input id="cbprivacypolicy" onclick="checkForCustomerSignup();" type="checkbox" class="form-check-input">&nbsp;I have read the <a href="#" class="p-0">privacy policy</a>.
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <input id="sbmtcusreg" type="submit" value="Register" class="px-4" onclick="redirectToLogin();">
+                </div>
+            </div>
+            <div class="row my-3">
+                <div class="col-md-12 d-flex justify-content-center align-items-center">
+                    Already registered?&nbsp;<a asp-action="" asp-controller="" class="p-0">Login now</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

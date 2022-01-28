@@ -1,0 +1,623 @@
+html, body{
+    height: 100%;
+    margin: 0;
+    scroll-behavior: smooth;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.home{
+    background-image: url("../images/home/banner-bg.jpg");
+    height: 100%; 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+.home-content{
+    width: 100%;
+    height: 100%;            
+    position: absolute;
+    background-color: rgba(0,0,0,0.3);
+}
+
+/* Header */
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+nav li {
+    float: left;
+}
+nav li a {
+    display: block;
+    color: white;
+    padding: 16px;
+    text-decoration: none;
+}
+nav .drop-down {
+    list-style: none; 
+    overflow: hidden; /* When ul height is reduced, ensure overflowing li are not shown */
+    height: auto; /* 172px = (38 (li) + 5 (li border)) * 4 (number of li) */
+    width: 93px;
+    -webkit-transition: height 0.3s ease;
+    transition: height 0.3s ease;
+    position: absolute; 
+    top: 1;
+    right: 0;
+    z-index: 2;
+}
+nav .drop-down.closed {
+  height: 43px;
+}
+nav .drop-down li a {
+  display: block;
+  color: #ecf0f1;
+  text-decoration: none;
+  padding: 10px; /* Larger touch target area */
+}
+.navbar span.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  color: white;
+}
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+    outline: none;
+    box-shadow: none;
+}
+.navOption a {
+    color: #ffffff;
+    font-size: 15px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
+    font-weight: lighter;
+    margin-left: 5px; 
+    padding: 6px 15px 6px 15px;
+    text-decoration: none;
+}
+.navOptionOutline {
+    border: 1px solid transparent;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+.navOptionOutline:hover, .ot1{
+    border-color: white;
+}
+.ot1:hover{
+    background-color: white;
+    color: #006072;
+}
+.hometext {
+    margin-top: 5%;
+    padding-left: 50px;
+}
+.hometext p {
+    color: #ffffff;
+    font-size: 45px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
+    font-weight: medium;
+}
+.hometext ul {
+    padding-left: 0px;
+    list-style-type: none;
+    color: #ffffff;
+    font-size: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
+}
+.btnBookCleaner {  
+    background: rgba(0, 96, 114, 0.5);
+    font-size: 18px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
+    border: 1px solid #ffffff;
+    border-radius: 25px;
+    padding: 8px 25px 8px 25px;
+    color: white;
+    margin-bottom: 3%;
+}
+.btnBookCleaner:hover, .bottomnav:hover{
+    background: rgba(255, 255, 255, 1);
+    color: rgba(0, 96, 114, 1);
+}
+.subtask-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+}
+.dv-subtask{
+    text-align: center;
+    width: 178px;
+    height: auto;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
+}
+.dvimg-subtask{
+    height: 64px;
+    width: 64px;
+    margin-left: 57px;
+    margin-bottom: 10px;
+}
+.subtask-desc{
+    color: white;
+    font-size: 18px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
+}
+.bottomnav {
+    background: radial-gradient( 5px -9px, circle, white 8%, red 26px );
+    border: 1px solid white;
+    border-radius: 50%; 
+    color: white;
+    font: bold 18px Roboto;
+    height: 35px; 
+    min-width: 35px;
+    padding: 8px 3px 0 3px;
+    text-align: center;
+}
+.title{
+    font-size: 40px;
+    color: #4F4F4F;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
+    text-align: center;
+    font-weight: bold;
+}
+.whyhelperland-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+}
+.dv-whyhelperland{
+    width: 350px;
+    height: auto;
+    color: #4F4F4F;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
+    margin: 19px;
+    text-align: center;
+    padding-top: 15px;
+}
+.whyhelperland-img{
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.whyhelperland-desc-title{
+    font-size: 30px;
+    font-weight: bold;
+}
+.whyhelperland-desc{
+    font-size: 17px;
+}
+.ourblog-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+}
+.right{
+    right: 0;
+    position: absolute;
+}
+.left{
+    left: 0;
+    position: absolute;
+}
+.ourblog-inner-container{
+    width: 1162px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    height: auto;
+}
+.dv-consectetur{
+    width: 641px;
+    height: auto;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
+    color: #4F4F4F;
+}
+.dv-consectetur-img
+{
+    width: 521px;
+    height: auto;
+}
+.dv-ourblog{
+    width: 357px;
+    height: auto;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.blogCaption {
+	font-size: 20px;
+    font-weight: bold;
+    color: #3d4046;
+}
+.blogDate {
+	font-size: 13px;
+    color: #565656;
+}
+.blogDetail {
+	font-size: 16px;
+    color: #565656;
+}
+.blogReadPost {
+	font-size: 18px;
+    color: #4f4f4f;
+}
+.blogArrow {
+    font-weight: bold;
+    font-size: 25px;
+}
+.customer-outer-container{
+    background-color: #F4F5F8;
+}
+.customer-inner-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    height: auto;
+}
+.dv-customer-say{
+    width: 357px;
+    height: auto;
+    background-color: white;
+    border-left: 3px solid #1d7a8c;
+    border-radius: 3px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
+}
+.cusTitle {
+    margin-top: 10px;
+    margin-left: 90px; 
+    overflow-wrap: normal;
+    font-size: 20px;
+    font-weight: bold;
+    color: #4F4F4F;
+}
+.cusSubTitle {
+    margin-left: 90px; 
+    overflow-wrap: normal;
+    font-size: 14px;
+    color: #8E8E8E;
+}
+.cusDetail {
+    font-size: 16px;
+    color: #565656;
+}
+.cusReadMore {
+    color: #565656;
+    font-size: 18px;
+} 
+.topnav {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #525252;
+    color: #f4f5f8;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+    box-sizing: border-box;
+}
+.newsletter {
+    font-size: 18px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
+    color: #353548;
+    font-weight: bold;
+}
+.textbox {
+    border: 1px solid lightgrey;
+    background-color: #F4F5F8;
+}
+.textbox:focus {
+    outline: none;
+}
+.submit {
+    background-color: #ff7b6d;
+    color: white;
+    font-size: 12px;
+}
+.footer1 {
+    background-color: #111111;
+    padding: 20px;
+}
+.footer2 {
+    background-color: #292929;
+    padding: 10px;
+    color: #f1f1f1;
+    font-size: 14px;
+}
+.footer2 .privacypolicy {
+    color: #6eabef;
+    padding-left: 0;
+    font-size: 12px;
+}
+.footer1 a, .footer2 a{
+    text-decoration: none;
+    color: #f1f1f1;
+    font-size: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
+    padding: 16px;
+}
+.footer1 a:hover, .footer2 a:hover {
+  color: #f1f1f1;
+}
+.btnok {
+    background-color: #eed507;
+    font-size: 16px;
+    color: #4f4f4f;
+    border-radius: 20px;
+    border: 0.5px solid #f4f5f8;
+    padding: 5px 30px 5px 30px;
+}
+.sticky {
+    position: fixed;
+    top: 0;
+    background-color: #525252; 
+    width: 100%;
+    transition: 1s;
+    z-index: 1;
+}
+.liddCountry{
+    clear: both;
+    width: 94%;
+}
+#ddCountryImgContainer{
+    display: flex;
+    align-items: center;
+}
+.navbar .background_disable_effect {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    background-color: #000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .3s ease;
+    z-index: 9;
+    display: none;
+}
+
+/* Login Modal CSS */
+.modal{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.mdlheader{
+    color: #646464;
+    font-size: 25px;
+    font-weight: bold;
+}
+.img-modal-icon{
+    padding-right: calc(1.5em + .75rem);
+    background-repeat: no-repeat;
+    background-position: center right calc(.375em + .1875rem);
+    background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+}
+.img-email {
+    background-image: url('../images/home/img-email.png');
+}
+.img-password {
+    background-image: url('../images/home/img-password.png');
+}
+.modal input[type=email], .modal input[type=password]{
+    height: 45px;
+}
+.btnLogin{
+    color: white;
+    background-color: rgba(0, 96, 114, 1);
+    width: 100%;
+    border: 1px solid #e1e1e1;
+    border-radius: 20px;
+    padding: 8px;
+    font-size: 18px;
+}
+.btnLogin:hover{
+    background-color: rgba(0, 96, 114, 0.9);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+    border: 1px solid transparent;    
+}
+.modal .btndisable{
+    color: white;
+    width: 100%;
+    border: 1px solid #e1e1e1;
+    border-radius: 20px;
+    padding: 8px;
+    font-size: 18px;
+    background-color: rgba(0, 96, 114, 0.6);
+    cursor: no-drop;
+}
+.modal a{
+    color: rgba(0, 96, 114, 1);
+    text-decoration: none;
+    font-weight: bold;
+}
+.modal a:hover{
+    color: rgba(0, 96, 114, 0.9);
+}
+/*a:not([href]):not([class]), a:not([href]):not([class]):hover {
+    color: white;*/ 
+    /* text-decoration: none; */
+/*}*/
+
+@media (max-width:1450px) {
+    .blog-left-bg, .blog-right-bg{
+        display: none;
+    }
+}
+@media (max-width:1095px) {
+    .arrow{
+        display: none;
+    }
+    .dv-consectetur{
+        text-align: center;
+    }
+    .navOption a {
+        padding: 5px 12px 5px 12px;
+    }
+}
+@media (max-width:991px) {
+    .navOption a {
+        margin-left: 0px;
+        margin-top: 5px;
+        margin-right: 20px;
+        color: #646464;
+    }
+    #navlogo{
+        width: 73px;
+        height: 54px;
+    }
+    #navbar{
+        position: fixed;
+        top: 0;
+        z-index: 9;
+        width: 100%;
+    }
+    .hometext {
+        margin-top: 20%;
+    }
+    .hometext{
+        text-align: center;
+        padding-left: 0px;
+    }
+    .hometext p{
+        font-size: 30px;
+    }
+    .btnBookCleaner{
+        font-size: 16px;
+        margin-bottom: 0%;
+    }
+    .dv-subtask{
+        width: 150px;
+    }
+    .dvimg-subtask{
+        height: 50px;
+        width: 50px;
+        margin-left: 50px;
+        margin-bottom: 5px;
+    }
+    .subtask-desc{
+        font-size: 14px;
+    }
+    .subtask-container{
+        margin-top: 8%;
+    }
+    .bottomnav{
+        margin-top: 5%;
+    }
+    .title{
+        font-size: 30px;
+    }
+    .whyhelperland-img{
+        width: 280px;
+        height: 280px;
+    }
+    .whyhelperland-desc-title{
+        font-size: 25px;
+    }
+    .whyhelperland-desc{
+        font-size: 16px;
+    }
+    .navbar-collapse{
+        position: fixed;
+        right: -250px;
+        height: 100%;
+        width: 250px;
+        top: 0;
+        background: #fff;
+        box-shadow: none;
+        z-index: 10;
+        transition: all .3s ease;
+        overflow: auto;
+    }
+    .show{
+        right: 0px;
+    }
+    .navbar .background_disable_effect.open {
+        visibility: visible;
+        opacity: .5;
+        display: block;
+    }
+    .navOption a{
+        margin-left: 4%;
+    }
+    .navOptionOutline:hover, .ot1:hover{
+        color: #006072;
+        border: 1px solid #006072;        
+    }
+}
+@media (max-width:766px) {
+    .hometext p{
+        font-size: 25px;
+    }
+    .hometext ul{
+        font-size: 14px;
+    }
+    .btnBookCleaner{
+        font-size: 14px;
+    }
+    .dv-consectetur{
+        width: 400px;
+    }
+    .dv-consectetur-img{
+        width: 400px;
+    }
+    .img-consectetur{
+        width: 350px;
+    }
+    .hometext {
+        margin-top: 22%;
+    }
+}
+@media (max-width:572px) {
+    .hometext {
+        margin-top: 30%;
+    }
+}
+@media (max-width:445px) {
+    .hometext {
+        margin-top: 40%;
+    }
+}
+@media (max-width:365px){
+    .hometext {
+        margin-top: 45%;
+    }
+    .dv-subtask{
+        width: 100px;
+    }
+    .dvimg-subtask{
+        height: 40px;
+        width: 40px;
+        margin-left: 30px;
+        margin-bottom: 5px;
+    }
+    .subtask-desc{
+        font-size: 12px;
+    }
+    .dv-consectetur{
+        width: 300px;
+    }
+    .dv-consectetur-img{
+        width: 300px;
+    }
+    .img-consectetur{
+        width: 280px;
+    }
+    .whyhelperland-img{
+        width: 250px;
+        height: 250px;
+    }
+}

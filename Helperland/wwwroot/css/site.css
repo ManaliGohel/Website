@@ -1,0 +1,129 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+/*a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}*/
+
+/* Provide sufficient contrast against white background */
+/*a {
+  color: #0366d6;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}*/
+
+/* Sticky footer styles
+-------------------------------------------------- */
+/*html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}*/
+
+/* Sticky footer styles
+-------------------------------------------------- */
+/*html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {*/
+  /* Margin bottom by footer height */
+  /*margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px;*/ /* Vertically center the text there */
+/*}*/
+
+/* Login Modal CSS */
+.modal {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.mdlheader {
+    color: #646464;
+    font-size: 25px;
+    font-weight: bold;
+}
+.img-modal-icon {
+    padding-right: calc(1.5em + .75rem);
+    background-repeat: no-repeat;
+    background-position: center right calc(.375em + .1875rem);
+    background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+}
+.img-email {
+    background-image: url('../images/home/img-email.png');
+}
+.img-password {
+    background-image: url('../images/home/img-password.png');
+}
+.modal input[type=email], .modal input[type=password] {
+    height: 45px;
+}
+.btnLogin {
+    color: white;
+    background-color: rgba(0, 96, 114, 1);
+    width: 100%;
+    border: 1px solid #e1e1e1;
+    border-radius: 20px;
+    padding: 8px;
+    font-size: 18px;
+}
+.btnLogin:hover {
+    background-color: rgba(0, 96, 114, 0.9);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+    border: 1px solid transparent;
+}
+.modal .btndisable {
+    color: white;
+    width: 100%;
+    border: 1px solid #e1e1e1;
+    border-radius: 20px;
+    padding: 8px;
+    font-size: 18px;
+    background-color: rgba(0, 96, 114, 0.6);
+    cursor: no-drop;
+}
+.modal a {
+    color: rgba(0, 96, 114, 1);
+    text-decoration: none;
+    font-weight: bold;
+    padding: 5px;
+}
+.modal a:hover {
+    color: rgba(0, 96, 114, 0.9);
+}

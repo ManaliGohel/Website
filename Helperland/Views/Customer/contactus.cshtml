@@ -1,0 +1,91 @@
+﻿@{
+    ViewData["Title"] = "Contact Us";
+    Layout = "_CustomerLayout";
+}
+
+<img src="~/images/contact/contact-background.png" class="img-fluid" id="myImg">
+<div class="container">
+    <div class="title mt-4">Contact us</div>
+    <table class="center">
+        <tr class="align-items-center">
+            <td width="65px"><hr class="starline"></td>
+            <td width="40px" class="text-center"><img src="~/images/faq/star.png"></td>
+            <td width="65px"><hr class="starline"></td>
+        </tr>
+    </table>
+    <div class="contact-container mt-5">
+        <div class="dv-contact mx-5">
+            <div class="dvimg-contact d-flex justify-content-center align-items-center">
+                <img src="~/images/contact/location.png">
+            </div>
+            <p class="contact-desc"></p>1111 Lorem ipsum text 100,<br>Lorem ipsum AB</p>
+        </div>
+        <div class="dv-contact mx-5">
+            <div class="dvimg-contact d-flex justify-content-center align-items-center">
+                <img src="~/images/contact/phone-call.png">
+            </div>
+            <p class="contact-desc">+49 (40) 123 56 7890<br>+49 (40) 987 56 0000</p>
+        </div>
+        <div class="dv-contact mx-5">
+            <div class="dvimg-contact d-flex justify-content-center align-items-center">
+                <img src="~/images/contact/msg-box.png">
+            </div>
+            <p class="contact-desc">info@@helperland.com</p>
+        </div>
+    </div>
+    <hr>
+</div>
+<div class="container-fluid my-5">
+    <div class="contact-form-title my-4">Get in touch with us</div>
+    <div class="contact-container">
+        <form class="form">
+            <div class="row">
+                <div class="col-md-6 my-1">
+                    <input type="text" class="form-control" placeholder="First name">
+                </div>
+                <div class="col-md-6 my-1">
+                    <input type="text" class="form-control" placeholder="Last name">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 my-1">
+                    <div class="input-group">
+                        <div class="input-group-text">+46</div>
+                        <input type="text" class="form-control" placeholder="Mobile number">
+                    </div>
+                </div>
+                <div class="col-md-6 my-1">
+                    <input type="email" class="form-control" placeholder="Email">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 my-1">
+                    <select class="form-select">
+                        <option selected>Subject</option>
+                        <option>...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 my-1">
+                    <textarea class="form-control" id="txtareaMsg" rows="5" placeholder="Message"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 my-1 mb-3">
+                    <label class="form-label" for="contactusAttachment">Attachment</label>
+                    <input type="file" id="contactusAttachment" value="" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <input type="submit" value="Submit" class="sbmtContactForm text-center">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="map-img-container d-flex justify-content-center align-items-center">
+    <img src="~/images/contact/map.png" class="map-img img-fluid">
+    <img src="~/images/contact/map-indicator.png" class="map-img mapindicator-img img-fluid">
+</div>

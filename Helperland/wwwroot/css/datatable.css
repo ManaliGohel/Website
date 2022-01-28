@@ -1,0 +1,99 @@
+/* Datatable CSS */
+.bottom{
+    display: flex;
+    justify-content: space-between !important;
+}
+.paginate_button{
+    border-radius: 50% !important;
+    color: white;
+}
+.paginate_button:hover{
+    background: #1D7A8C !important;
+    color: white;
+}
+.paginate_button.current{
+    background: #1D7A8C !important;
+    color: white;
+}
+.dataTables_paginate{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 0px !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.first{
+    content: url(../images/upcoming-service/first-page.png);
+    padding: 15px 16px 15px 16px;
+    border-radius: 50%;
+    border: 1px solid #e1e1e1;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.first:hover{
+    content: url(../images/upcoming-service/first-page-white.png);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button{
+    border-radius: 50%;
+    border: 1px solid #e1e1e1;
+    position: relative !important;
+    margin-left: 3px !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button{
+    border-radius: 50%;
+    border: 1px solid #e1e1e1;
+    position: relative !important;
+    margin-left: 3px !important;
+}
+.dataTables_wrapper .dataTables_paginate span .paginate_button{
+    top: 0px;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.next{
+    content: url(../images/upcoming-service/keyboard-right-arrow-button-copy.png);
+    padding: 15px 16px 15px 16px;
+    border-radius: 50%;
+    border: 1px solid #e1e1e1;
+    transform: rotate(180deg);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.next:hover{
+    content: url(../images/upcoming-service/keyboard-right-arrow-button-copy-white.png);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.last{
+    content: url(../images/upcoming-service/first-page.png);
+    padding: 15px 16px 15px 16px;
+    border-radius: 50%;
+    border: 1px solid #e1e1e1;
+    transform: rotate(180deg);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.last:hover{
+    content: url(../images/upcoming-service/first-page-white.png);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.first{
+    content: url(../images/upcoming-service/first-page.png);
+    padding: 15px 16px 15px 16px;
+    border-radius: 50%;
+    border: 1px solid #e1e1e1;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.first:hover{
+    content: url(../images/upcoming-service/first-page-white.png);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.previous{
+    content: url(../images/upcoming-service/keyboard-right-arrow-button-copy.png);
+    padding: 15px 16px 15px 16px;
+    border-radius: 50%;
+    border: 1px solid #e1e1e1;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.previous:hover{
+    content: url(../images/upcoming-service/keyboard-right-arrow-button-copy-white.png);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    color: white !important;
+    border: 1px solid #979797;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    color: white !important;
+    border: 1px solid #979797;
+}
+
+@media (max-width: 768px){
+    .bottom{
+        display: block;
+    }
+}

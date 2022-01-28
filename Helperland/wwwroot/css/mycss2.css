@@ -1,0 +1,187 @@
+.becomepro-back{
+    background-image: url("../images/becomepro/becomepro.png");
+    height: auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;    
+}
+.container-regpro {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.dv-regpro{
+    width: 430px;
+    background-color: white;
+    border-radius: 5px;
+    color: #4f4f4f;
+    font-size: 16px;
+}
+.dv-regpro .title{
+    font-size: 24px;
+    font-weight: bold;
+}
+.dv-regpro .inputtext{
+    height: 46px;
+    border: 1px solid #c8c8c8;
+    border-radius: 3px;
+}
+.dv-regpro .inputtext::placeholder{
+    color: #c8c8c8;
+}
+.tc-pv{
+    text-decoration: none;
+    color: #1fb6ff;
+}
+.tc-pv:hover{
+    color: #1d7a8c;
+}
+.btnRegPro{
+    background-color: #1D7A8C;
+    color: white;
+    font-size: 16px;
+    border: 1px solid #c8c8c8;
+    border-radius: 25px;
+    font-weight: bold;
+}
+.btnRegPro:hover{
+    background-color: rgba(29, 122, 140, 0.9);
+}
+.ff{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.bottomnav {
+    background: radial-gradient( 5px -9px, circle, white 8%, red 26px );
+    border: 1px solid white;
+    border-radius: 50%; 
+    color: white;
+    font: bold 18px Roboto;
+    height: 35px; 
+    min-width: 35px;
+    padding: 8px 3px 0 3px;
+    text-align: center;
+}
+.bottomnav:hover{
+    background: rgba(255, 255, 255, 1);
+    color: rgba(0, 96, 114, 1);
+}
+.fttext{
+	color: #737381;
+	font-size: 14px;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
+}
+.hrclr{
+	color: #f4f5f8;
+}
+.howitworks-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+}
+.right{
+    right: 0;
+    position: absolute;
+}
+.left{
+    left: 0;
+    position: absolute;
+}
+.howitworks-img{
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.howitworks-inner-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.dv-howitworks-left{
+    width: 365px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+.dv-howitworks-right{
+    width: 365px;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+.howitworks-subtitle {
+	font-size: 30px;
+    font-weight: bold;
+    color: #4f4f4f;
+}
+.howitworks-detail {
+	font-size: 16px;
+    color: #4f4f4f;
+}
+.howitworks-readPost {
+	font-size: 18px;
+    color: #4f4f4f;
+}
+.arr {
+    font-weight: bold;
+    font-size: 25px;
+}
+.regpro_slide1 {
+    display: flex;
+    align-items: center;
+}
+.feellikehw p {
+    color: #ffffff;
+    font-size: 35px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: normal;
+}
+.feellikehw ul {
+    padding-left: 0px;
+    list-style-type: none;
+    color: #ffffff;
+    font-size: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+@media (max-width:991px) {
+    .container-regpro {
+        padding-top: 150px;
+    }
+    .feellikehw p {
+        font-size: 30px;
+    }
+}
+@media (max-width:776px) {
+    .regpro_slide1 {
+        justify-content: center;
+    }
+    .regpro_slide2 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .feellikehw p {
+        font-size: 25px;
+    }
+    .feellikehw ul {
+        font-size: 14px;
+    }
+}
+@media (max-width:754px) {
+    .dv-howitworks-left {
+        justify-content: center;
+    }
+    .dv-howitworks-right {
+        justify-content: center;
+    }
+ }
