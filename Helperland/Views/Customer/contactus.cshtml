@@ -1,4 +1,6 @@
-﻿@{
+﻿@model ContactUsViewModel
+
+@{
     ViewData["Title"] = "Contact Us";
     Layout = "_CustomerLayout";
 }
@@ -35,57 +37,64 @@
     </div>
     <hr>
 </div>
-<div class="container-fluid my-5">
+<div class="container-fluid mt-5 mb-0">
     <div class="contact-form-title my-4">Get in touch with us</div>
     <div class="contact-container">
-        <form class="form">
+        <form class="form" asp-controller="customer" asp-action="contactus" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-6 my-1">
-                    <input type="text" class="form-control" placeholder="First name">
+                    <input id="txtFirstName" type="text" asp-for="firstname" class="form-control" placeholder="First name" autocomplete="off">
+                    <span asp-validation-for="firstname" class="text-danger"></span>
                 </div>
                 <div class="col-md-6 my-1">
-                    <input type="text" class="form-control" placeholder="Last name">
+                    <input type="text" asp-for="lastname" class="form-control" placeholder="Last name" autocomplete="off">
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 my-1">
                     <div class="input-group">
                         <div class="input-group-text">+46</div>
-                        <input type="text" class="form-control" placeholder="Mobile number">
+                        <input asp-for="mobile" id="txtMobile" class="form-control" placeholder="Mobile number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="10" autocomplete="off" />
                     </div>
+                    <span asp-validation-for="mobile" class="text-danger"></span>
                 </div>
                 <div class="col-md-6 my-1">
-                    <input type="email" class="form-control" placeholder="Email">
+                    <input type="email" id="txtEmail" asp-for="email" class="form-control" placeholder="Email" autocomplete="off" maxlength="200">
+                    <span asp-validation-for="email" class="text-danger"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12 my-1">
-                    <select class="form-select">
-                        <option selected>Subject</option>
-                        <option>...</option>
+                    <select class="form-select" asp-for="subject">
+                        <option value="General" selected>General</option>
+                        <option value="Inquiry">Inquiry</option>
+                        <option value="Renewal">Renewal</option>
+                        <option value="Revocation">Revocation</option>
                     </select>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12 my-1">
-                    <textarea class="form-control" id="txtareaMsg" rows="5" placeholder="Message"></textarea>
+                    <textarea class="form-control" asp-for="message" id="txtareaMsg" rows="5" placeholder="Message"></textarea>
+                    <span asp-validation-for="message" class="text-danger"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12 my-1 mb-3">
                     <label class="form-label" for="contactusAttachment">Attachment</label>
-                    <input type="file" id="contactusAttachment" value="" class="form-control" />
+                    <input type="file" asp-for="attachment" id="contactusAttachment" value="" class="form-control" />
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <input type="submit" value="Submit" class="sbmtContactForm text-center">
+                    <input type="submit" id="sbmtContactUs" value="Submit" class="sbmtContactForm text-center">
                 </div>
             </div>
         </form>
     </div>
 </div>
-<div class="map-img-container d-flex justify-content-center align-items-center">
-    <img src="~/images/contact/map.png" class="map-img img-fluid">
-    <img src="~/images/contact/map-indicator.png" class="map-img mapindicator-img img-fluid">
+<div class="map-img-container d-flex justify-content-center align-items-center  my-4">
+    @*<img src="~/images/contact/map.png" class="map-img img-fluid">
+        <img src="~/images/contact/map-indicator.png" class="map-img mapindicator-img img-fluid">*@
+    <iframe src="https://maps.google.com/maps?q=ahmedabad&t=&z=13&ie=UTF8&iwloc=&output=embed" width="1560" height="400" style="border:0;" class="my-0" allowfullscreen="" loading="lazy"></iframe>
 </div>

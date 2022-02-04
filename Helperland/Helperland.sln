@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helperland", "Helperland.csproj", "{7E3B578A-5525-4897-9D87-C6566CBE3CAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helperland", "Helperland.csproj", "{7E3B578A-5525-4897-9D87-C6566CBE3CAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

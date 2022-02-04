@@ -12,12 +12,25 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="~/css/mycss.css">
     <link rel="stylesheet" href="~/css/site.css">
+    <style>
+        /* For hide arrows of Number Input type */
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
 </head>
 @{ 
     string onloadCalls = "";
     if (ViewData["Title"] == "FAQs")
         onloadCalls += "showCustomerBlock();";
-    else if(ViewData["Title"] == "Prices" || ViewData["Title"] == "Contact Us" || ViewData["Title"] == "About Us")
+    else if(ViewData["Title"] == "Prices" || ViewData["Title"] == "Contact Us" || ViewData["Title"] == "About Us" || ViewData["Title"] == "Reset Password")
         onloadCalls += "";
     else if (ViewData["Title"] == "Book Service")
         onloadCalls += "showSetupServiceBlock(); initialyExtraServices();";
@@ -36,12 +49,12 @@
                 <div class="navbar-nav ms-auto">
                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                         <li class="my-2 mx-2"><a class="navBorderWBack py-2 px-3" asp-action="" asp-controller="">Book now</a></li>
-                        <li class="my-2 mx-2"><a class="navOnlyBorder py-2 px-3" asp-action="" asp-controller="">Prices & services</a></li>
+                        <li class="my-2 mx-2"><a class="navOnlyBorder py-2 px-3" asp-action="prices" asp-controller="customer">Prices & services</a></li>
                         <li class="my-2 mx-2"><a class="py-2 px-3 navApplyBorder" asp-action="" asp-controller="">Warranty</a></li>
                         <li class="my-2 mx-2"><a class="py-2 px-3 navApplyBorder" asp-action="" asp-controller="">Blog</a></li>
-                        <li class="my-2 mx-2"><a class="py-2 px-3 navApplyBorder" asp-action="" asp-controller="">Contact</a></li>
+                        <li class="my-2 mx-2"><a class="py-2 px-3 navApplyBorder" asp-action="contactus" asp-controller="customer">Contact</a></li>
                         <li class="my-2 mx-2"><a class="navBorderWBack py-2 px-3" asp-action="" asp-controller="" id="btnLogin" data-bs-toggle="modal" data-bs-target="#loginModal" role="button">Login</a></li>
-                        <li class="my-2 mx-2"><a class="navBorderWBack py-2 px-3" asp-action="" asp-controller="">Become a Helper</a></li>
+                        <li class="my-2 mx-2"><a class="navBorderWBack py-2 px-3" asp-action="becomeaprovider" asp-controller="ServiceProvider">Become a Helper</a></li>
                     </ul>
                 </div>
             </div>

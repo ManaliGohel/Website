@@ -5803,11 +5803,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Helperland\\Helperland.csproj",
+      "projectUniqueName": "D:\\TatvaSoft\\Website\\Helperland\\Helperland.csproj",
       "projectName": "Helperland",
-      "projectPath": "D:\\Helperland\\Helperland.csproj",
+      "projectPath": "D:\\TatvaSoft\\Website\\Helperland\\Helperland.csproj",
       "packagesPath": "C:\\Users\\Manali\\.nuget\\packages\\",
-      "outputPath": "D:\\Helperland\\obj\\",
+      "outputPath": "D:\\TatvaSoft\\Website\\Helperland\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Manali\\AppData\\Roaming\\NuGet\\NuGet.Config",

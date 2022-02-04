@@ -1,8 +1,138 @@
-﻿@{
+﻿@model SignupViewModel
+
+@{
     ViewData["Title"] = "Become a Provider";
     Layout = "_BecomeAProviderLayout";
 }
 
+<section class="becomepro-back pb-5">
+    <header>
+        <nav class="navbar navbar-expand-lg p-2 pt-3" id="navbar">
+            <a asp-action="index" asp-controller="customer">
+                <img src="~/images/Home/white-logo-transparent-background.png" alt="logo" id="navlogo">
+            </a>
+            <button type="button" class="navbar-toggler" id="navmain" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto navOption">
+                    <a asp-action="" asp-controller="" class="navOptionOutline ot1" id="btnBookCleaner">Book a Cleaner</a>
+                    <a asp-action="prices" asp-controller="customer" class="navOptionOutline">Prices</a>
+                    <a asp-action="" asp-controller="" class="navOptionOutline">Our Guarantee</a>
+                    <a asp-action="" asp-controller="" class="navOptionOutline">Blog</a>
+                    <a asp-action="contactus" asp-controller="customer" class="navOptionOutline">Contact us</a>
+                    <a asp-action="" asp-controller="" class="navOptionOutline ot1" id="btnLogin" data-bs-toggle="modal" data-bs-target="#loginModal" role="button">Login</a>
+                    <a asp-action="becomeaprovider" asp-controller="ServiceProvider" class="navOptionOutline ot1" id="btnBecomeHelper">Become a Helper</a>
+                    <div id="navcountry">
+                        <a id="ddCountry" class="p-0 m-0" role="button" data-bs-toggle="dropdown" aria-expanded="false"><div id="ddCountryImgContainer"><img src="~/images/Home/india.jpg" class="ps-4 pe-2 pt-2"><div class="dv-downarr"><img class="img-pro-downarr" src="~/images/upcoming-service/down-arrow.png"></div></div></a>
+                        <ul class="dropdown-menu ms-2 mt-2" aria-labelledby="ddCountry" style="width: 5%; right: 10px; left: auto;">
+                            <li class="liddCountry p-0 m-0"><a class="dropdown-item" asp-action="" asp-controller=""><img src="~/images/Home/canada.jpg" alt="canada"></a></li>
+                            <li class="liddCountry p-0 m-0"><a class="dropdown-item" asp-action="" asp-controller=""><img src="~/images/Home/us.jpg" alt="us"></a></li>
+                            <li class="liddCountry p-0 m-0"><a class="dropdown-item" asp-action="" asp-controller=""><img src="~/images/Home/uk.png" alt="uk"></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="background_disable_effect"></div>
+        </nav>
+    </header>
+    <div class="container-regpro">
+        <div class="row" style="width: 100%;">
+            <div class="col-md-4 regpro_slide1">
+                <div class="feellikehw">
+                    <p>Do not feel like housework?</p>
+                    <ul>
+                        <li>&#10004; open time-management</li>
+                        <li>&#10004; only accept suitable requests</li>
+                        <li>&#10004; fair and fixed hourly wage</li>
+                        <li>&#10004; ideal part time job</li>
+                        <li>&#10004; personal contact person</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8 regpro_slide2">
+                <div class="dv-regpro p-4 mx-4">
+                    <div class="title ff mb-4">Register Now!</div>
+                    <form id="frmRegProvider" method="post"  asp-controller="ServiceProvider" asp-action="becomeaprovider">
+                        <div class="row mb-3">
+                            <div class="col-md-11 ms-3 mb-0 alert alert-success alert-dismissible fade @(TempData["msg"]==null?"d-none":"show")" role="alert">
+                                @TempData["msg"]
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <input type="text" id="txtFirstName" asp-for="firstname" maxlength="100" autocomplete="off" class="form-control inputtext ff" placeholder="First name">
+                                <span asp-validation-for="firstname" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <input type="text" id="txtLastName" asp-for="lastname" maxlength="100" autocomplete="off" class="form-control inputtext ff" placeholder="Last name">
+                                <span asp-validation-for="lastname" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <input type="email" id="txtEmail" asp-for="email" maxlength="100" autocomplete="off" class="form-control inputtext ff" placeholder="Email Address">
+                                <span asp-validation-for="email" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <div class="input-group-text ff">+46</div>
+                                    <input type="text" id="txtPhoneNumber" asp-for="mobile" maxlength="20" autocomplete="off" class="form-control inputtext ff" placeholder="Phone Number">
+                                    <span asp-validation-for="mobile" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <input type="password" id="pwd" asp-for="password" maxlength="100" autocomplete="off" class="form-control inputtext ff" placeholder="Password">
+                                <span asp-validation-for="password" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <input type="password" id="confirmpwd" asp-for="confirmpassword" maxlength="100" autocomplete="off" class="form-control inputtext ff" placeholder="Confirm Password">
+                                <span asp-validation-for="confirmpassword" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="cbSendNewsletter">
+                                    <label class="form-check-label ff" for="cbSendNewsletter">
+                                        Send me newsletters from Helperland
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-md-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="cbTC&PV">
+                                    <label class="form-check-label ff" for="cbTC&PV">
+                                        I accept <a asp-action="" asp-controller="" class="tc-pv">terms and conditions</a> & <a asp-action="" asp-controller="" class="tc-pv">privacy policy</a>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12 text-center">
+                                <button type="submit" form="frmRegProvider" class="btnRegPro text-center ff pt-2 pe-4 pb-2 ps-4">Get Started&nbsp;&nbsp;<img src="~/images/becomepro/right-arr.png"></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center mt-5">
+        <a href="#footer" class="bottomnav"><i class="fal fa-arrow-down"></i></a>
+    </div>
+</section>
 <div class="container-fluid howitworks-container mt-5">
     <img src="~/images/home/blog-left-bg.png" class="img-fluid left blog-left-bg">
     <div class="title mb-5 ff">How it works</div>

@@ -16,7 +16,7 @@
         <div class="home-content">
             <header>
                 <nav class="navbar navbar-expand-lg p-2 pt-3" id="navbar">
-                    <a asp-action="" asp-controller="">
+                    <a asp-action="index" asp-controller="customer">
                         <img src="~/images/Home/white-logo-transparent-background.png" alt="logo" id="navlogo">
                     </a>
                     <button type="button" class="navbar-toggler" id="navmain" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -25,12 +25,12 @@
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <div class="navbar-nav ms-auto navOption">
                             <a asp-action="" asp-controller="" class="navOptionOutline ot1" id="btnBookCleaner">Book a Cleaner</a>
-                            <a asp-action="" asp-controller="" class="navOptionOutline">Prices</a>
+                            <a asp-action="prices" asp-controller="customer" class="navOptionOutline">Prices</a>
                             <a asp-action="" asp-controller="" class="navOptionOutline">Our Guarantee</a>
                             <a asp-action="" asp-controller="" class="navOptionOutline">Blog</a>
-                            <a asp-action="" asp-controller="" class="navOptionOutline">Contact us</a>
+                            <a asp-action="contactus" asp-controller="customer" class="navOptionOutline">Contact us</a>
                             <a asp-action="" asp-controller="" class="navOptionOutline ot1" id="btnLogin" data-bs-toggle="modal" data-bs-target="#loginModal" role="button">Login</a>
-                            <a asp-action="" asp-controller="" class="navOptionOutline ot1" id="btnBecomeHelper">Become a Helper</a>
+                            <a asp-action="becomeaprovider" asp-controller="ServiceProvider" class="navOptionOutline ot1" id="btnBecomeHelper">Become a Helper</a>
                             <div id="navcountry">
                                 <a id="ddCountry" class="p-0 m-0" role="button" data-bs-toggle="dropdown" aria-expanded="false"><div id="ddCountryImgContainer"><img src="~/images/Home/india.jpg" class="ps-4 pe-2 pt-2"><div class="dv-downarr"><img class="img-pro-downarr" src="~/images/upcoming-service/down-arrow.png"></div></div></a>
                                 <ul class="dropdown-menu ms-2 mt-2" aria-labelledby="ddCountry" style="width: 5%; right: 10px; left: auto;">
@@ -120,13 +120,13 @@
             <table class="table table-borderless">
                 <tr class="row footer1 align-items-center text-center">
                     <td class="col-md-2">
-                        <a asp-action="" asp-controller=""><img src="~/images/Home/white-logo-transparent-background-copy-4.png" alt="white-logo-transparent-background-copy-4"></a>
+                        <a asp-action="index" asp-controller="customer"><img src="~/images/Home/white-logo-transparent-background-copy-4.png" alt="white-logo-transparent-background-copy-4"></a>
                     </td>
                     <td class="col-md-8">
-                        <a asp-action="" asp-controller="">HOME</a>
-                        <a asp-action="" asp-controller="">ABOUT</a>
+                        <a asp-action="index" asp-controller="customer">HOME</a>
+                        <a asp-action="aboutus" asp-controller="customer">ABOUT</a>
                         <a asp-action="" asp-controller="">TESTIMONIALS</a>
-                        <a asp-action="" asp-controller="">FAQs</a>
+                        <a asp-action="faq" asp-controller="customer">FAQs</a>
                         <a asp-action="" asp-controller="">INSURANCE POLICY</a>
                         <a asp-action="" asp-controller="">IMPRESSUM</a>
                     </td>
@@ -147,7 +147,7 @@
         </footer>
     </div>
 
-    <partial name="_LoginForgotPasswordModalLayout"/>
+    <partial name="_LoginForgotPasswordModalLayout" />
 
     @if (IsSectionDefined("scripts"))
     {
@@ -159,5 +159,28 @@
     <!-- script for sidebar navigation -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <partial name="_SidebarNavigationLayout" />
+
+    @if (ViewBag.openLoginModel == true)
+    {
+        <script type="text/javascript">
+            $(window).on('load', function () {
+                $('#loginModal').modal('show');
+            });
+        </script>
+    }
+
+    <!-- Sweet alert -->
+    <link href="~/lib/limonte-sweetalert2/sweetalert2.css" rel="stylesheet" />
+    <script src="~/lib/limonte-sweetalert2/sweetalert2.js"></script>
+    @if (ViewBag.ForgotPasswordResetLinksend == true)
+    {
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Forgot Password',
+                text: 'If provided Email is a Registered Email ID on Helperland, you will receive an Email with further Instructions on how to Reset your Password!!',
+            })
+        </script>
+    }
 </body>
 </html>
