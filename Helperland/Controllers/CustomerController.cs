@@ -3,8 +3,10 @@ using Helperland.Data;
 using Helperland.Enums;
 using Helperland.Models;
 using Helperland.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -39,9 +42,26 @@ namespace Helperland.Controllers
             this._dataProtectionProvider = dataProtectionProvider;
         }
 
-        public IActionResult index()
+        public async Task<IActionResult> index()
         {
-            return View();
+            if (HttpContext.Request.Cookies["EmailId"] != null && HttpContext.Request.Cookies["Password"] != null)
+            {
+                User user = await helperLandContext.Users.FirstOrDefaultAsync(e => e.Email == HttpContext.Request.Cookies["EmailId"] && e.Password == HttpContext.Request.Cookies["Password"]);
+                if (user != null && user.IsApproved == true)
+                {
+                    HttpContext.Session.SetInt32("UserType", user.UserTypeId);
+                    HttpContext.Session.SetString("UserName", user.FirstName);
+                    if (user.UserTypeId == (int)UserTypeIdEnum.Customer)
+                        return RedirectToAction("servicehistory", "customer");
+                    else if (user.UserTypeId == (int)UserTypeIdEnum.ServiceProvider)
+                        return RedirectToAction("upcomingservice", "serviceprovider");
+                    else
+                        return RedirectToAction("index", "admin");
+                }
+                return View();
+            }
+            else
+                return View();
         }
         public IActionResult faq()
         {
@@ -75,7 +95,7 @@ namespace Helperland.Controllers
                 }
                 ContactU Newcontact = new ContactU()
                 {
-                    Name = model.firstname + " " + model.lastname,
+                    Name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.firstname) + " " + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.lastname),
                     Email = model.email,
                     Subject = model.subject,
                     PhoneNumber = model.mobile,
@@ -106,10 +126,21 @@ namespace Helperland.Controllers
         }
         public IActionResult servicehistory()
         {
-            return View();
+            if (HttpContext.Session.GetInt32("UserType") == (int)UserTypeIdEnum.Customer)
+            {
+                ViewBag.UserName = HttpContext.Session.GetString("UserName");
+                //if (HttpContext.Session.GetInt32("redirectToBookService") == 1)
+                //    return RedirectToAction("bookservice", "customer");
+                //else
+                    return View();
+            }
+            else
+                return RedirectToAction("index", "customer");
         }
         public IActionResult bookservice()
         {
+            if (HttpContext.Session.GetInt32("UserType") != null)
+                ViewBag.UserName = HttpContext.Session.GetString("UserName");
             return View();
         }
         public IActionResult Privacy()
@@ -130,8 +161,8 @@ namespace Helperland.Controllers
                 {
                     User user = new User
                     {
-                        FirstName = model.firstname,
-                        LastName = model.lastname,
+                        FirstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.firstname),
+                        LastName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.lastname),
                         Email = model.email,
                         Mobile = model.mobile,
                         Password = model.password,
@@ -143,7 +174,7 @@ namespace Helperland.Controllers
                     };
                     helperLandContext.Add(user);
                     helperLandContext.SaveChanges();
-                    TempData["msg"] = "Accound Created Successfully!!";
+                    TempData["msg"] = "Account Created Successfully!!";
                     return RedirectToAction("customersignup", "customer");
                 }
             }
@@ -156,66 +187,74 @@ namespace Helperland.Controllers
 
         [HttpPost]
         [HttpGet]
-        public async Task<IActionResult> issEmailAlreadyRegistered(string email)
+        public async Task<IActionResult> isEmailAlreadyRegistered(string email)
         {
             var user = await helperLandContext.Users.FirstOrDefaultAsync(e => e.Email == email);
-            if (user == null) 
-                return Json(true);            
-            else            
-                return Json($"This Email {email} is Already Registered!!");            
+            if (user == null)
+                return Json(true);
+            else
+                return Json($"This Email {email} is Already Registered!!");
         }
 
         [HttpPost]
-        [Route("customer/index")]
-        public async Task<IActionResult> loginUser(LoginAndForgotPasswordViewModel model)
+        public JsonResult checkForLoginIfUserExistorNot(string email, string password, bool isremember)
         {
-            if (ModelState.IsValid)
+            var isExist = helperLandContext.Users.Where(u => u.Email.Equals(email) && u.Password.Equals(password)).FirstOrDefault();
+            string result;
+            if (isExist != null)
             {
-                User user = await helperLandContext.Users.FirstOrDefaultAsync(e=>e.Email == model.login.email && e.Password == model.login.password);
-                if (user != null && user.IsApproved == true)
+                if (isExist.IsApproved == true)
                 {
-                    if (user.UserTypeId == (int)UserTypeIdEnum.Customer)
-                        return RedirectToAction("servicehistory", "customer");
-                    else if (user.UserTypeId == (int)UserTypeIdEnum.ServiceProvider)
-                        return RedirectToAction("upcomingservice", "serviceprovider");
-                    else
-                        return RedirectToAction("index", "admin");
-                }
-                else if (user != null && user.IsApproved == false)
-                    TempData["errMsg"] = "Still you are not Approved by Admin!!";
-                else
-                    TempData["errMsg"] = "Invalid Username/Password";
-            }
-            ViewBag.openLoginModel = true;
-            return View("~/Views/customer/index.cshtml", model);
-        }
-
-        [HttpPost]
-        public IActionResult forgotPassword(LoginAndForgotPasswordViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                User user = helperLandContext.Users.Where(x => x.Email == model.forgotPassword.email).FirstOrDefault();
-                if (user != null)
-                {
-                    var plaintextbytes = System.Text.Encoding.UTF8.GetBytes(user.Password);
-                    var OldPassword = System.Convert.ToBase64String(plaintextbytes);
-                    string input = model.forgotPassword.email + "_!_" + DateTime.Now.ToString() + "_!_" + OldPassword;
-                    var protector = _dataProtectionProvider.CreateProtector(_key);
-                    string encrypt = protector.Protect(input);
-                    EmailModel emailModel = new EmailModel
+                    if (isremember == true)
                     {
-                        To = model.forgotPassword.email,
-                        Subject = "Helperland Reset Password",
-                        Body = "<h2>Reset Password Link:</h2><br/> " + "http://" + this.Request.Host.ToString() + "/Customer/resetpassword?token=" + encrypt                        
-                    };
-                    MailHelper mailhelper = new MailHelper(configuration);
-                    mailhelper.Send(emailModel);
+                        CookieOptions cookieOptions = new CookieOptions();
+                        cookieOptions.Expires = new DateTimeOffset(DateTime.Now.AddMonths(1));
+                        HttpContext.Response.Cookies.Append("EmailId", isExist.Email, cookieOptions);
+                        HttpContext.Response.Cookies.Append("Password", isExist.Password, cookieOptions);
+                        HttpContext.Response.Cookies.Append("UserId", isExist.UserId.ToString(), cookieOptions);
+                    }
+                    HttpContext.Session.SetInt32("UserType", isExist.UserTypeId);
+                    HttpContext.Session.SetString("UserName", isExist.FirstName);
+                    HttpContext.Session.SetInt32("UserId", isExist.UserId);
+                    if (HttpContext.Session.GetString("redirectToBookService") == "1")
+                    {
+                        result = "Book Service";
+                        HttpContext.Session.Remove("redirectToBookService");
+                    }
+                    else
+                        result = isExist.UserTypeId.ToString();                    
                 }
-                ViewBag.ForgotPasswordResetLinksend = true;
-                return View("~/Views/Customer/index.cshtml");
+                else
+                    result = "Still you are not Approved by Admin!!";
             }
-            return View();
+            else
+                result = "Invalid Username/Password!!";
+            return Json(result);
+        }
+
+        [HttpPost]
+        public JsonResult checkForForgotPasswordIfUserExistorNot(string email)
+        {
+            var user = helperLandContext.Users.Where(u => u.Email.Equals(email)).FirstOrDefault();
+            bool result = false;
+            if (user != null)
+            {
+                var plaintextbytes = System.Text.Encoding.UTF8.GetBytes(user.Password);
+                var OldPassword = System.Convert.ToBase64String(plaintextbytes);
+                string input = email + "_!_" + DateTime.Now.ToString() + "_!_" + OldPassword;
+                var protector = _dataProtectionProvider.CreateProtector(_key);
+                string encrypt = protector.Protect(input);
+                EmailModel emailModel = new EmailModel
+                {
+                    To = email,
+                    Subject = "Helperland Reset Password",
+                    Body = "<h2>Reset Password Link:</h2><br/> " + "http://" + this.Request.Host.ToString() + "/Customer/resetpassword?token=" + encrypt
+                };
+                MailHelper mailhelper = new MailHelper(configuration);
+                mailhelper.Send(emailModel);
+                result = true;
+            }
+            return Json(result);
         }
 
         public IActionResult resetPassword(string token)
@@ -279,5 +318,31 @@ namespace Helperland.Controllers
             }
             return View();
         }
+
+        public IActionResult logout()
+        {
+            foreach (var cookie in Request.Cookies.Keys)
+                Response.Cookies.Delete(cookie);
+            HttpContext.Session.Clear();
+            return RedirectToAction("index", "customer");
+        }
+
+        //public IActionResult userTypewiseRedirection(int usertypeid, string username)
+        //{
+        //    HttpContext.Session.SetInt32("UserType", usertypeid);
+        //    HttpContext.Session.SetString("UserName", username);
+        //    if (usertypeid == (int)UserTypeIdEnum.Customer)
+        //        return RedirectToAction("servicehistory", "customer");
+        //    else if (usertypeid == (int)UserTypeIdEnum.ServiceProvider)
+        //        return RedirectToAction("upcomingservice", "serviceprovider");
+        //    else
+        //        return RedirectToAction("index", "admin");
+        //}
+
+        //public async Task<User> getUserDetailsById(int userid)
+        //{
+        //    User user = await helperLandContext.Users.FirstOrDefaultAsync(e => e.UserId == userid);
+        //    return user;
+        //}
     }
 }

@@ -14,7 +14,7 @@ namespace Helperland.Data
         }
 
         public HelperLandContext(DbContextOptions<HelperLandContext> options)
-            : base(options)
+            :base(options)
         {
         }
 

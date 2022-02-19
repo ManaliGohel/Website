@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,6 +14,7 @@ namespace Helperland.ViewModels
         public string firstname { get; set; }
         public string lastname { get; set; }
         [Required]
+        [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Enter valid Mobile Number!")]
         public string mobile { get; set; }
         [Required]
         [EmailAddress(ErrorMessage = "Enter valid Email Id!")]

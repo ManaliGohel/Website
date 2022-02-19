@@ -6,21 +6,21 @@ function stickyNavbar(){
 	if(window.pageYOffset >= sticky)
 	{
 		navbar.classList.add("sticky");
-    navlogo.style.width = "73px";
-    navlogo.style.height = "54px";
-    document.getElementById('btnBookCleaner').classList.add("stickynavtext");
-    document.getElementById('btnLogin').classList.add("stickynavtext");
-    document.getElementById('btnBecomeHelper').classList.add("stickynavtext");
+        navlogo.style.width = "73px";
+        navlogo.style.height = "54px";
+        document.getElementById('btnBookCleaner').classList.add("stickynavtext");
+        document.getElementById('btnLogin').classList.add("stickynavtext");
+        document.getElementById('btnBecomeHelper').classList.add("stickynavtext");
 	}
 	else
-  {
+    {
 		navbar.classList.remove("sticky");
-    navlogo.style.width = "175px";
-    navlogo.style.height = "130px";
-    document.getElementById('btnBookCleaner').classList.remove("stickynavtext");
-    document.getElementById('btnLogin').classList.remove("stickynavtext");
-    document.getElementById('btnBecomeHelper').classList.remove("stickynavtext");
-    setLogoByWinSize();
+        navlogo.style.width = "175px";
+        navlogo.style.height = "130px";
+        document.getElementById('btnBookCleaner').classList.remove("stickynavtext");
+        document.getElementById('btnLogin').classList.remove("stickynavtext");
+        document.getElementById('btnBecomeHelper').classList.remove("stickynavtext");
+        setLogoByWinSize();
 	}
 }
 function topnavigation(){
@@ -55,18 +55,18 @@ function checkForLoginModal(){
   var loginemail=document.getElementById("loginmodal_email").value.trim().length;
   var loginpassword=document.getElementById("loginmodal_password").value.trim().length;
   var btnlogin=document.getElementById("btnloginmodal");
-  if(loginemail>0 && loginpassword>0){
-    btnlogin.disabled=false;
-    if(btnlogin.classList.contains('btndisable'))
-      btnlogin.classList.remove('btndisable');
-    btnlogin.classList.add('btnLogin');
-  }
-  else{
-    btnlogin.disabled=true;
-    if(btnlogin.classList.contains('btnLogin'))
-      btnlogin.classList.remove('btnLogin');
-    btnlogin.classList.add('btndisable');
-  }
+    if (loginemail > 0 && loginpassword > 0) {     
+        btnlogin.disabled = false;
+        if (btnlogin.classList.contains('btndisable'))
+            btnlogin.classList.remove('btndisable');
+        btnlogin.classList.add('btnLogin');  
+    }
+    else{
+        btnlogin.disabled=true;
+        if(btnlogin.classList.contains('btnLogin'))
+            btnlogin.classList.remove('btnLogin');
+        btnlogin.classList.add('btndisable');
+    }
 }
 
 function checkForPasswordModal(){
@@ -84,8 +84,4 @@ function checkForPasswordModal(){
       btnpassword.classList.remove('btnLogin');
     btnpassword.classList.add('btndisable');
   }
-}
-
-function openLoginModal(){
-  $('#loginModal').modal('show');
 }

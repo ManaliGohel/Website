@@ -16,61 +16,60 @@
     </table>
     <div class="contact-container">
         <form class="form" asp-controller="customer" asp-action="customersignup" method="post">
-                <div class="row">
-                    <div class="col-md-12 my-2 alert alert-success alert-dismissible fade @(TempData["msg"]==null?"d-none":"show")" role="alert">
-                        @TempData["msg"]
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
+            <div class="row">
+                <div class="col-md-12 my-2 alert alert-success alert-dismissible fade @(TempData["msg"]==null?"d-none":"show")" role="alert">
+                    @TempData["msg"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 my-1">
-                        <input type="text" id="txtFirstName" asp-for="firstname" maxlength="100" class="form-control" placeholder="First name" onkeyup="checkForCustomerSignup();" autocomplete="off">
-                        <span asp-validation-for="firstname" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-6 my-1">
-                        <input type="text" id="txtLastName" asp-for="lastname" maxlength="100" class="form-control" placeholder="Last name" onkeyup="checkForCustomerSignup();" autocomplete="off">
-                        <span asp-validation-for="lastname" class="text-danger"></span>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 my-1">
+                    <input type="text" id="txtFirstName" asp-for="firstname" maxlength="100" class="form-control text-capitalize" placeholder="First name" onkeyup="checkForCustomerSignup();" autocomplete="off">
+                    <span asp-validation-for="firstname" class="text-danger"></span>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 my-1">
-                        <input type="email" id="txtEmail" asp-for="email" maxlength="100" class="form-control" placeholder="Email" onkeyup="checkForCustomerSignup();" autocomplete="off">
-                        <span asp-validation-for="email" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-6 my-1">
-                        <div class="input-group">
-                            <div class="input-group-text">+49</div>
-                            <input asp-for="mobile" id="txtMobile" class="form-control" placeholder="Mobile number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="10" autocomplete="off" onkeyup="checkForCustomerSignup();" />
-                            @*<input type="text" id="txtMobile" asp-for="mobile" maxlength="20" class="form-control" placeholder="Mobile number" onkeyup="checkForCustomerSignup();" autocomplete="off">*@
-                            <span asp-validation-for="mobile" class="text-danger"></span>
-                        </div>
-                    </div>
+                <div class="col-md-6 my-1">
+                    <input type="text" id="txtLastName" asp-for="lastname" maxlength="100" class="form-control text-capitalize" placeholder="Last name" onkeyup="checkForCustomerSignup();" autocomplete="off">
+                    <span asp-validation-for="lastname" class="text-danger"></span>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 my-1">
-                        <input type="password" id="pwd" asp-for="password" maxlength="100" class="form-control" placeholder="Password" onkeyup="checkForCustomerSignup();" autocomplete="off">
-                        <span asp-validation-for="password" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-6 my-1">
-                        <input type="password" id="confirmpwd" asp-for="confirmpassword" maxlength="100" class="form-control" placeholder="Confirm Password" onkeyup="checkForCustomerSignup();" autocomplete="off">
-                        <span asp-validation-for="confirmpassword" class="text-danger"></span>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 my-1">
+                    <input type="email" id="txtEmail" asp-for="email" maxlength="100" class="form-control" placeholder="Email" onkeyup="checkForCustomerSignup();" autocomplete="off">
+                    <span asp-validation-for="email" class="text-danger"></span>
                 </div>
-                <div class="row my-2">
-                    <div class="col-md-12 my-1 mb-3">
-                        <input id="cbprivacypolicy" onclick="checkForCustomerSignup();" type="checkbox" class="form-check-input">&nbsp;I have read the <a href="#" class="p-0">privacy policy</a>.
+                <div class="col-md-6 my-1">
+                    <div class="input-group">
+                        <div class="input-group-text">+49</div>
+                        <input asp-for="mobile" id="txtMobile" class="form-control" placeholder="Mobile number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeypress="return event.charCode &gt;= 48 &amp;&amp; event.charCode &lt;= 57" type="number" maxlength="10" autocomplete="off" onkeyup="checkForCustomerSignup();" />
                     </div>
+                    <span asp-validation-for="mobile" class="text-danger"></span>
                 </div>
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                        <input id="sbmtcusreg" type="submit" value="Register" class="px-4" @*onclick="redirectToLogin();"*@>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 my-1">
+                    <input type="password" id="pwd" asp-for="password" maxlength="100" class="form-control" placeholder="Password" onkeyup="checkForCustomerSignup();" autocomplete="off">
+                    <span asp-validation-for="password" class="text-danger"></span>
                 </div>
-                <div class="row my-3">
-                    <div class="col-md-12 d-flex justify-content-center align-items-center">
-                        Already registered?&nbsp;<a asp-action="" asp-controller="" class="p-0">Login now</a>
-                    </div>
+                <div class="col-md-6 my-1">
+                    <input type="password" id="confirmpwd" asp-for="confirmpassword" maxlength="100" class="form-control" placeholder="Confirm Password" onkeyup="checkForCustomerSignup();" autocomplete="off">
+                    <span asp-validation-for="confirmpassword" class="text-danger"></span>
                 </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-md-12 my-1 mb-3">
+                    <input id="cbprivacypolicy" onclick="checkForCustomerSignup();" type="checkbox" class="form-check-input">&nbsp;I have read the <a href="#" class="p-0">privacy policy</a>.
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <input id="sbmtcusreg" type="submit" value="Register" class="px-4">
+                </div>
+            </div>
+            <div class="row my-3">
+                <div class="col-md-12 d-flex justify-content-center align-items-center">
+                    Already registered?&nbsp;<a asp-action="" asp-controller="" class="p-0">Login now</a>
+                </div>
+            </div>
         </form>
     </div>
 </div>

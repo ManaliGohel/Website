@@ -113,6 +113,7 @@ nav .drop-down li a {
     padding: 8px 25px 8px 25px;
     color: white;
     margin-bottom: 3%;
+    text-decoration: none;
 }
 .btnBookCleaner:hover, .bottomnav:hover{
     background: rgba(255, 255, 255, 1);

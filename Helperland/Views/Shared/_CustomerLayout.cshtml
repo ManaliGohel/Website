@@ -25,6 +25,9 @@
             -moz-appearance: textfield;
         }
     </style>
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 </head>
 @{ 
     string onloadCalls = "";
@@ -32,8 +35,6 @@
         onloadCalls += "showCustomerBlock();";
     else if(ViewData["Title"] == "Prices" || ViewData["Title"] == "Contact Us" || ViewData["Title"] == "About Us" || ViewData["Title"] == "Reset Password")
         onloadCalls += "";
-    else if (ViewData["Title"] == "Book Service")
-        onloadCalls += "showSetupServiceBlock(); initialyExtraServices();";
     else if (ViewData["Title"] == "Sign Up")
         onloadCalls += "checkForCustomerSignup();";
     onloadCalls += "checkForLoginModal(); checkForPasswordModal();";
@@ -48,7 +49,16 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto">
                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                        <li class="my-2 mx-2"><a class="navBorderWBack py-2 px-3" asp-action="" asp-controller="">Book now</a></li>
+                        @{
+                            if (Context.Session.GetInt32("UserType") != null)
+                            {
+                                <li class="my-2 mx-2"><a class="navBorderWBack py-2 px-3" asp-action="bookservice" asp-controller="customer">Book now</a></li>
+                            }
+                            else
+                            {
+                                <li class="my-2 mx-2"><a class="navBorderWBack py-2 px-3" href="#" onclick="openLoginModalforBS();">Book now</a></li>                                
+                            }
+                        }
                         <li class="my-2 mx-2"><a class="navOnlyBorder py-2 px-3" asp-action="prices" asp-controller="customer">Prices & services</a></li>
                         <li class="my-2 mx-2"><a class="py-2 px-3 navApplyBorder" asp-action="" asp-controller="">Warranty</a></li>
                         <li class="my-2 mx-2"><a class="py-2 px-3 navApplyBorder" asp-action="" asp-controller="">Blog</a></li>

@@ -830,18 +830,18 @@ table.dataTable tbody td{
     background-color: #F3F3F3;
     color: #646464;
 }
-.active-setupcleaningsertab{
+.active-setupcleaningsertab, .active-setupcleaningsertab-temp {
     background-color: #1D7A8C;
-    color: white;  
+    color: white;
     position: relative;
 }
-.active-setupcleaningsertab:after{
+.active-setupcleaningsertab:after {
     position: absolute;
-    content:"";
-    display:block;
-	border-left: 12px solid transparent;
-	border-right: 12px solid transparent;
-	border-top: 12px solid #1D7A8C;
+    content: "";
+    display: block;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 12px solid #1D7A8C;
     left: 43%;
     top: 58px;
 }
@@ -849,7 +849,7 @@ table.dataTable tbody td{
     display: block;
 }
 .sel-rooms-baths{
-    width: 100px;
+    width: 150px;
     float: left;
 }
 .sel-timeforser{
@@ -912,7 +912,7 @@ table.dataTable tbody td{
 .serselected-border{
     border: 3px solid #1D7A8C;
 }
-.btnContinueSetupSerProc{
+.btnContinueSetupSerProc {
     color: white;
     background-color: #1d7a8c;
     font-size: 16px;
@@ -1007,9 +1007,112 @@ table.dataTable tbody td{
     padding-left: 30px;
     text-align: justify;
 }
+.rbuseradd {
+    -ms-transform: scale(1.2); /* IE 9 */
+    -webkit-transform: scale(1.2); /* Chrome, Safari, Opera */
+    transform: scale(1.2);
+    accent-color: #1D7A8C;
+    cursor: pointer;
+}
+.dvuseradd {
+    border: 1px solid #e1e1e1;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+.btnaddnewadd {
+    color: #1d7a8c;
+    font-size: 16px;
+    border: 2px solid #1d7a8c;
+    background-color: white;
+    border-radius: 20px;
+    font-weight: bold;
+}
+.btnaddnewadd:hover {
+    background-color: #1d7a8c;
+    color: white;
+}
+.dvadduseraddress {
+    background-color: #f8f8f8;
+    border: 1px solid #e1e1e1;
+    border-radius: 4px;
+}
+.lbluseraddtitle{
+    color: #4f4f4f;
+}
+.btncanceluseradd {
+    background-color: #f8f8f8;
+    border: 1px solid #646464;
+    border-radius: 20px;
+    color: #646464;
+}
+.btncanceluseradd:hover {
+    color: #1d7a8c;
+    border: 1px solid #1d7a8c;
+}
+.btnapplypromocode {
+    color: #1d7a8c;
+    border: 1px solid #1d7a8c;
+    background-color: white;
+    border-radius: 20px;
+}
+.btnapplypromocode:hover {
+    background-color: #1d7a8c;
+    color: white;
+    box-shadow: 0 4px 8px 0 rgba(100, 100, 100, 0.2), 0 6px 20px 0 rgba(100, 100, 100, 0.19);
+}
+.payment-card {
+    height: 46px;
+}
+.payment-card img {
+    height: 25px;
+    position: absolute;
+    top: 12px;
+    left: 10px;
+}
+.card-number {
+    height: 46px;
+}
+.payment-card .card-number {
+    padding-left: 50px;
+}
+.payment-card .month-year {
+    width: 80px;
+    position: absolute;
+    top: 1px;
+    right: 70px;
+    border: 0px;
+    height: 44px;
+}
+.payment-card .CC {
+    position: absolute;
+    top: 1px;
+    right: 10px;
+    border: 0px;
+    height: 44px;
+    width: 60px;
+}
+.payment-card .CC:focus,
+.payment-card .month-year:focus {
+    outline: 0;
+    box-shadow: none;
+}
+.txtacceptedcards{
+    font-size: 10px;
+    color: #646464;
+}
+.imgacceptedcards{
+    width: 121px;
+    height: 25px;
+}
+.cbwidth{
+    width: 35px;
+}
 
 /* Responsive */
-@media (max-width:991px){
+@media (max-width:991px) {
     .um_logo_name{
         font-size: 30px;
     }

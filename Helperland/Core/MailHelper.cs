@@ -35,14 +35,9 @@ namespace Helperland.Core
                     EnableSsl = enable,
                     Credentials = new NetworkCredential(username, password)
                 };
-
                 var mailMessage = new MailMessage(model.From, model.To, model.Subject, model.Body);
-
                 mailMessage.IsBodyHtml = true;
-
-
                 smtpClient.Send(mailMessage);
-
                 return true;
             }
             catch(Exception ex)
@@ -50,7 +45,6 @@ namespace Helperland.Core
                 return false;
             }
         }
-
 
         public bool SendContectUs(EmailModel model)
         {
@@ -61,7 +55,6 @@ namespace Helperland.Core
                 var username = _configuration["Gmail:Username"];
                 var password = _configuration["Gmail:Password"];
                 var enable = bool.Parse(_configuration["Gmail:SMTP:starttls:enable"]);
-
                 model.From = _configuration["Gmail:Username"];
                 model.To = _configuration["Gmail:adminemail"];
                 var smtpClient = new SmtpClient
@@ -72,16 +65,12 @@ namespace Helperland.Core
                     Credentials = new NetworkCredential(username, password)
                 };
                 var mailMessage = new MailMessage(model.From, model.To, model.Subject, model.Body);
-
                 mailMessage.IsBodyHtml = true;
-
                 if (model.Attachment != null)
                 {
                     mailMessage.Attachments.Add(new Attachment(model.Attachment));
                 }
-
                 smtpClient.Send(mailMessage);
-
                 return true;
             }
             catch (Exception e)

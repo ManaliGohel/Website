@@ -1,113 +1,274 @@
-﻿@{
-    Layout = "_IndexLayout";
-}
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Helperland</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Helperland, Home, HTML, CSS, JavaScript, Bootstrap">
+    <link rel="icon" type="image/x-icon" href="~/images/logo/favicon_img.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="~/css/home.css">
+    <script src="~/lib/jquery/jquery.js"></script>
+    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+</head>
+<body onload="checkForLoginModal();checkForPasswordModal();" onscroll="stickyNavbar();" onresize="setLogoByWinSize();">
+    <div class="home">
+        <div class="home-content">
+            <header>
+                <nav class="navbar navbar-expand-lg p-2 pt-3" id="navbar">
+                    <a asp-action="index" asp-controller="customer">
+                        <img src="~/images/Home/white-logo-transparent-background.png" alt="logo" id="navlogo">
+                    </a>
+                    <button type="button" class="navbar-toggler" id="navmain" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <div class="navbar-nav ms-auto navOption">
+                            @{
+                                if (Context.Session.GetInt32("UserType") != null)
+                                {
+                                    <a asp-action="bookservice" asp-controller="customer" class="navOptionOutline ot1" id="btnBookCleaner">Book a Cleaner</a>
+                                }
+                                else
+                                {
+                                    <a href="#" class="navOptionOutline ot1" id="btnBookCleaner" onclick="openLoginModalforBS();">Book a Cleaner</a>
+                                }
+                            }
+                            <a asp-action="prices" asp-controller="customer" class="navOptionOutline">Prices</a>
+                            <a asp-action="" asp-controller="" class="navOptionOutline">Our Guarantee</a>
+                            <a asp-action="" asp-controller="" class="navOptionOutline">Blog</a>
+                            <a asp-action="contactus" asp-controller="customer" class="navOptionOutline">Contact us</a>
+                            <a asp-action="" asp-controller="" class="navOptionOutline ot1" id="btnLogin" data-bs-toggle="modal" data-bs-target="#loginModal" role="button">Login</a>
+                            <a asp-action="becomeaprovider" asp-controller="ServiceProvider" class="navOptionOutline ot1" id="btnBecomeHelper">Become a Helper</a>
+                            <div id="navcountry">
+                                <a id="ddCountry" class="p-0 m-0" role="button" data-bs-toggle="dropdown" aria-expanded="false"><div id="ddCountryImgContainer"><img src="~/images/Home/india.jpg" class="ps-4 pe-2 pt-2"><div class="dv-downarr"><img class="img-pro-downarr" src="~/images/upcoming-service/down-arrow.png"></div></div></a>
+                                <ul class="dropdown-menu ms-2 mt-2" aria-labelledby="ddCountry" style="width: 5%; right: 10px; left: auto;">
+                                    <li class="liddCountry p-0 m-0"><a class="dropdown-item" asp-action="" asp-controller=""><img src="~/images/Home/canada.jpg" alt="canada"></a></li>
+                                    <li class="liddCountry p-0 m-0"><a class="dropdown-item" asp-action="" asp-controller=""><img src="~/images/Home/us.jpg" alt="us"></a></li>
+                                    <li class="liddCountry p-0 m-0"><a class="dropdown-item" asp-action="" asp-controller=""><img src="~/images/Home/uk.png" alt="uk"></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="background_disable_effect"></div>
+                </nav>
+            </header>
+            <div class="hometext">
+                <p>Do not feel like housework?</p>
+                <ul>
+                    <li>Great! Book now for Helperland and enjoy the benefits</li>
+                    <li>&#10004; certified & insured helper</li>
+                    <li>&#10004; easy booking procedure</li>
+                    <li>&#10004; friendly customer service</li>
+                    <li>&#10004; secure online payment method</li>
+                </ul>
+            </div>
+            <div class="d-flex justify-content-center">
+                <a class="btnBookCleaner" href="#" onclick="openLoginModalforBS();">Let’s Book a Cleaner</a>
+            </div>
+            <div class="subtask-container">
+                <div class="dv-subtask mx-3">
+                    <div class="dvimg-subtask d-flex justify-content-center align-items-center">
+                        <img src="~/images/home/postcode.png" class="img-fluid">
+                    </div>
+                    <p class="subtask-desc">Enter your postcode</p>
+                </div>
+                <img src="~/images/home/step-arrow-1.png" class="img-fluid mt-4 arrow">
+                <div class="dv-subtask mx-3">
+                    <div class="dvimg-subtask d-flex justify-content-center align-items-center">
+                        <img src="~/images/home/plan.png" class="img-fluid">
+                    </div>
+                    <p class="subtask-desc">Select your plan</p>
+                </div>
+                <img src="~/images/home/step-arrow-1-copy.png" class="img-fluid mt-4 arrow">
+                <div class="dv-subtask mx-3">
+                    <div class="dvimg-subtask d-flex justify-content-center align-items-center">
+                        <img src="~/images/home/payonline.png" class="img-fluid">
+                    </div>
+                    <p class="subtask-desc">Pay securely online</p>
+                </div>
+                <img src="~/images/home/step-arrow-1.png" class="img-fluid mt-4 arrow">
+                <div class="dv-subtask mx-3">
+                    <div class="dvimg-subtask d-flex justify-content-center align-items-center">
+                        <img src="~/images/home/service.png" class="img-fluid">
+                    </div>
+                    <p class="subtask-desc">Enjoy amazing service</p>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <a href="#footer" class="bottomnav"><i class="fal fa-arrow-down"></i></a>
+            </div>
+        </div>
+    </div>
 
-<div class="container-fluid mb-5">
-    <div class="title mt-5 mb-3">Convince yourself!</div>
-    <div class="whyhelperland-container">
-        <div class="dv-whyhelperland">
-            <img src="~/images/home/group-21.png" class="whyhelperland-img img-fluid">
-            <p class="whyhelperland-desc-title mt-4">Friendly & Certified Helpers</p>
-            <p class="whyhelperland-desc mt-4">
-                We want you to be completely satisfied with our service and feel comfortable at home. In order to guarantee this, our helpers go through a test procedure. Only when the cleaners meet our high standards, they may call themselves Helper.
-            </p>
-        </div>
-        <div class="dv-whyhelperland">
-            <img src="~/images/home/group-23.png" class="whyhelperland-img img-fluid">
-            <p class="whyhelperland-desc-title mt-5">Transparent and secure payment</p>
-            <p class="whyhelperland-desc mt-5">
-                We have transparent prices, you do not have to scratch money or money on the sideboard Leave it: Pay your helper easily and securely via the online payment method. You will also receive an invoice for each completed cleaning.
-            </p>
-        </div>
-        <div class="dv-whyhelperland">
-            <img src="~/images/home/group-24.png" class="whyhelperland-img img-fluid">
-            <p class="whyhelperland-desc-title mt-4">We're here for you</p>
-            <p class="whyhelperland-desc mt-4">
-                You have a question or need assistance with the booking process? Our customer service is happy to help and advise you. How you can reach us you will find out when you look under "Contact". We look forward to hearing from you or reading.
-            </p>
-        </div>
-    </div>
-</div>
-<div class="container-fluid ourblog-container">
-    <img src="~/images/home/blog-left-bg.png" class="img-fluid left blog-left-bg">
-    <div class="ourblog-inner-container mt-5">
-        <div class="dv-consectetur">
-            <p class="whyhelperland-desc-title">We do not know what makes you happy, but ...</p>
-            <p class="whyhelperland-desc">
-                If it's not dusting off, our friendly helpers will free you from this burden - do not worry anymore about spending valuable time doing housework, but savor life, you're well worth your time with beautiful experiences. Free yourself and enjoy the gained time: Go celebrate, relax, play with your children, meet friends or dare to jump on the bungee.Other leisure ideas and exclusive events can be found in our blog - guaranteed free from dust and cleaning tips!
-            </p>            
-        </div>
-        <div class="dv-consectetur-img d-flex justify-content-center">
-            <img src="~/images/home/group-36.png" class="img-fuid img-consectetur">
-        </div>
-    </div>
-    <div class="ourblog-container title">Our Blog</div>
-    <div class="ourblog-container">
-        <div class="dv-ourblog m-4">
-            <img src="~/images/home/group-28.png" class="img-fluid">
-            <div class="p-3">
-                <div class="blogCaption">Lorem ipsum dolor sit amet</div>
-                <p class="blogDate">January 28, 2019</p>
-                <p class="blogDetail">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum metus pulvinar aliquet.</p>
-                <p class="blogReadPost">Read the Post <span class="blogArrow">&rarr;</span></p>
+    <div class="container-fluid mb-5">
+        <div class="title mt-5 mb-3">Convince yourself!</div>
+        <div class="whyhelperland-container">
+            <div class="dv-whyhelperland">
+                <img src="~/images/home/group-21.png" class="whyhelperland-img img-fluid">
+                <p class="whyhelperland-desc-title mt-4">Friendly & Certified Helpers</p>
+                <p class="whyhelperland-desc mt-4">
+                    We want you to be completely satisfied with our service and feel comfortable at home. In order to guarantee this, our helpers go through a test procedure. Only when the cleaners meet our high standards, they may call themselves Helper.
+                </p>
             </div>
-        </div>
-        <div class="dv-ourblog m-4">
-            <img src="~/images/home/group-29.png" class="img-fluid">
-            <div class="p-3">
-                <div class="blogCaption">Lorem ipsum dolor sit amet</div>
-                <p class="blogDate">January 28, 2019</p>
-                <p class="blogDetail">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum metus pulvinar aliquet.</p>
-                <p class="blogReadPost">Read the Post <span class="blogArrow">&rarr;</span></p>
+            <div class="dv-whyhelperland">
+                <img src="~/images/home/group-23.png" class="whyhelperland-img img-fluid">
+                <p class="whyhelperland-desc-title mt-5">Transparent and secure payment</p>
+                <p class="whyhelperland-desc mt-5">
+                    We have transparent prices, you do not have to scratch money or money on the sideboard Leave it: Pay your helper easily and securely via the online payment method. You will also receive an invoice for each completed cleaning.
+                </p>
             </div>
-        </div>
-        <div class="dv-ourblog m-4">
-            <img src="~/images/home/group-30.png" class="img-fluid">
-            <div class="p-3">
-                <div class="blogCaption">Lorem ipsum dolor sit amet</div>
-                <p class="blogDate">January 28, 2019</p>
-                <p class="blogDetail">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum metus pulvinar aliquet.</p>
-                <p class="blogReadPost">Read the Post <span class="blogArrow">&rarr;</span></p>
+            <div class="dv-whyhelperland">
+                <img src="~/images/home/group-24.png" class="whyhelperland-img img-fluid">
+                <p class="whyhelperland-desc-title mt-4">We're here for you</p>
+                <p class="whyhelperland-desc mt-4">
+                    You have a question or need assistance with the booking process? Our customer service is happy to help and advise you. How you can reach us you will find out when you look under "Contact". We look forward to hearing from you or reading.
+                </p>
             </div>
         </div>
     </div>
-    <img src="~/images/home/blog-right-bg.png" class="img-fluid right blog-right-bg">
-</div>
-<div class="customer-outer-container pt-5 pb-3 mt-5">
-    <p class="title">What Our Customers Say</p>
-    <div class="customer-inner-container">
-        <div class="dv-customer-say px-4 py-3 m-4">
-            <img src="~/images/home/message.png" class="img-fluid" align="right">
-            <div class="float-start">
-                <img src="~/images/Home/group-31.png" alt="group-31" />
+    <div class="container-fluid ourblog-container">
+        <img src="~/images/home/blog-left-bg.png" class="img-fluid left blog-left-bg">
+        <div class="ourblog-inner-container mt-5">
+            <div class="dv-consectetur">
+                <p class="whyhelperland-desc-title">We do not know what makes you happy, but ...</p>
+                <p class="whyhelperland-desc">
+                    If it's not dusting off, our friendly helpers will free you from this burden - do not worry anymore about spending valuable time doing housework, but savor life, you're well worth your time with beautiful experiences. Free yourself and enjoy the gained time: Go celebrate, relax, play with your children, meet friends or dare to jump on the bungee.Other leisure ideas and exclusive events can be found in our blog - guaranteed free from dust and cleaning tips!
+                </p>
             </div>
-            <div class="cusTitle">Lary Watson</div>
-            <div class="cusSubTitle clearfix">Manchester</div>
-            <p class="cusDetail mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum metus pulvinar aliquet consequat. Praesent nec malesuada nibh.</p>
-            <p class="cusDetail">Nullam et metus congue, auctor augue sit amet, consectetur tortor.</p>
-            <p class="cusReadMore">Read More <span class="blogArrow">&rarr;</span></p>
+            <div class="dv-consectetur-img d-flex justify-content-center">
+                <img src="~/images/home/group-36.png" class="img-fuid img-consectetur">
+            </div>
         </div>
-        <div class="dv-customer-say px-4 py-3 m-4">
-            <img src="~/images/home/message.png" class="img-fluid" align="right">
-            <div class="float-start">
-                <img src="~/images/Home/group-32.png" alt="group-31" />
+        <div class="ourblog-container title">Our Blog</div>
+        <div class="ourblog-container">
+            <div class="dv-ourblog m-4">
+                <img src="~/images/home/group-28.png" class="img-fluid">
+                <div class="p-3">
+                    <div class="blogCaption">Lorem ipsum dolor sit amet</div>
+                    <p class="blogDate">January 28, 2019</p>
+                    <p class="blogDetail">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum metus pulvinar aliquet.</p>
+                    <p class="blogReadPost">Read the Post <span class="blogArrow">&rarr;</span></p>
+                </div>
             </div>
-            <div class="cusTitle">Lary Watson</div>
-            <div class="cusSubTitle clearfix">Manchester</div>
-            <p class="cusDetail mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum metus pulvinar aliquet consequat. Praesent nec malesuada nibh.</p>
-            <p class="cusDetail">Nullam et metus congue, auctor augue sit amet, consectetur tortor.</p>
-            <p class="cusReadMore">Read More <span class="blogArrow">&rarr;</span></p>
+            <div class="dv-ourblog m-4">
+                <img src="~/images/home/group-29.png" class="img-fluid">
+                <div class="p-3">
+                    <div class="blogCaption">Lorem ipsum dolor sit amet</div>
+                    <p class="blogDate">January 28, 2019</p>
+                    <p class="blogDetail">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum metus pulvinar aliquet.</p>
+                    <p class="blogReadPost">Read the Post <span class="blogArrow">&rarr;</span></p>
+                </div>
+            </div>
+            <div class="dv-ourblog m-4">
+                <img src="~/images/home/group-30.png" class="img-fluid">
+                <div class="p-3">
+                    <div class="blogCaption">Lorem ipsum dolor sit amet</div>
+                    <p class="blogDate">January 28, 2019</p>
+                    <p class="blogDetail">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum metus pulvinar aliquet.</p>
+                    <p class="blogReadPost">Read the Post <span class="blogArrow">&rarr;</span></p>
+                </div>
+            </div>
         </div>
-        <div class="dv-customer-say px-4 py-3 m-4">
-            <img src="~/images/home/message.png" class="img-fluid" align="right">
-            <div class="float-start">
-                <img src="~/images/Home/group-33.png" alt="group-31" />
+        <img src="~/images/home/blog-right-bg.png" class="img-fluid right blog-right-bg">
+    </div>
+    <div class="customer-outer-container pt-5 pb-3 mt-5">
+        <p class="title">What Our Customers Say</p>
+        <div class="customer-inner-container">
+            <div class="dv-customer-say px-4 py-3 m-4">
+                <img src="~/images/home/message.png" class="img-fluid" align="right">
+                <div class="float-start">
+                    <img src="~/images/Home/group-31.png" alt="group-31" />
+                </div>
+                <div class="cusTitle">Lary Watson</div>
+                <div class="cusSubTitle clearfix">Manchester</div>
+                <p class="cusDetail mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum metus pulvinar aliquet consequat. Praesent nec malesuada nibh.</p>
+                <p class="cusDetail">Nullam et metus congue, auctor augue sit amet, consectetur tortor.</p>
+                <p class="cusReadMore">Read More <span class="blogArrow">&rarr;</span></p>
             </div>
-            <div class="cusTitle">Lary Watson</div>
-            <div class="cusSubTitle clearfix">Manchester</div>
-            <p class="cusDetail mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum metus pulvinar aliquet consequat. Praesent nec malesuada nibh.</p>
-            <p class="cusDetail">Nullam et metus congue, auctor augue sit amet, consectetur tortor.</p>
-            <p class="cusReadMore">Read More <span class="blogArrow">&rarr;</span></p>
+            <div class="dv-customer-say px-4 py-3 m-4">
+                <img src="~/images/home/message.png" class="img-fluid" align="right">
+                <div class="float-start">
+                    <img src="~/images/Home/group-32.png" alt="group-31" />
+                </div>
+                <div class="cusTitle">Lary Watson</div>
+                <div class="cusSubTitle clearfix">Manchester</div>
+                <p class="cusDetail mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum metus pulvinar aliquet consequat. Praesent nec malesuada nibh.</p>
+                <p class="cusDetail">Nullam et metus congue, auctor augue sit amet, consectetur tortor.</p>
+                <p class="cusReadMore">Read More <span class="blogArrow">&rarr;</span></p>
+            </div>
+            <div class="dv-customer-say px-4 py-3 m-4">
+                <img src="~/images/home/message.png" class="img-fluid" align="right">
+                <div class="float-start">
+                    <img src="~/images/Home/group-33.png" alt="group-31" />
+                </div>
+                <div class="cusTitle">Lary Watson</div>
+                <div class="cusSubTitle clearfix">Manchester</div>
+                <p class="cusDetail mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum metus pulvinar aliquet consequat. Praesent nec malesuada nibh.</p>
+                <p class="cusDetail">Nullam et metus congue, auctor augue sit amet, consectetur tortor.</p>
+                <p class="cusReadMore">Read More <span class="blogArrow">&rarr;</span></p>
+            </div>
         </div>
     </div>
-</div>
+
+    <div class="container-fluid customer-outer-container py-5">
+        <div class="row">
+            <div class="col-md-1 d-flex justify-content-center" id="test">
+                <a asp-action="" asp-controller="" onclick="topnavigation();"><div class="topnav"><img src="~/images/Home/forma-1.png" alt="forma-1"></div></a>
+            </div>
+            <div class="col-md-10 text-center">
+                <p class="newsletter">GET OUR NEWSLETTER</p>
+                <div>
+                    <input type="text" class="form-control-sm rounded-pill textbox" placeholder="YOUR EMAIL">
+                    <input type="submit" class="btn rounded-pill submit" value="Submit">
+                </div>
+            </div>
+            <div class="col-md-1 d-flex justify-content-center">
+                <img src="~/images/Home/layer-598.png" alt="layer-598">
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" id="footer">
+        <footer>
+            <table class="table table-borderless">
+                <tr class="row footer1 align-items-center text-center">
+                    <td class="col-md-2">
+                        <a asp-action="index" asp-controller="customer"><img src="~/images/Home/white-logo-transparent-background-copy-4.png" alt="white-logo-transparent-background-copy-4"></a>
+                    </td>
+                    <td class="col-md-8">
+                        <a asp-action="index" asp-controller="customer">HOME</a>
+                        <a asp-action="aboutus" asp-controller="customer">ABOUT</a>
+                        <a asp-action="" asp-controller="">TESTIMONIALS</a>
+                        <a asp-action="faq" asp-controller="customer">FAQs</a>
+                        <a asp-action="" asp-controller="">INSURANCE POLICY</a>
+                        <a asp-action="" asp-controller="">IMPRESSUM</a>
+                    </td>
+                    <td class="col-md-2">
+                        <a asp-action="" asp-controller="" class="pe-2"><img src="~/images/Home/fb.png" alt="fb"></a>
+                        <a asp-action="" asp-controller=""><img src="~/images/Home/insta.png" alt="insta"></a>
+                    </td>
+                </tr>
+                <tr class="row footer2 align-items-center">
+                    <td class="col-md-11 text-center">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat nunc libero, ac malesuada ligula aliquam ac. <a asp-action="" asp-controller="" class="privacypolicy">Privacy Policy</a>
+                    </td>
+                    <td class="col-md-1" align="right">
+                        <input type="button" value="OK!" class="btnok">
+                    </td>
+                </tr>
+            </table>
+        </footer>
+    </div>
+
+    <partial name="_LoginForgotPasswordModalLayout" />   
+
+    <!-- script -->
+    <script src="~/js/home.js"></script>
+    <!-- script for sidebar navigation -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <partial name="_SidebarNavigationLayout" />
+</body>
+</html>
