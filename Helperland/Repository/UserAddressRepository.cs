@@ -18,8 +18,11 @@ namespace Helperland.Repository
         public int AddUserAddress(UserAddress userAddress)
         {
             helperlandContext.UserAddresses.Add(userAddress);
-            var result = helperlandContext.SaveChanges();
-            return result;
+            return helperlandContext.SaveChanges();
+        }
+        public UserAddress GetAddressByAddressId(int addressid)
+        {
+            return helperlandContext.UserAddresses.Where(a => a.AddressId == addressid).FirstOrDefault();
         }
     }
 }

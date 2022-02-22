@@ -37,6 +37,9 @@ namespace Helperland
                     options.AccessDeniedPath = "/Forbidden/";
                 });
             services.AddScoped<IUserAddressRepository, UserAddressRepository>();
+            services.AddScoped<IServiceRequestRepository, ServiceRequestRepository>();
+            services.AddScoped<IServiceRequestAddressRepository, ServiceRequestAddressRepository>();
+            services.AddScoped<IServiceRequestExtraRepository, ServiceRequestExtraRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

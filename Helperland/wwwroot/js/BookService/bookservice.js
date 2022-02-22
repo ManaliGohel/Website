@@ -1,4 +1,6 @@
-﻿function checkAvailabilityOfSP() {
+﻿var _serviceHourlyRate = 18;
+
+function checkAvailabilityOfSP() {
     var spnAvailability = document.getElementById("spnCheckAvailability");
     spnAvailability.innerHTML = "";
     var zipcode = document.getElementById("txtzipcode").value.trim();    
@@ -16,8 +18,8 @@
                         showSchedulePlanBlock(); 
                         document.getElementById("spnBasicSerHours").innerHTML = 3;
                         document.getElementById("totalSerHours").innerHTML = 3;
-                        document.getElementById("spnpercleaningrate").innerHTML = 54;
-                        document.getElementById("spntotalpayment").innerHTML = 54;                        
+                        document.getElementById("spnpercleaningrate").innerHTML = (_serviceHourlyRate*3);
+                        document.getElementById("spntotalpayment").innerHTML = (_serviceHourlyRate*3);                        
                     }
                     else {
                         spnAvailability.innerHTML = "We are not providing service in this area. We’ll notify you if any Helper would start working near your area!!";
@@ -208,6 +210,7 @@ function setDateinPS() {
 }
 
 var sercount = 0;
+var extraServices = [];
 function selectUnselectSerCabinet() {
     if (document.getElementById("dv-ser-cabinet").classList.contains('serselected-border')) {
         document.getElementById("ser-cabinet-selected").style.display = "none";
@@ -216,6 +219,7 @@ function selectUnselectSerCabinet() {
         sercount--;
         document.getElementById("dv-insidecabinets").style.display = "none";
         document.getElementById("selserhours").selectedIndex--;
+        extraServices.splice(extraServices.indexOf("InsideCabinets"), 1);
     }
     else {
         if ((document.getElementById("selserhours").selectedIndex) < ($('#selserhours  option').length - 1) && (parseFloat(document.getElementById('seltimeforser').value) + parseFloat(document.getElementById('selserhours').value)) < 20) {
@@ -225,6 +229,7 @@ function selectUnselectSerCabinet() {
             sercount++;
             document.getElementById("dv-insidecabinets").style.display = "block";
             document.getElementById("selserhours").selectedIndex++;
+            extraServices.push("InsideCabinets");
         }
         else {
             $("#spnInvalidSertimeErr").text("You cant't select extra services! Helper must be able to finish cleaning by 8pm!!").fadeIn(1000).fadeOut(5000);
@@ -240,6 +245,7 @@ function selectUnselectSerFridge() {
         sercount--;
         document.getElementById("dv-insidefridge").style.display = "none";
         document.getElementById("selserhours").selectedIndex--;
+        extraServices.splice(extraServices.indexOf("InsideFridge"), 1);
     }
     else {
         if ((document.getElementById("selserhours").selectedIndex) < ($('#selserhours  option').length - 1) && (parseFloat(document.getElementById('seltimeforser').value) + parseFloat(document.getElementById('selserhours').value)) < 20) {
@@ -249,6 +255,7 @@ function selectUnselectSerFridge() {
             sercount++;
             document.getElementById("dv-insidefridge").style.display = "block";
             document.getElementById("selserhours").selectedIndex++;
+            extraServices.push("InsideFridge");
         }
         else {
             $("#spnInvalidSertimeErr").text("You cant't select extra services! Helper must be able to finish cleaning by 8pm!!").fadeIn(1000).fadeOut(3000);
@@ -264,6 +271,7 @@ function selectUnselectSerOven() {
         sercount--;
         document.getElementById("dv-insideoven").style.display = "none";
         document.getElementById("selserhours").selectedIndex--;
+        extraServices.splice(extraServices.indexOf("InsideOven"), 1);
     }
     else {
         if ((document.getElementById("selserhours").selectedIndex) < ($('#selserhours  option').length - 1) && (parseFloat(document.getElementById('seltimeforser').value) + parseFloat(document.getElementById('selserhours').value)) < 20) {
@@ -273,6 +281,7 @@ function selectUnselectSerOven() {
             sercount++;
             document.getElementById("dv-insideoven").style.display = "block";
             document.getElementById("selserhours").selectedIndex++;
+            extraServices.push("InsideOven");
         }
         else {
             $("#spnInvalidSertimeErr").text("You cant't select extra services! Helper must be able to finish cleaning by 8pm!!").fadeIn(1000).fadeOut(3000);
@@ -288,6 +297,7 @@ function selectUnselectSerLaundry() {
         sercount--;
         document.getElementById("dv-insidelaundry").style.display = "none";
         document.getElementById("selserhours").selectedIndex--;
+        extraServices.splice(extraServices.indexOf("LaundryWashAndDry"), 1);
     }
     else {
         if ((document.getElementById("selserhours").selectedIndex) < ($('#selserhours  option').length - 1) && (parseFloat(document.getElementById('seltimeforser').value) + parseFloat(document.getElementById('selserhours').value)) < 20) {
@@ -297,6 +307,7 @@ function selectUnselectSerLaundry() {
             sercount++;
             document.getElementById("dv-insidelaundry").style.display = "block";
             document.getElementById("selserhours").selectedIndex++;
+            extraServices.push("LaundryWashAndDry");
         }
         else {
             $("#spnInvalidSertimeErr").text("You cant't select extra services! Helper must be able to finish cleaning by 8pm!!").fadeIn(1000).fadeOut(3000);
@@ -312,6 +323,7 @@ function selectUnselectSerWindows() {
         sercount--;
         document.getElementById("dv-interiorwindows").style.display = "none";
         document.getElementById("selserhours").selectedIndex--;
+        extraServices.splice(extraServices.indexOf("InteriorWindows"), 1);
     }
     else {
         if ((document.getElementById("selserhours").selectedIndex) < ($('#selserhours  option').length - 1) && (parseFloat(document.getElementById('seltimeforser').value) + parseFloat(document.getElementById('selserhours').value)) < 20) {
@@ -321,6 +333,7 @@ function selectUnselectSerWindows() {
             sercount++;
             document.getElementById("dv-interiorwindows").style.display = "block";
             document.getElementById("selserhours").selectedIndex++;
+            extraServices.push("InteriorWindows");
         }
         else {
             $("#spnInvalidSertimeErr").text("You cant't select extra services! Helper must be able to finish cleaning by 8pm!!").fadeIn(1000).fadeOut(3000);
@@ -338,8 +351,8 @@ function selectedExtraSers() {
         document.getElementById("dv-extrasers").classList.add("d-block");
     }
     document.getElementById("totalSerHours").innerHTML = document.getElementById("selserhours").value;
-    document.getElementById("spnpercleaningrate").innerHTML = (parseFloat(document.getElementById("totalSerHours").innerHTML) * 18);
-    document.getElementById("spntotalpayment").innerHTML = (parseFloat(document.getElementById("totalSerHours").innerHTML) * 18);
+    document.getElementById("spnpercleaningrate").innerHTML = (parseFloat(document.getElementById("totalSerHours").innerHTML) * _serviceHourlyRate);
+    document.getElementById("spntotalpayment").innerHTML = (parseFloat(document.getElementById("totalSerHours").innerHTML) * _serviceHourlyRate);
     document.getElementById("spnBasicSerHours").innerHTML = (parseFloat(document.getElementById("selserhours").value) - parseFloat(sercount * 0.5));    
     document.getElementById("hdnselectedserhoursindex").value = document.getElementById("selserhours").selectedIndex;
 }
@@ -349,8 +362,8 @@ function isSufficientTimeforSer() {
     if (parseFloat(document.getElementById("selserhours").value) >= parseFloat(3 + (sercount * 0.5))) {
         document.getElementById("hdnselectedserhoursindex").value = document.getElementById("selserhours").selectedIndex;
         document.getElementById("totalSerHours").innerHTML = document.getElementById("selserhours").value;
-        document.getElementById("spnpercleaningrate").innerHTML = (parseFloat(document.getElementById("totalSerHours").innerHTML) * 18);
-        document.getElementById("spntotalpayment").innerHTML = (parseFloat(document.getElementById("totalSerHours").innerHTML) * 18);
+        document.getElementById("spnpercleaningrate").innerHTML = (parseFloat(document.getElementById("totalSerHours").innerHTML) * _serviceHourlyRate);
+        document.getElementById("spntotalpayment").innerHTML = (parseFloat(document.getElementById("totalSerHours").innerHTML) * _serviceHourlyRate);
         document.getElementById("spnBasicSerHours").innerHTML = (parseFloat(document.getElementById("selserhours").value) - parseFloat(sercount * 0.5));
     }
     else {
@@ -367,8 +380,8 @@ function clearExtraServices() {
         document.getElementById("dv-extrasers").classList.remove("d-block");
         document.getElementById("dv-extrasers").classList.add("d-none");
         document.getElementById("totalSerHours").innerHTML = 3;
-        document.getElementById("spnpercleaningrate").innerHTML = 54;
-        document.getElementById("spntotalpayment").innerHTML = 54;
+        document.getElementById("spnpercleaningrate").innerHTML = (_serviceHourlyRate*3);
+        document.getElementById("spntotalpayment").innerHTML = (_serviceHourlyRate*3);
         document.getElementById("spnBasicSerHours").innerHTML = 3;
         initialyExtraServices();
         document.getElementById("selserhours").selectedIndex = 0;
@@ -378,8 +391,8 @@ function clearExtraServices() {
     else {
         document.getElementById("selserhours").selectedIndex = sercount;
         document.getElementById("totalSerHours").innerHTML = document.getElementById("selserhours").value;
-        document.getElementById("spnpercleaningrate").innerHTML = (parseFloat(document.getElementById("totalSerHours").innerHTML) * 18);
-        document.getElementById("spntotalpayment").innerHTML = (parseFloat(document.getElementById("totalSerHours").innerHTML) * 18);
+        document.getElementById("spnpercleaningrate").innerHTML = (parseFloat(document.getElementById("totalSerHours").innerHTML) * _serviceHourlyRate);
+        document.getElementById("spntotalpayment").innerHTML = (parseFloat(document.getElementById("totalSerHours").innerHTML) * _serviceHourlyRate);
         document.getElementById("spnBasicSerHours").innerHTML = (parseFloat(document.getElementById("selserhours").value) - parseFloat(sercount * 0.5));
     }
     document.getElementById("hdnselectedserhoursindex").value = document.getElementById("selserhours").selectedIndex;
@@ -525,10 +538,50 @@ function saveUserNewAddress() {
     }
 }
 
-function showCompleteBooking() {
+function bookService() {
+    var completeBooking = {};
+    completeBooking.ServiceStartDate = document.getElementById("dtSerDate").value
+    var myarr = document.getElementById("seltimeforser").value.split(".");
+    if (myarr.length > 1) {
+        completeBooking.ServiceStartTime = myarr[0] + ":30";
+    }
+    else {
+        completeBooking.ServiceStartTime = myarr[0] + ":00";
+    }
+    completeBooking.ZipCode = document.getElementById("txtzipcode").value;
+    completeBooking.ServiceHourlyRate = _serviceHourlyRate;
+    completeBooking.ServiceHours = document.getElementById("totalSerHours").innerHTML;
+    completeBooking.ExtraHours = parseFloat(document.getElementById("totalSerHours").innerHTML) - parseFloat(document.getElementById("spnBasicSerHours").innerHTML);
+    completeBooking.ExtraServicesName = extraServices; 
+    completeBooking.SubTotal = document.getElementById("spnpercleaningrate").innerHTML;
+    completeBooking.TotalCost = document.getElementById("spntotalpayment").innerHTML;
+    completeBooking.Comments = document.getElementById("txtareaComments").value;
+    completeBooking.HasPets = document.getElementById("cbhavePets").checked;
+    completeBooking.UserAddressID = $("input[type='radio'][name='rbuseradd']:checked").val();
+    console.log(completeBooking);
+    $.ajax({
+        url: "/BookService/saveBookServiceRequest",
+        type: "post",
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(completeBooking),
+        success: function (response) {
+            if (response > 0) {
+                showCompleteBooking(response);
+            }
+        },
+        error: function (response) {
+            console.log("bookService() error: " + response.responseText);
+        }
+    });
+}
+
+function showCompleteBooking(servicereqid) {
     Swal.fire({
         icon: 'success',
         title: 'Booking has been successfully submitted!!',
-        text: 'Service Request Id: 8488',
+        text: 'Service Request Id: ' + servicereqid + "!!"
+    }).then(function () {
+        window.location = "/customer/servicehistory";
     });
 }

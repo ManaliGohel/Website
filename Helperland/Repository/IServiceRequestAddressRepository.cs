@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Helperland.Repository
 {
-    public interface IUserAddressRepository
+    public interface IServiceRequestAddressRepository
     {
-        public int AddUserAddress(UserAddress userAddress);
-        public UserAddress GetAddressByAddressId(int addressid);
+        public int saveServiceRequestAddress(ServiceRequestAddress serviceRequestAddress);
     }
 }

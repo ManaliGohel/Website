@@ -46,7 +46,7 @@ namespace Helperland.Core
             }
         }
 
-        public bool SendContectUs(EmailModel model)
+        public bool SendContactUs(EmailModel model)
         {
             try
             {

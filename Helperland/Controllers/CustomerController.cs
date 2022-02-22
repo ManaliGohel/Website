@@ -63,6 +63,12 @@ namespace Helperland.Controllers
             else
                 return View();
         }
+
+        public IActionResult home()
+        {
+            return View("~/Views/Customer/index.cshtml");
+        }
+
         public IActionResult faq()
         {
             return View();
@@ -113,9 +119,7 @@ namespace Helperland.Controllers
                     Attachment = filepath  
                 };
                 MailHelper mailhelp = new MailHelper(configuration);
-
-                mailhelp.SendContectUs(emailmodel);
-
+                mailhelp.SendContactUs(emailmodel);
                 return RedirectToAction();
             }
             return View();
