@@ -4,9 +4,17 @@ html, body{
     scroll-behavior: smooth;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
-.home{
+input[type=text], input[type=email], input[type=password], input[type=date], input[type=number], input[type=file], input[type="file"]::-webkit-file-upload-button, .select, input[type=datetime-local] {
+    height: 45px;
+}
+input[type=text]:focus, input[type=email]:focus, input[type=checkbox]:focus, input[type=radio]:focus, input[type=password]:focus, input[type=date]:focus, input[type=number]:focus, input[type=file]:focus, .textarea:focus, .select:focus, input[type=datetime-local]:focus {
+    outline: none !important;
+    box-shadow: none;
+    border: 1px solid #1D7A8C;
+}
+.home {
     background-image: url("../images/home/banner-bg.jpg");
-    height: 100%; 
+    height: 100%;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -392,67 +400,6 @@ nav .drop-down li a {
     display: none;
 }
 
-/* Login Modal CSS */
-.modal{
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-.mdlheader{
-    color: #646464;
-    font-size: 25px;
-    font-weight: bold;
-}
-.img-modal-icon{
-    padding-right: calc(1.5em + .75rem);
-    background-repeat: no-repeat;
-    background-position: center right calc(.375em + .1875rem);
-    background-size: calc(.75em + .375rem) calc(.75em + .375rem);
-}
-.img-email {
-    background-image: url('../images/home/img-email.png');
-}
-.img-password {
-    background-image: url('../images/home/img-password.png');
-}
-.modal input[type=email], .modal input[type=password]{
-    height: 45px;
-}
-.btnLogin{
-    color: white;
-    background-color: rgba(0, 96, 114, 1);
-    width: 100%;
-    border: 1px solid #e1e1e1;
-    border-radius: 20px;
-    padding: 8px;
-    font-size: 18px;
-}
-.btnLogin:hover{
-    background-color: rgba(0, 96, 114, 0.9);
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.2);
-    border: 1px solid transparent;    
-}
-.modal .btndisable{
-    color: white;
-    width: 100%;
-    border: 1px solid #e1e1e1;
-    border-radius: 20px;
-    padding: 8px;
-    font-size: 18px;
-    background-color: rgba(0, 96, 114, 0.6);
-    cursor: no-drop;
-}
-.modal a{
-    color: rgba(0, 96, 114, 1);
-    text-decoration: none;
-    font-weight: bold;
-}
-.modal a:hover{
-    color: rgba(0, 96, 114, 0.9);
-}
-/*a:not([href]):not([class]), a:not([href]):not([class]):hover {
-    color: white;*/ 
-    /* text-decoration: none; */
-/*}*/
-
 @media (max-width:1450px) {
     .blog-left-bg, .blog-right-bg{
         display: none;
@@ -580,6 +527,9 @@ nav .drop-down li a {
     }
     .hometext {
         margin-top: 22%;
+    }
+    input[type=text], input[type=email], input[type=password], input[type=date], input[type=number], input[type=file], input[type="file"]::-webkit-file-upload-button, .textarea:focus, .select, input[type=datetime-local] {
+        font-size: 14px;
     }
 }
 @media (max-width:572px) {

@@ -133,10 +133,7 @@ namespace Helperland.Controllers
             if (HttpContext.Session.GetInt32("UserType") == (int)UserTypeIdEnum.Customer)
             {
                 ViewBag.UserName = HttpContext.Session.GetString("UserName");
-                //if (HttpContext.Session.GetInt32("redirectToBookService") == 1)
-                //    return RedirectToAction("bookservice", "customer");
-                //else
-                    return View();
+                return View();
             }
             else
                 return RedirectToAction("index", "customer");
@@ -330,23 +327,5 @@ namespace Helperland.Controllers
             HttpContext.Session.Clear();
             return RedirectToAction("index", "customer");
         }
-
-        //public IActionResult userTypewiseRedirection(int usertypeid, string username)
-        //{
-        //    HttpContext.Session.SetInt32("UserType", usertypeid);
-        //    HttpContext.Session.SetString("UserName", username);
-        //    if (usertypeid == (int)UserTypeIdEnum.Customer)
-        //        return RedirectToAction("servicehistory", "customer");
-        //    else if (usertypeid == (int)UserTypeIdEnum.ServiceProvider)
-        //        return RedirectToAction("upcomingservice", "serviceprovider");
-        //    else
-        //        return RedirectToAction("index", "admin");
-        //}
-
-        //public async Task<User> getUserDetailsById(int userid)
-        //{
-        //    User user = await helperLandContext.Users.FirstOrDefaultAsync(e => e.UserId == userid);
-        //    return user;
-        //}
     }
 }

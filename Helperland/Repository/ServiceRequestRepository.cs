@@ -1,5 +1,6 @@
 ﻿using Helperland.Data;
 using Helperland.Models;
+using Helperland.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,11 @@ namespace Helperland.Repository
         public int saveServiceRequest(ServiceRequest serviceRequest)
         {
             helperLandContext.ServiceRequests.Add(serviceRequest);            
+            return helperLandContext.SaveChanges();
+        }
+        public int saveRatingsForSP(Rating rating)
+        {
+            helperLandContext.Ratings.Add(rating);
             return helperLandContext.SaveChanges();
         }
     }

@@ -36,6 +36,11 @@
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.2);
     border: 1px solid transparent;
 }
+.fs6 {
+    font-size: 16px;
+    border-radius: 24px;
+    padding: 11px;
+}
 .modal .btndisable {
     color: white;
     width: 100%;
@@ -54,4 +59,41 @@
 }
 .modal a:hover {
     color: rgba(0, 96, 114, 0.9);
+}
+
+#loginModal .modal-dialog, #forgorpasswordModal .modal-dialog {
+    max-width: 370px;
+}
+#addedituseraddressModal .modal-dialog {
+    max-width: 600px;
+    color: #646464;
+}
+#showServiceRequestDetailsModal .modal-dialog {
+    max-width: 750px;
+    color: #646464;
+}
+#rescheduleServiceRequestModal .modal-dialog, #deleteServiceRequestModal .modal-dialog {
+    max-width: 400px;
+    color: #646464;
+}
+.createaccounttxt {
+    margin-top: -10px;
+}
+
+@media (max-width: 768px){
+    .mdlheader{
+        font-size: 18px;
+    }
+    .modal-body, .modal .btndisable {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 442px) {
+    .mdlheader {
+        font-size: 16px;
+    }
+    .modal-body, .modal .btndisable {
+        font-size: 14px;
+    }
 }

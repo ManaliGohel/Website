@@ -8,6 +8,9 @@ namespace Helperland.ViewModels
 {
     public class UserAddressViewModel
     {
+        [JsonPropertyName("addressId")]
+        public int addressId { get; set; }
+
         [JsonPropertyName("userId")]
         public int userId { get; set; }
 

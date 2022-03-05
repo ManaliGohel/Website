@@ -64,10 +64,7 @@ namespace Helperland.Controllers
         [HttpGet]
         public JsonResult getAllUserAddressesbyPostalcode(string postalcode)
         {
-            if (HttpContext.Request.Cookies["UserId"] != null)
-                return Json(helperLandContext.UserAddresses.Where(a => a.UserId.Equals(Int32.Parse(HttpContext.Request.Cookies["UserId"])) && a.PostalCode.Equals(postalcode)).ToList());
-            else
-                return Json(helperLandContext.UserAddresses.Where(a => a.UserId.Equals(HttpContext.Session.GetInt32("UserId")) && a.PostalCode.Equals(postalcode)).ToList());
+            return Json(helperLandContext.UserAddresses.Where(a => a.UserId.Equals(getLoggedinUserId()) && a.PostalCode.Equals(postalcode)).OrderByDescending(a => a.AddressId).ToList());            
         }
 
         [HttpGet]
@@ -88,14 +85,9 @@ namespace Helperland.Controllers
         [HttpPost]
         public JsonResult addNewAddress([FromBody] UserAddressViewModel userAddressViewModel)
         {
-            int userid = 0;
-            if (HttpContext.Request.Cookies["UserId"] != null)
-                userid = Int32.Parse(HttpContext.Request.Cookies["UserId"]);
-            else
-                userid = (int)HttpContext.Session.GetInt32("UserId");
             UserAddress userAddress = new UserAddress
             {
-                UserId = userid,
+                UserId = getLoggedinUserId(),
                 AddressLine1 = userAddressViewModel.addressLine1,
                 AddressLine2 = userAddressViewModel.addressLine2,
                 City = userAddressViewModel.city,
@@ -112,14 +104,9 @@ namespace Helperland.Controllers
         [HttpPost]
         public JsonResult saveBookServiceRequest([FromBody] ServiceRequestViewModel model)
         {
-            int userid = 0;
-            if (HttpContext.Request.Cookies["UserId"] != null)
-                userid = Int32.Parse(HttpContext.Request.Cookies["UserId"]);
-            else
-                userid = (int)HttpContext.Session.GetInt32("UserId");
             ServiceRequest serviceRequest = new ServiceRequest
             {
-                UserId = userid,
+                UserId = getLoggedinUserId(),
                 ServiceId = 0,
                 ServiceStartDate = Convert.ToDateTime(model.ServiceStartDate.ToString().Trim() + " " + model.ServiceStartTime.ToString().Trim()),
                 ZipCode = model.ZipCode,
@@ -133,7 +120,7 @@ namespace Helperland.Controllers
                 HasPets = model.HasPets,
                 CreatedDate = DateTime.Now,
                 ModifiedDate = DateTime.Now,
-                ModifiedBy = userid,
+                ModifiedBy = getLoggedinUserId(),
                 Distance = 25,
                 PaymentDone = true,
                 RecordVersion = Guid.NewGuid()
@@ -180,6 +167,13 @@ namespace Helperland.Controllers
                 }
             }
             return Json(serviceRequest.ServiceRequestId);
+        }
+        public int getLoggedinUserId()
+        {
+            if (HttpContext.Request.Cookies["UserId"] != null)
+                return Int32.Parse(HttpContext.Request.Cookies["UserId"]);
+            else
+                return (int)HttpContext.Session.GetInt32("UserId");
         }
     }
 }

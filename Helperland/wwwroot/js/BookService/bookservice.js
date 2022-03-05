@@ -540,7 +540,7 @@ function saveUserNewAddress() {
 
 function bookService() {
     var completeBooking = {};
-    completeBooking.ServiceStartDate = document.getElementById("dtSerDate").value
+    completeBooking.ServiceStartDate = document.getElementById("dtSerDate").value;
     var myarr = document.getElementById("seltimeforser").value.split(".");
     if (myarr.length > 1) {
         completeBooking.ServiceStartTime = myarr[0] + ":30";

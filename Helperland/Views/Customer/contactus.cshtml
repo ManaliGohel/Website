@@ -65,7 +65,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12 my-1">
-                    <select class="form-select" asp-for="subject">
+                    <select class="form-select select" asp-for="subject">
                         <option value="General" selected>General</option>
                         <option value="Inquiry">Inquiry</option>
                         <option value="Renewal">Renewal</option>
@@ -75,7 +75,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12 my-1">
-                    <textarea class="form-control" asp-for="message" id="txtareaMsg" rows="5" placeholder="Message"></textarea>
+                    <textarea class="form-control textarea" asp-for="message" id="txtareaMsg" rows="5" placeholder="Message"></textarea>
                     <span asp-validation-for="message" class="text-danger"></span>
                 </div>
             </div>

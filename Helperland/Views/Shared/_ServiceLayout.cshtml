@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css">
     }
+    <link href="~/css/site.css" rel="stylesheet" />
     @if (ViewData["Title"] == "Book Service")
     {
-        <link href="~/css/site.css" rel="stylesheet" />        
         <link href="~/css/bookservice.css" rel="stylesheet" />
     }
     <link rel="stylesheet" href="~/css/datatable.css">
@@ -98,8 +98,8 @@
                                     <ul class="dropdown-menu p-3 ms-2 ddProfile" aria-labelledby="ddProfile" style="right: 10px; left: auto;">
                                         <li class="dropdown-item ddProfileNoHover">Welcome,<br><span id="proname">@ViewBag.UserName</span></li>
                                         <li><hr></li>
-                                        <li><a class="dropdown-item" asp-action="" asp-controller="">My Dashboard</a></li>
-                                        <li><a class="dropdown-item" asp-action="" asp-controller="">My Settings</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="showcusDashboard('lnkcus-dashboard');">My Dashboard</a></li>
+                                        <li><a class="dropdown-item" href="#" onclick="showcusMysettings();">My Settings</a></li>
                                         <li><a class="dropdown-item" asp-action="logout" asp-controller="customer">Logout</a></li>
                                     </ul>
                                 </li>
@@ -127,8 +127,16 @@
                                     <ul class="dropdown-menu p-3 ms-2 ddProfile" aria-labelledby="ddProfile" style="right: 10px; left: auto;">
                                         <li class="dropdown-item ddProfileNoHover">Welcome, <br><span id="proname">@ViewBag.UserName</span></li>
                                         <li><hr></li>
-                                        <li><a class="dropdown-item" asp-action="" asp-controller="">My Dashboard</a></li>
-                                        <li><a class="dropdown-item" asp-action="" asp-controller="">My Settings</a></li>
+                                        @if (ViewData["Title"] == "Book Service")
+                                        {
+                                            <li><a class="dropdown-item" asp-action="servicehistory" asp-controller="Customer">My Dashboard</a></li>
+                                            <li><a class="dropdown-item" href="#" onclick="redirectToCustomerMysettings();">My Settings</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li><a class="dropdown-item" asp-action="faq" asp-controller="Customer">My Dashboard</a></li>
+                                            <li><a class="dropdown-item" asp-action="aboutus" asp-controller="Customer">My Settings</a></li>
+                                        }
                                         <li><a class="dropdown-item" asp-action="logout" asp-controller="customer">Logout</a></li>
                                     </ul>
                                 </li>
@@ -169,9 +177,9 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-3"><img src="~/images/service-history/imghatprofile.png"></div>
+                        <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-3"><span id="spnSpRateModalSPImage"><img src="~/images/service-history/imghatprofile.png"></span></div>
                         <div>
-                            <label class="fs1 fw-bold">Lyum Watson</label>
+                            <label class="fs1 fw-bold" id="lblspRateModalSPName"></label>
                             <div>
                                 <span id="rateSPfinal" class="stars-container stars-0">★★★★★</span>
                                 <label class="ps-1" id="lblrateSP">0</label>
@@ -180,6 +188,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <input type="hidden" id="hdnSRIdforRateSP" />
+                        <input type="hidden" id="hdnSPIdforRateSP" />
                         <label class="fs1 fw-bold mb-2">Rate your service provider</label>
                         <div class="row">
                             <div class="col-md-4"><label class="mt-2">On time arrival</label></div>
@@ -201,10 +211,35 @@
                         </div>
                         <div class="row mt-1">
                             <div class="col-md-12">
-                                <textarea class="form-control" id="txtFeedbackToSP"></textarea>
+                                <textarea class="form-control textarea" id="txtFeedbackToSP"></textarea>
                             </div>
                         </div>
-                        <button class="btnExport mt-2 fw-bold py-2 px-3" data-bs-toggle="modal" data-bs-dismiss="modal">Submit</button>
+                        <button class="btnExport mt-2 fw-bold py-2 px-3" onclick="submitRateOfSP();">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal end -->
+        <!-- Modal 5 Already Rate Service Provider -->
+        <div class="modal fade" id="alreadyRatedSPModal" aria-hidden="true" aria-labelledby="alreadyRatedSPModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="float-start dvProimgContainer d-flex justify-content-center align-items-center me-3"><span id="spnSpRateModalSPImage"><img src="~/images/service-history/imghatprofile.png"></span></div>
+                        <div>
+                            <label class="fs1 fw-bold" id="lblspRatedModalSPName"></label>
+                            <div>
+                                <span class="stars-container stars-0">★★★★★</span>
+                                <label class="ps-1" id="lblrateSP">0</label>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3 ffc">
+                            <label class="fs1 fw-bold">You are already rated service provider for this service!!</label>
+                        </div>                        
+                        <button class="btnLogin fs6" onclick="closeAreadyRatedSPModal();">Okay</button>
                     </div>
                 </div>
             </div>
@@ -214,12 +249,9 @@
 
     <!-- Script -->
     <script src="~/js/myjs.js"></script>
-    @if (ViewData["Title"] == "Service History")
+    @if (ViewData["Title"] == "Book Service" || ViewData["Title"] == "Service History")
     {
-        <script src="~/js/service_history.js"></script>
-    }
-    @if (ViewData["Title"] == "Book Service")
-    {
+        <script src="~/js/Customer/service_history.js"></script>
         <script src="~/js/BookService/bookservice.js"></script>
         <!-- Sweet alert -->
         <link href="~/lib/limonte-sweetalert2/sweetalert2.css" rel="stylesheet" />
@@ -280,6 +312,29 @@
                         }]
                     }
                 });
+                $('#tblcusDashboard').DataTable({
+                    "columnDefs": [
+                        { "orderable": false, "targets": 4 }
+                    ],
+                    "bFilter": false, //hide Search bar
+                    "pagingType": "full_numbers",
+                    paging: true,
+                    "pagingType": "full_numbers",
+                    // bFilter: false,
+                    ordering: true,
+                    searching: false,
+                    info: true,
+                    "columnDefs": [
+                        { "orderable": false, "targets": 4 }
+                    ],
+                    "oLanguage": {
+                        "sInfo": "Total Records: _TOTAL_"
+                    },
+                    "dom": 'Bt<"top">rt<"bottom"lip><"clear">',
+                    responsive: true,
+                    "order": [],
+                    buttons: []
+                });
             });
         </script>
     }
@@ -320,6 +375,13 @@
 </html>
 @if (ViewData["Title"] == "Service History")
 {
+    <script>
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
     <!-- Rate by Star script -->
     <script src="~/js/jsRapStar.js"></script>
     <script>
@@ -377,7 +439,7 @@
                 onMousemove: function (score) {
                     $(this).attr('title', 'Rate ' + score.toFixed(2));
                 }
-            });
+            });            
         });
         $(function () {
             function addScore(score, $domElement) {
@@ -405,6 +467,6 @@
             style.innerHTML = '.stars-container:after { color: gold; }';
             document.getElementsByTagName('head')[0].appendChild(style);
             document.getElementById('rateSPfinal').classList.add("stars-container");
-        }
-    </script>
+        }           
+    </script>        
 }

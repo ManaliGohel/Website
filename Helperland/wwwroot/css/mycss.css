@@ -1,6 +1,14 @@
 html, body{
     margin: 0;
 }
+input[type=text], input[type=email], input[type=password], input[type=date], input[type=number], input[type=file], input[type="file"]::-webkit-file-upload-button, .select, input[type=datetime-local] {
+    height: 45px;
+}
+input[type=text]:focus, input[type=email]:focus, input[type=password]:focus, input[type=checkbox]:focus, input[type=radio]:focus, input[type=number]:focus, input[type=file]:focus, .textarea:focus, .select:focus, input[type=datetime-local]:focus, input[type=date]:focus {
+    outline: none !important;
+    box-shadow: none;
+    border: 1px solid #1D7A8C;
+}
 
 /* Header */
 .sticky {
@@ -477,16 +485,16 @@ a:hover {
 .ser-provider-submenu-list{
     width: 100%;
 }
-#tblUpcomingServices, #tblcusServiceHistory, #tblUserManagement, #tblSerReq{
+#tblUpcomingServices, #tblcusServiceHistory, #tblUserManagement, #tblSerReq, #tblcusDashboard {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     color: #646464;
     border: 1px solid #e1e1e1;
-    font-size: 16px;    
+    font-size: 16px;
 }
-#tblUpcomingServices thead, #tblcusServiceHistory thead, #tblUserManagement thead, #tblSerReq thead{
+#tblUpcomingServices thead, #tblcusServiceHistory thead, #tblUserManagement thead, #tblSerReq thead, #tblcusDashboard thead{
     height: 50px;
 }
-#tblUpcomingServices tbody tr, #tblcusServiceHistory tbody tr, #tblUserManagement tbody tr, #tblSerReq tbody tr{
+#tblUpcomingServices tbody tr, #tblcusServiceHistory tbody tr, #tblUserManagement tbody tr, #tblSerReq tbody tr, #tblcusDashboard tbody tr{
     height: 71px;
 }
 table.dataTable thead th{
@@ -574,6 +582,18 @@ table.dataTable tbody td{
     border: 1px solid #e1e1e1;
     border-radius: 20px;
     white-space: nowrap;
+}
+.btnCancelService {
+    background-color: #FF6060;
+    color: white;
+    font-size: 14px;
+    border: 1px solid #e1e1e1;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+.btnCancelService:hover{
+    background-color: #FF1616;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
 }
 .stars-container {
     position: relative;
@@ -881,6 +901,9 @@ table.dataTable tbody td{
     left: -25px;
     position: absolute;
 }
+.dateForServiceReschedule{
+    width: 100%;
+}
 .cock-icon{
     background: transparent url(../images/upcoming-service/clock.png) 9px center no-repeat!important;
     position: relative;
@@ -920,7 +943,11 @@ table.dataTable tbody td{
     border-radius: 20px;
     margin-bottom: 8px;
 }
-.btnContinueSetupSerProc:hover{
+.btnContinueSetupSerProcDisable{
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+.btnContinueSetupSerProc:hover {
     background-color: #146371;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
 }
@@ -1110,6 +1137,84 @@ table.dataTable tbody td{
 .cbwidth{
     width: 35px;
 }
+.cusMySettingstb {
+    height: 53px;
+    border-bottom: 3px solid #DEDCD7;
+    color: #737381;
+    width: 33.33%;
+}
+.cusMySettingstb:hover, .cusMySettingstbselected {
+    border-bottom: 3px solid rgb(29, 122, 140);
+    color: rgb(29, 122, 140);
+    cursor: pointer;
+}
+#dvcus-mysettings-mydetails {
+    color: #737381;
+}
+.wdate, .wyear{
+    width: 29%;
+}
+.wmonth {
+    width: 40%;
+}
+#dvcus-mysettings {
+    color: #737381;
+}
+#dvcus-mysettings-myaddresses .addhead {
+    background-color: #f9f9f9;
+    border-left: 3px solid #f1f1f1;
+    border-right: 3px solid #f1f1f1;
+    border-top: 2px solid #f1f1f1;
+    border-bottom: 2px solid #f1f1f1;
+    display: flow-root;
+}
+#dvcus-mysettings-myaddresses .dvaddresses {
+    border-left: 3px solid #f1f1f1;
+    border-right: 3px solid #f1f1f1;
+    border-top: 2px solid #f1f1f1;
+    border-bottom: 2px solid #f1f1f1;
+    display: flow-root;
+}
+.flts{
+    float: left;
+}
+.flte{
+    float: right;
+    margin-right: -20px;
+}
+#dvcus-mysettings-myaddresses .dvaddresses .flte .dvimg{
+    height: 40px;
+    width: 40px;
+    float: left;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#dvcus-mysettings-myaddresses .dvaddresses .flte .dvimg:hover{
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+.dvcussettingsimg {
+    width: 20px;
+    height: 22px;
+    overflow: hidden;
+    margin-top: 22px;
+    display: none;
+}
+.dvcussettingsimg img{
+    width: 100%;
+}
+.dvcussettingsimg-active{
+    margin-top: -24px;
+}
+.spRateImage{
+    height: 13px;
+    width: 14px;
+}
+.onHover{
+    cursor: pointer;
+}
 
 /* Responsive */
 @media (max-width:991px) {
@@ -1261,13 +1366,13 @@ table.dataTable tbody td{
     .contact-form-title{
         font-size: 25px;
     }
-    #tblUpcomingServices, #tblcusServiceHistory{
+    #tblUpcomingServices, #tblcusServiceHistory, #tblcusDashboard {
         border: 1px solid transparent;
     }
-    #tblUpcomingServices thead, #tblcusServiceHistory thead{
+    #tblUpcomingServices thead, #tblcusServiceHistory thead, #tblcusDashboard thead{
         display: none;
     }
-    #tblUpcomingServices tbody tr, #tblcusServiceHistory tbody tr{
+    #tblUpcomingServices tbody tr, #tblcusServiceHistory tbody tr, #tblcusDashboard tbody tr{
         display: flex;
         flex-direction: column;
         height: auto;
@@ -1280,7 +1385,7 @@ table.dataTable tbody td{
         font-size: 16px;
         text-align: center;
     }
-    #tblUpcomingServices tbody tr td, #tblcusServiceHistory tbody tr td{
+    #tblUpcomingServices tbody tr td, #tblcusServiceHistory tbody tr td, #tblcusDashboard tbody tr td{
         padding: 20px;
     }
     .media-object{
@@ -1289,6 +1394,15 @@ table.dataTable tbody td{
     }
     .fs3 {
         font-size: 18px;
+    }
+    .cusMySettingstb, .cusMySettingstbselected, #dvcus-mysettings, input[type=text], input[type=email], input[type=password], input[type=date], input[type=number], input[type=file], input[type="file"]::-webkit-file-upload-button, .textarea:focus, .select, input[type=datetime-local] {
+        font-size: 14px;
+    }
+    .dvcussettingsimg{
+        display: block;
+    }
+    .spncussettingstabstxt{
+        display: none;
     }
 }
 
@@ -1317,5 +1431,15 @@ table.dataTable tbody td{
     }
     .active-setupcleaningsertab:after{
         left: 35%;
-    }    
+    }
+    .flte {
+        float: left;
+        margin-left: -12px;
+    }
+    #dvcus-mysettings-myaddresses .addhead {
+        display: none;
+    }
+    #dvcus-mysettings-myaddresses .dvaddresses{
+        margin-bottom: 3%;
+    }
 }

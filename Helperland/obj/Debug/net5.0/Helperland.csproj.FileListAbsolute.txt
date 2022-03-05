@@ -174,3 +174,5 @@ D:\TatvaSoft\Website\Helperland\obj\Debug\net5.0\Helperland.dll
 D:\TatvaSoft\Website\Helperland\obj\Debug\net5.0\ref\Helperland.dll
 D:\TatvaSoft\Website\Helperland\obj\Debug\net5.0\Helperland.pdb
 D:\TatvaSoft\Website\Helperland\obj\Debug\net5.0\Helperland.genruntimeconfig.cache
+D:\TatvaSoft\Website\Helperland\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Relational.Design.dll
+D:\TatvaSoft\Website\Helperland\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.SqlServer.Design.dll
