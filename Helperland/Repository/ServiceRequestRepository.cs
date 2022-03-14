@@ -1,4 +1,5 @@
 ﻿using Helperland.Data;
+using Helperland.Enums;
 using Helperland.Models;
 using Helperland.ViewModels;
 using System;
@@ -25,6 +26,6 @@ namespace Helperland.Repository
         {
             helperLandContext.Ratings.Add(rating);
             return helperLandContext.SaveChanges();
-        }
+        }        
     }
 }

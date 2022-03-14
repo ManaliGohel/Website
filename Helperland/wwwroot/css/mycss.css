@@ -485,16 +485,16 @@ a:hover {
 .ser-provider-submenu-list{
     width: 100%;
 }
-#tblUpcomingServices, #tblcusServiceHistory, #tblUserManagement, #tblSerReq, #tblcusDashboard {
+#tblUpcomingServices, #tblNewServiceRequests, #tblSPServiceHistory, #tblcusServiceHistory, #tblUserManagement, #tblSerReq, #tblcusDashboard {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     color: #646464;
     border: 1px solid #e1e1e1;
     font-size: 16px;
 }
-#tblUpcomingServices thead, #tblcusServiceHistory thead, #tblUserManagement thead, #tblSerReq thead, #tblcusDashboard thead{
+#tblUpcomingServices thead, #tblNewServiceRequests thead, #tblSPServiceHistory thead, #tblcusServiceHistory thead, #tblUserManagement thead, #tblSerReq thead, #tblcusDashboard thead{
     height: 50px;
 }
-#tblUpcomingServices tbody tr, #tblcusServiceHistory tbody tr, #tblUserManagement tbody tr, #tblSerReq tbody tr, #tblcusDashboard tbody tr{
+#tblUpcomingServices tbody tr, #tblNewServiceRequests tbody tr, #tblSPServiceHistory tbody tr, #tblcusServiceHistory tbody tr, #tblUserManagement tbody tr, #tblSerReq tbody tr, #tblcusDashboard tbody tr{
     height: 71px;
 }
 table.dataTable thead th{
@@ -1143,12 +1143,15 @@ table.dataTable tbody td{
     color: #737381;
     width: 33.33%;
 }
+.spMySettingstbWidth{
+    width: 50%;
+}
 .cusMySettingstb:hover, .cusMySettingstbselected {
     border-bottom: 3px solid rgb(29, 122, 140);
     color: rgb(29, 122, 140);
     cursor: pointer;
 }
-#dvcus-mysettings-mydetails {
+#dvcus-mysettings-mydetails, #dvcus-mysettings, #dvcus-mysettings-sp, #dvsp-mysettings-mydetails, #dvsp-mysettings-changepassword {
     color: #737381;
 }
 .wdate, .wyear{
@@ -1156,9 +1159,6 @@ table.dataTable tbody td{
 }
 .wmonth {
     width: 40%;
-}
-#dvcus-mysettings {
-    color: #737381;
 }
 #dvcus-mysettings-myaddresses .addhead {
     background-color: #f9f9f9;
@@ -1214,6 +1214,93 @@ table.dataTable tbody td{
 }
 .onHover{
     cursor: pointer;
+}
+.dvsp-basic-details-width{
+    width: 89%;
+    margin-right: 1%;
+}
+.dvsp-profile-width {
+    width: 10%;
+}
+.avatar-images img {
+    width: 80px;
+    height: 80px;
+}
+.selectedAvatar {
+    border: 3px solid #1d7a8c;
+    border-radius: 50%;
+}
+.unselectedAvatar{
+    border: none;
+}
+/*blockquote customer css*/
+.dvblockcustomer {
+    border: 1px solid transparent !important;
+}
+.dvblockcustomer .blockcustomer {
+    border: 1px solid transparent !important;
+}
+.dvblockcustomer .dataTables_wrapper {
+    border: 1px solid transparent !important;
+}
+.blockcustomer tbody {
+    display: flex;
+}
+.blockcustomer tbody tr {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    border: 1px solid #e1e1e1;
+    width: 31%;
+    margin-left: 2%;
+    background-color: white !important;
+    text-align: center;
+    border-radius: 3px;
+    color: #646464;
+}
+.blockcustomer tbody tr td {
+    border: none !important;
+}
+/* SP Ratings */
+.ratings .category select{
+   width:auto;
+}
+.ml-30 {
+    margin-left:30px !important;
+}
+.ratings .colume-3 {
+    min-width: 50%;
+    padding-left:10px;
+}
+.ratings .colume-2,
+.ratings .colume-1 {
+    min-width: 25%;
+    text-align: left;
+    padding-left: 10px;
+}
+.ratings .commentbox{
+    float:left;
+}
+#tblSPMyRatings tbody tr {
+    background-color: white !important;
+    border-radius: 5px;
+}
+#tblSPMyRatings tbody tr td{
+    border: 1px solid transparent !important;
+}
+#tblSPMyRatings_wrapper .bottom{
+    margin-top: 10px !important;
+}
+#tblSPMyRatings {
+    border-bottom: 1px solid transparent !important;
+    color: #646464;
+}
+.spMyratingsBorder {
+    border: 2px solid #e1e1e1;
+    border-radius: 5px;
+    height: auto;
+    overflow: hidden;
+    padding: 10px;
 }
 
 /* Responsive */
@@ -1366,17 +1453,17 @@ table.dataTable tbody td{
     .contact-form-title{
         font-size: 25px;
     }
-    #tblUpcomingServices, #tblcusServiceHistory, #tblcusDashboard {
+    #tblUpcomingServices, #tblNewServiceRequests, #tblSPServiceHistory, #tblcusServiceHistory, #tblcusDashboard {
         border: 1px solid transparent;
     }
-    #tblUpcomingServices thead, #tblcusServiceHistory thead, #tblcusDashboard thead{
+    #tblUpcomingServices thead, #tblNewServiceRequests thead, #tblSPServiceHistory thead, #tblcusServiceHistory thead, #tblcusDashboard thead{
         display: none;
     }
-    #tblUpcomingServices tbody tr, #tblcusServiceHistory tbody tr, #tblcusDashboard tbody tr{
+    #tblUpcomingServices tbody tr, #tblNewServiceRequests tbody tr, #tblSPServiceHistory tbody tr, #tblcusServiceHistory tbody tr, #tblcusDashboard tbody tr{
         display: flex;
         flex-direction: column;
         height: auto;
-        margin: 3%;
+        margin-bottom: 3%;
         border: 1px solid #e1e1e1;
         padding-right: 15px;
         padding-left: 15px;
@@ -1385,7 +1472,10 @@ table.dataTable tbody td{
         font-size: 16px;
         text-align: center;
     }
-    #tblUpcomingServices tbody tr td, #tblcusServiceHistory tbody tr td, #tblcusDashboard tbody tr td{
+    .contentCenter{
+        justify-content: center;
+    }
+    #tblUpcomingServices tbody tr td, #tblNewServiceRequests tbody tr td, #tblSPServiceHistory tbody tr td, #tblcusServiceHistory tbody tr td, #tblcusDashboard tbody tr td{
         padding: 20px;
     }
     .media-object{
@@ -1395,7 +1485,7 @@ table.dataTable tbody td{
     .fs3 {
         font-size: 18px;
     }
-    .cusMySettingstb, .cusMySettingstbselected, #dvcus-mysettings, input[type=text], input[type=email], input[type=password], input[type=date], input[type=number], input[type=file], input[type="file"]::-webkit-file-upload-button, .textarea:focus, .select, input[type=datetime-local] {
+    .cusMySettingstb, .cusMySettingstbselected, #dvcus-mysettings, #dv-mysettings-sp, input[type=text], input[type=email], input[type=password], input[type=date], input[type=number], input[type=file], input[type="file"]::-webkit-file-upload-button, .textarea:focus, .select, input[type=datetime-local] {
         font-size: 14px;
     }
     .dvcussettingsimg{
@@ -1403,6 +1493,17 @@ table.dataTable tbody td{
     }
     .spncussettingstabstxt{
         display: none;
+    }
+    .dvsp-basic-details-width {
+        width: 85%;
+    }
+    .dvsp-profile-width img, .avatar-images img {
+        width: 60px;
+        height: 60px;
+    }
+    .blockcustomer tbody tr{
+        width: 100%;
+        margin-left: 0%;
     }
 }
 
@@ -1441,5 +1542,9 @@ table.dataTable tbody td{
     }
     #dvcus-mysettings-myaddresses .dvaddresses{
         margin-bottom: 3%;
+    }
+    .dvsp-basic-details-width {
+        width: 75%;
+        margin-right: 1%;
     }
 }

@@ -68,7 +68,7 @@
     max-width: 600px;
     color: #646464;
 }
-#showServiceRequestDetailsModal .modal-dialog {
+#showServiceRequestDetailsModal .modal-dialog, #showSPServiceRequestDetailsModal .modal-dialog {
     max-width: 750px;
     color: #646464;
 }

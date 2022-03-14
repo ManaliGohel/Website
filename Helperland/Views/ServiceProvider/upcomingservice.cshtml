@@ -18,394 +18,307 @@
     </div>
     <div id="sidebarlink_container" class="ser-provider-submenu-list">
         <div id="dv-dashboard">Dashboard</div>
-        <div id="dv-new-ser-req">New Service Requests</div>
+        <div id="dv-new-ser-req">
+            <div class="row m-2 my-3">
+                <div class="col-md-12">
+                    <div class="mb-2">
+                        <input class="form-check-input onHover" id="hasPetsForNewRequestsOfSP" type="checkbox" checked onchange="showSPNewServiceRequestsData(this.checked);">
+                        <label class="form-check-label" for="">
+                            Include Pet at Home
+                        </label>
+                    </div>
+                    <table id="tblNewServiceRequests" class="table-data mb-3" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Service Id</th>
+                                <th data-orderable="false">Service date</th>
+                                <th data-orderable="false">Customer details</th>
+                                <th data-orderable="false">Payment</th>
+                                <th data-orderable="false">Time conflict</th>
+                                <th data-orderable="false">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
         <div id="dv-upcoming-services">
             <!-- Data table start -->
             <table id="tblUpcomingServices" class="table-data mb-3" style="width:100%">
                 <thead>
                     <tr>
-                        <th>Service ID</th>
-                        <th>Service data</th>
+                        <th>Service Id</th>
+                        <th>Service date</th>
                         <th>Customer details</th>
-                        <th>Distance</th>
-                        <th data-orderable="false">Action</th>
+                        <th data-orderable="false">Payment</th>
+                        <th data-orderable="false">Distance</th>
+                        <th data-orderable="false">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>323436</td>
+                        <td>8488</td>
                         <td>
                             <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">09/04/2018</span></div>
                             <div><img src="~/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
                         </td>
                         <td>
-                            <div>Manali Gohel</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Musterstrabe 5,12345 Bonn</div>
+                            <div class="d-flex align-items-center contentCenter">
+                                <div><img src="~/images/upcoming-service/place.png" class="me-1" alt=""></div>
+                                <div>
+                                    <div>Manali Gohel</div>
+                                    <div>Koenigstrasse 112</div>
+                                    <div>99897 Tambach-Dietharz</div>
+                                </div>
+                            </div>
                         </td>
-                        <td>15 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-                    <tr>
-                        <td>323437</td>
+                        <td>5626 &euro;</td>
+                        <td>296 km</td>
                         <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">10/04/2018</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 11:00 - 15:00</div>
+                            <button class="tblCancel px-3 py-2 me-1">Cancel</button>
                         </td>
-                        <td>
-                            <div>Nida Mirza</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Musterstrabe 5,12345 Bonn</div>
-                        </td>
-                        <td>18 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-                    <tr>
-                        <td>323434</td>
-                        <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">10/02/2018</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 11:00 - 15:00</div>
-                        </td>
-                        <td>
-                            <div>Drashti Bhavsar</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Sattadhar, Ahmedabad</div>
-                        </td>
-                        <td>13 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-                    <tr>
-                        <td>323439</td>
-                        <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">10/02/2021</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 11:00 - 15:00</div>
-                        </td>
-                        <td>
-                            <div>Bhavin Shah</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Petlad</div>
-                        </td>
-                        <td>20 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-                    <tr>
-                        <td>323440</td>
-                        <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">10/01/2021</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 11:00 - 15:00</div>
-                        </td>
-                        <td>
-                            <div>Deep Patel</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Navsari</div>
-                        </td>
-                        <td>25 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-                    <tr>
-                        <td>323443</td>
-                        <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">14/01/2021</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 12:00 - 15:00</div>
-                        </td>
-                        <td>
-                            <div>Joyal Suthar</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Borsad</div>
-                        </td>
-                        <td>11 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-                    <tr>
-                        <td>323444</td>
-                        <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">11/01/2021</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 13:00 - 16:00</div>
-                        </td>
-                        <td>
-                            <div>Shivani Gohel</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Gorva, Vadodara</div>
-                        </td>
-                        <td>14 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-
-                    <tr>
-                        <td>323436</td>
-                        <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">09/04/2018</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
-                        </td>
-                        <td>
-                            <div>Manali Gohel</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Musterstrabe 5,12345 Bonn</div>
-                        </td>
-                        <td>15 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-                    <tr>
-                        <td>323437</td>
-                        <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">10/04/2018</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 11:00 - 15:00</div>
-                        </td>
-                        <td>
-                            <div>Nida Mirza</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Musterstrabe 5,12345 Bonn</div>
-                        </td>
-                        <td>18 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-                    <tr>
-                        <td>323434</td>
-                        <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">10/02/2018</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 11:00 - 15:00</div>
-                        </td>
-                        <td>
-                            <div>Drashti Bhavsar</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Sattadhar, Ahmedabad</div>
-                        </td>
-                        <td>13 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-                    <tr>
-                        <td>323439</td>
-                        <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">10/02/2021</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 11:00 - 15:00</div>
-                        </td>
-                        <td>
-                            <div>Bhavin Shah</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Petlad</div>
-                        </td>
-                        <td>20 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-                    <tr>
-                        <td>323440</td>
-                        <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">10/01/2021</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 11:00 - 15:00</div>
-                        </td>
-                        <td>
-                            <div>Deep Patel</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Navsari</div>
-                        </td>
-                        <td>25 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-                    <tr>
-                        <td>323443</td>
-                        <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">14/01/2021</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 12:00 - 15:00</div>
-                        </td>
-                        <td>
-                            <div>Joyal Suthar</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Borsad</div>
-                        </td>
-                        <td>11 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-                    <tr>
-                        <td>323444</td>
-                        <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">11/01/2021</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 13:00 - 16:00</div>
-                        </td>
-                        <td>
-                            <div>Shivani Gohel</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Gorva, Vadodara</div>
-                        </td>
-                        <td>14 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-                    <tr>
-                        <td>323436</td>
-                        <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">09/04/2018</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
-                        </td>
-                        <td>
-                            <div>Manali Gohel</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Musterstrabe 5,12345 Bonn</div>
-                        </td>
-                        <td>15 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-                    <tr>
-                        <td>323437</td>
-                        <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">10/04/2018</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 11:00 - 15:00</div>
-                        </td>
-                        <td>
-                            <div>Nida Mirza</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Musterstrabe 5,12345 Bonn</div>
-                        </td>
-                        <td>18 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-                    <tr>
-                        <td>323434</td>
-                        <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">10/02/2018</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 11:00 - 15:00</div>
-                        </td>
-                        <td>
-                            <div>Drashti Bhavsar</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Sattadhar, Ahmedabad</div>
-                        </td>
-                        <td>13 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-                    <tr>
-                        <td>323439</td>
-                        <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">10/02/2021</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 11:00 - 15:00</div>
-                        </td>
-                        <td>
-                            <div>Bhavin Shah</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Petlad</div>
-                        </td>
-                        <td>20 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-                    <tr>
-                        <td>323440</td>
-                        <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">10/01/2021</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 11:00 - 15:00</div>
-                        </td>
-                        <td>
-                            <div>Deep Patel</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Navsari</div>
-                        </td>
-                        <td>25 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-                    <tr>
-                        <td>323443</td>
-                        <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">14/01/2021</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 12:00 - 15:00</div>
-                        </td>
-                        <td>
-                            <div>Joyal Suthar</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Borsad</div>
-                        </td>
-                        <td>11 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-                    <tr>
-                        <td>323444</td>
-                        <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">11/01/2021</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 13:00 - 16:00</div>
-                        </td>
-                        <td>
-                            <div>Shivani Gohel</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Gorva, Vadodara</div>
-                        </td>
-                        <td>14 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-
-                    <tr>
-                        <td>323436</td>
-                        <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">09/04/2018</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 12:00 - 18:00</div>
-                        </td>
-                        <td>
-                            <div>Manali Gohel</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Musterstrabe 5,12345 Bonn</div>
-                        </td>
-                        <td>15 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-                    <tr>
-                        <td>323437</td>
-                        <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">10/04/2018</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 11:00 - 15:00</div>
-                        </td>
-                        <td>
-                            <div>Nida Mirza</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Musterstrabe 5,12345 Bonn</div>
-                        </td>
-                        <td>18 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-                    <tr>
-                        <td>323434</td>
-                        <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">10/02/2018</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 11:00 - 15:00</div>
-                        </td>
-                        <td>
-                            <div>Drashti Bhavsar</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Sattadhar, Ahmedabad</div>
-                        </td>
-                        <td>13 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-                    <tr>
-                        <td>323439</td>
-                        <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">10/02/2021</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 11:00 - 15:00</div>
-                        </td>
-                        <td>
-                            <div>Bhavin Shah</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Petlad</div>
-                        </td>
-                        <td>20 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-                    <tr>
-                        <td>323440</td>
-                        <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">10/01/2021</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 11:00 - 15:00</div>
-                        </td>
-                        <td>
-                            <div>Deep Patel</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Navsari</div>
-                        </td>
-                        <td>25 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-                    <tr>
-                        <td>323443</td>
-                        <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">14/01/2021</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 12:00 - 15:00</div>
-                        </td>
-                        <td>
-                            <div>Joyal Suthar</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Borsad</div>
-                        </td>
-                        <td>11 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
-                    <tr>
-                        <td>323444</td>
-                        <td>
-                            <div><img src="~/images/upcoming-service/calender.png" alt=""> <span class="fw-bold">11/01/2021</span></div>
-                            <div><img src="~/images/upcoming-service/clock.png" alt=""> 13:00 - 16:00</div>
-                        </td>
-                        <td>
-                            <div>Shivani Gohel</div>
-                            <div><img src="~/images/upcoming-service/place.png" alt=""> Gorva, Vadodara</div>
-                        </td>
-                        <td>14 km</td>
-                        <td><a asp-action="" asp-controller="" class="tblCancel">Cancel</a></td>
-                    </tr>
+                    </tr>                    
                 </tbody>
             </table>
             <!-- Data table end -->
         </div>
         <div id="dv-ser-schedule">Service Schedule</div>
-        <div id="dv-ser-history">Service History</div>
-        <div id="dv-myratings">My Ratings</div>
-        <div id="dv-block-cus">Block Customer</div>
+        <div id="dv-ser-history">
+            <table id="tblSPServiceHistory" class="table-data mb-3" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Service Id</th>
+                        <th>Service date</th>
+                        <th>Customer details</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div id="dv-myratings">
+            <div class="ratings">
+                <div class="category ms-2 d-flex align-items-center">
+                    <label class="ms-1 me-2">Rating</label>
+                    <select class="form-select select">
+                        <option selected>All</option>
+                        <option value="1">Excellent</option>
+                        <option value="2">Very Good</option>
+                        <option value="3">Good</option>
+                        <option value="4">Poor</option>
+                        <option value="5">Very Poor</option>
+                    </select>
+                </div>
+                <table id="tblSPMyRatings" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th class="d-none"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="dv-block-cus">
+            <div class="dvblockcustomer">
+                <table id="tblspBlockCustomer" class="blockcustomer mb-3" style="width:100%">
+                    <thead class="d-none">
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody class="row row-cols-1 row-cols-md-2 g-4 mt-0">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="dv-mysettings-sp">
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="fw-bold cusMySettingstb spMySettingstbWidth d-flex justify-content-center align-items-center" id="lnkspMysettingsMydetails" onclick="showspMySettingsTb('dvsp-mysettings-mydetails')">
+                    <span class="spncussettingstabstxt">My Details</span>
+                    <div class="dvcussettingsimg">
+                        <img src="~/images/service-history/my-account-details.png" id="imgCusMydetails" />
+                    </div>
+                </div>
+                <div class="fw-bold cusMySettingstb spMySettingstbWidth d-flex justify-content-center align-items-center" id="lnkspMysettingsChangepassword" onclick="showspMySettingsTb('dvsp-mysettings-changepassword')">
+                    <span class="spncussettingstabstxt">Change Password</span>
+                    <div class="dvcussettingsimg">
+                        <img src="~/images/service-history/my-account-password.png" id="imgCusChangepassword" />
+                    </div>
+                </div>
+            </div>
+            <div id="dvsp-mysettings-mydetails" class="mt-3 mb-5">
+                <div class="row">
+                    <div class="col-md-12 mb-2">
+                        <div class="alert alert-success" id="dvSPUpdateSuccess">
+                            <strong>Success!</strong> Service Provider has been updated Successfully!!
+                        </div>
+                    </div>
+                </div>
+                <div class="fw-bold">Account Status: <span class="text-success">Active</span></div>
+                <div class="fw-bold" style="display: flex; align-items: center;">
+                    <div class="dvsp-basic-details-width">
+                        <div>Basic Details</div>
+                        <div><hr /></div>
+                    </div>
+                    <div class="dvsp-profile-width" id="dvspProfile">
+                        <img src="~/images/upcoming-service/avatar-car.png" id="imgSPProfie" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-2">
+                        <label class="fw-bold">First name</label>
+                        <input type="text" class="form-control text-capitalize" id="txtFirstnameSPMydetails" autocomplete="off" maxlength="100" />
+                        <span class="text-danger small" id="spnFirstnameSPMydetails"></span>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <label class="fw-bold">Last name</label>
+                        <input type="text" class="form-control text-capitalize" id="txtLastnameSPMydetails" autocomplete="off" maxlength="100" />
+                        <span class="text-danger small" id="spnLastnameSPMydetails"></span>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <label class="fw-bold">E-mail address</label>
+                        <input type="email" class="form-control" id="txtEmailSPMydetails" autocomplete="off" maxlength="100" readonly />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-2">
+                        <label class="fw-bold">Mobile number</label>
+                        <div class="input-group">
+                            <div class="input-group-text">+49</div>
+                            <input class="form-control" id="txtMobileSPMydetails" autocomplete="off" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="10" autocomplete="off" />
+                        </div>
+                        <span class="text-danger small" id="spnMobileSPMydetails"></span>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <label class="fw-bold">Date of Birth</label>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="wdate">
+                                <select class="form-select select" id="selSPMyDetailsDOBDate"></select>
+                            </div>
+                            <div class="wmonth">
+                                <select class="form-select select" id="selSPMyDetailsDOBMonth"></select>
+                            </div>
+                            <div class="wyear">
+                                <select class="form-select select" id="selSPMyDetailsDOBYear"></select>
+                            </div>
+                        </div>
+                        <span class="text-danger small" id="spnDOBSPMydetails"></span>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <label class="fw-bold">Nationality</label>
+                        <select class="form-select select" id="selSPMyDetailsNationality">
+                            @{
+                                int count = 0;
+                                foreach (int i in Enum.GetValues(typeof(NationalityEnum)))
+                                {
+                                    if (count == 0)
+                                    {
+                                        <option value=@i selected>@Enum.GetName(typeof(NationalityEnum), @i).ToString()</option>
+                                        count++;
+                                    }
+                                    else
+                                    {
+                                        <option value=@i>@Enum.GetName(typeof(NationalityEnum), @i).ToString()</option>
+                                    }
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-4 mb-3">
+                        <label class="fw-bold mb-1">Gender</label>
+                        <div>
+                            <label class="radio-inline me-2"><input type="radio" class="rbuseradd" name="rbGenderSP" value="1" checked /> Male</label>
+                            <label class="radio-inline me-2"><input type="radio" class="rbuseradd" name="rbGenderSP" value="2" /> Female</label>
+                            <label class="radio-inline"><input type="radio" class="rbuseradd" name="rbGenderSP" value="3" /> Rather not to say</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-md-12 mb-2">
+                        <label class="fw-bold mb-2">Select Avatar</label>
+                        <div class="avatar-images">
+                            <img src="~/images/upcoming-service/avatar-car.png" class="onHover me-2 mb-1 selectedAvatar" id="img-avatar-car" onclick="selectedAvatarImage('img-avatar-car');" />
+                            <img src="~/images/upcoming-service/avatar-female.png" class="onHover me-2 mb-1" id="img-avatar-female" onclick="selectedAvatarImage('img-avatar-female');" />
+                            <img src="~/images/upcoming-service/avatar-hat.png" class="onHover me-2 mb-1" id="img-avatar-hat" onclick="selectedAvatarImage('img-avatar-hat');" />
+                            <img src="~/images/upcoming-service/avatar-iron.png" class="onHover me-2 mb-1" id="img-avatar-iron" onclick="selectedAvatarImage('img-avatar-iron');" />
+                            <img src="~/images/upcoming-service/avatar-male.png" class="onHover me-2 mb-1" id="img-avatar-male" onclick="selectedAvatarImage('img-avatar-male');" />
+                            <img src="~/images/upcoming-service/avatar-ship.png" class="onHover mb-1" id="img-avatar-ship" onclick="selectedAvatarImage('img-avatar-ship');" />
+                        </div>
+                    </div>
+                </div>
+                <div class="fw-bold">
+                    <div>My address</div>
+                    <div><hr /></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-2">
+                        <label class="fw-bold">Street name</label>
+                        <input type="text" class="form-control text-capitalize" id="txtStreetNameSPAdd" autocomplete="off" maxlength="200" />
+                        <span class="text-danger small" id="spnStreetNameSPAdd"></span>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <label class="fw-bold">House number</label>
+                        <input type="text" class="form-control" id="txtHouseNumberSPAdd" autocomplete="off" maxlength="200" />
+                        <span class="text-danger small" id="spnHouseNumberSPAdd"></span>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <label class="fw-bold">Postal code</label>
+                        <input class="form-control" id="txtPostalcodeSPAdd" onkeyup="fillCitiesByPostalcodeofSPMySettings(this.value)" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="6" autocomplete="off" />
+                        <span class="text-danger small" id="spnPostalCodeSPAdd"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-2">
+                        <label class="fw-bold">City</label>
+                        <select class="form-select select" id="selSPAddressCity"></select>
+                    </div>
+                </div>
+                <div><hr /></div>
+                <button class="btnContinueSetupSerProc px-4 py-2 mt-2" id="btnsaveSPDetails" onclick="saveSPDetails();">Save</button>
+            </div>
+            <div id="dvsp-mysettings-changepassword" class="mt-3 mb-5">
+                <div class="row">
+                    <div class="col-md-12 mb-2">
+                        <div class="alert alert-success" id="dvSPChangePassword">
+                            <strong>Success!</strong> Password has been updated Successfully!!
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="fw-bold">Old Password</label>
+                        <input type="text" class="form-control" placeholder="Old Password" id="txtoldpwdSPchangepwd" autocomplete="off" maxlength="100" />
+                        <span class="text-danger small" id="spnoldpwdSPchangepwd"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="fw-bold">New Password</label>
+                        <input type="text" class="form-control" placeholder="New Password" id="txtnewpwdSPchangepwd" data-bs-toggle="tooltip" data-bs-placement="right" title="Password must be 6 to 14 Characters long, must contain at least one Upper case, one Lower case, one Digit and one Special character!" onfocusout="validateSPNewPassword();" autocomplete="off" maxlength="100" />
+                        <span class="text-danger small" id="spnnewpwdSPchangepwd"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="fw-bold">Confirm Password</label>
+                        <input type="text" class="form-control" placeholder="Confirm Password" id="txtconfirmnewpwdSPchangepwd" onfocusout="validateSPConfirmNewPassword();" autocomplete="off" maxlength="100" />
+                        <span class="text-danger small" id="spnconfirmnewpwdSPchangepwd"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <button id="btnSPChangepassword" onclick="changeSPPassword();" class="btnContinueSetupSerProc btnContinueSetupSerProcDisable px-5 py-2 mt-2" disabled>Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <input type="hidden" id="hdnActiveMenu" value="">
 </section>

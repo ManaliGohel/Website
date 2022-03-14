@@ -132,10 +132,10 @@
                                             <li><a class="dropdown-item" asp-action="servicehistory" asp-controller="Customer">My Dashboard</a></li>
                                             <li><a class="dropdown-item" href="#" onclick="redirectToCustomerMysettings();">My Settings</a></li>
                                         }
-                                        else
+                                        else if (ViewData["Title"] == "Upcoming Service")
                                         {
-                                            <li><a class="dropdown-item" asp-action="faq" asp-controller="Customer">My Dashboard</a></li>
-                                            <li><a class="dropdown-item" asp-action="aboutus" asp-controller="Customer">My Settings</a></li>
+                                            <li><a class="dropdown-item" href="#">My Dashboard</a></li>
+                                            <li><a class="dropdown-item" href="#" onclick="redirectToServiceProviderMysettings();">My Settings</a></li>
                                         }
                                         <li><a class="dropdown-item" asp-action="logout" asp-controller="customer">Logout</a></li>
                                     </ul>
@@ -162,6 +162,24 @@
         @RenderBody()
     </div>
     <!-- body section end -->
+
+    @if (ViewData["Title"] == "Upcoming Service")
+    {
+        <!-- Modal 5 Show SP Service Request Details -->
+        <div class="modal fade" id="showSPServiceRequestDetailsModal" aria-hidden="true" aria-labelledby="showSPServiceRequestDetailsModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="mdlheader">Service Details</div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="dvSPServiceDetailsModalBody"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 
     <partial name="_FooterLayout" />
 
@@ -238,7 +256,7 @@
                     <div class="modal-body">
                         <div class="mb-3 ffc">
                             <label class="fs1 fw-bold">You are already rated service provider for this service!!</label>
-                        </div>                        
+                        </div>
                         <button class="btnLogin fs6" onclick="closeAreadyRatedSPModal();">Okay</button>
                     </div>
                 </div>
@@ -253,10 +271,11 @@
     {
         <script src="~/js/Customer/service_history.js"></script>
         <script src="~/js/BookService/bookservice.js"></script>
-        <!-- Sweet alert -->
-        <link href="~/lib/limonte-sweetalert2/sweetalert2.css" rel="stylesheet" />
-        <script src="~/lib/limonte-sweetalert2/sweetalert2.js"></script>
+
     }
+    <!-- Sweet alert -->
+    <link href="~/lib/limonte-sweetalert2/sweetalert2.css" rel="stylesheet" />
+    <script src="~/lib/limonte-sweetalert2/sweetalert2.js"></script>
     <!-- jquery -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- fontawesome -->
@@ -264,14 +283,14 @@
     <!-- Data Table -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.print.min.js"></script>
     @if (ViewData["Title"] == "Service History")
     {
-        <script src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-        <script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
-        <script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.print.min.js"></script>
         <script>
             $(document).ready(function () {
                 $('#tblcusServiceHistory').DataTable({
@@ -340,6 +359,7 @@
     }
     else if (ViewData["Title"] == "Upcoming Service")
     {
+        <script src="~/js/ServiceProvider/MySettingsSP.js"></script>
         <script>
             $(document).ready(function () {
                 $('#tblUpcomingServices').DataTable({
@@ -365,16 +385,98 @@
                     responsive: true,
                     "order": []
                 });
+                $('#tblNewServiceRequests').DataTable({
+                    "dom": '<"top"i>rt<"bottom"flp><"clear">',
+                    "columnDefs": [
+                        { "orderable": false, "targets": 4 }
+                    ],
+                    "bFilter": false, //hide Search bar
+                    "pagingType": "full_numbers",
+                    paging: true,
+                    "pagingType": "full_numbers",
+                    // bFilter: false,
+                    ordering: true,
+                    searching: false,
+                    info: true,
+                    "columnDefs": [
+                        { "orderable": false, "targets": 4 }
+                    ],
+                    "oLanguage": {
+                        "sInfo": "Total Records: _TOTAL_"
+                    },
+                    "dom": '<"top">rt<"bottom"lip><"clear">',
+                    responsive: true,
+                    "order": []
+                });
+                $('#tblSPServiceHistory').DataTable({
+                    "bFilter": false, //hide Search bar
+                    "pagingType": "full_numbers",
+                    paging: true,
+                    "pagingType": "full_numbers",
+                    // bFilter: false,
+                    ordering: true,
+                    searching: false,
+                    info: true,
+                    "oLanguage": {
+                        "sInfo": "Total Records: _TOTAL_"
+                    },
+                    "dom": 'Bt<"top">rt<"bottom"lip><"clear">',
+                    responsive: true,
+                    "order": [],
+                    buttons: {
+                        dom: {
+                            button: {
+                                tag: 'button',
+                                className: ''
+                            }
+                        },
+                        buttons: [{
+                            extend: 'excel',
+                            text: 'Export',
+                            className: "btnExport",
+                            exportOptions: {
+                                columns: [0, 1, 2]
+                            },
+                        }]
+                    }
+                });
+                $('#tblspBlockCustomer').DataTable({
+                    "dom": '<"top"i>rt<"bottom"flp><"clear">',
+                    "bFilter": false, //hide Search bar
+                    "pagingType": "full_numbers",
+                    paging: true,
+                    "pagingType": "full_numbers",
+                    // bFilter: false,
+                    ordering: true,
+                    searching: false,
+                    info: true,
+                    "oLanguage": {
+                        "sInfo": "Total Records: _TOTAL_"
+                    },
+                    "dom": '<"top">rt<"bottom"lip><"clear">',
+                    responsive: true,
+                    "order": []
+                });
+                $('#tblSPMyRatings').DataTable({
+                    "dom": '<"top"i>rt<"bottom"flp><"clear">',
+                    "bFilter": false,
+                    "pagingType": "full_numbers",
+                    paging: true,
+                    "pagingType": "full_numbers",
+                    ordering: true,
+                    searching: false,
+                    info: true,
+                    "oLanguage": {
+                        "sInfo": "Total Records: _TOTAL_"
+                    },
+                    "dom": '<"top">rt<"bottom"lip><"clear">',
+                    responsive: true,
+                    "order": []
+                });
+                $("div#tblSPServiceHistory_wrapper").find($(".dt-buttons")).attr('style', 'float:right !important');
             });
         </script>
     }
-
-    <!-- script for sidebar navigation -->
-    <partial name="_SidebarNavigationLayout" />
-</body>
-</html>
-@if (ViewData["Title"] == "Service History")
-{
     <script>
         // Initialize tooltips
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
@@ -382,6 +484,13 @@
             return new bootstrap.Tooltip(tooltipTriggerEl)
         })
     </script>
+
+    <!-- script for sidebar navigation -->
+    <partial name="_SidebarNavigationLayout" />
+</body>
+</html>
+@if (ViewData["Title"] == "Service History")
+{    
     <!-- Rate by Star script -->
     <script src="~/js/jsRapStar.js"></script>
     <script>

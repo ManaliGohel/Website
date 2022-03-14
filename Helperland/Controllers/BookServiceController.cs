@@ -117,6 +117,7 @@ namespace Helperland.Controllers
                 TotalCost = model.TotalCost,
                 Comments = model.Comments,
                 PaymentDue = false,
+                Status = (int)ServiceStatusEnum.New,
                 HasPets = model.HasPets,
                 CreatedDate = DateTime.Now,
                 ModifiedDate = DateTime.Now,
@@ -125,6 +126,7 @@ namespace Helperland.Controllers
                 PaymentDone = true,
                 RecordVersion = Guid.NewGuid()
             };
+            model.UserId = serviceRequest.UserId;
             if (serviceRequestRepository.saveServiceRequest(serviceRequest) > 0)
             {
                 UserAddress userAddress = userAddressRepository.GetAddressByAddressId(Convert.ToInt32(model.UserAddressID));
@@ -151,7 +153,12 @@ namespace Helperland.Controllers
                         };
                         serviceRequestExtraRepository.saveServiceRequestExtra(serviceRequestExtra);
                     }
-                    var availableSPsInGivenZipcode = helperLandContext.Users.Where(s => s.IsApproved == true && s.ZipCode == model.ZipCode && s.UserTypeId == (int)UserTypeIdEnum.ServiceProvider);
+                    //var availableSPsInGivenZipcode = helperLandContext.Users.Where(s => s.IsApproved == true && s.ZipCode == model.ZipCode && s.UserTypeId == (int)UserTypeIdEnum.ServiceProvider);
+                    List<User> availableSPsInGivenZipcode = (from u in helperLandContext.Users
+                                                             join fb in helperLandContext.FavoriteAndBlockeds on u.UserId equals fb.UserId into fb1
+                                                             from fb in fb1.DefaultIfEmpty()
+                                                             where u.ZipCode == serviceRequest.ZipCode && u.IsApproved == true && u.UserTypeId == (int)UserTypeIdEnum.ServiceProvider && Convert.ToInt16(model.UserId) != fb.TargetUserId
+                                                             select u).ToList();
                     EmailModel emailModel;
                     foreach (var sps in availableSPsInGivenZipcode)
                     {

@@ -656,7 +656,7 @@ function getCustomerDashboardData() {
                 countForNoServiceRequestAvailable++;
             }
             var tblcusDashboard = $('#tblcusDashboard').DataTable();
-            tblcusDashboard.clear();
+            tblcusDashboard.clear().draw();
             if (countForNoServiceRequestAvailable > 0) {   
                 for (var i = 0; i < data.length; i++) {
                     var serStartDate = new Date(data[i].serviceDateTime).toLocaleDateString('en-GB');
@@ -785,7 +785,7 @@ function showServiceRequestDetails(serviceRequestId, withRescheduleDelete) {
                 str += "<hr/>";
                 str += "<div class='fw-bold mb-1'>Comments</div>";
                 if (v.hasPets) {
-                    str += "<div class='d-flex justify-align-center align-items-center'><img src='../../images/service-history/included.png' class='me-2' />I don have pets at home</div>";
+                    str += "<div class='d-flex justify-align-center align-items-center'><img src='../../images/service-history/included.png' class='me-2' />I do have pets at home</div>";
                 }
                 else {
                     str += "<div class='d-flex justify-align-center align-items-center'><img src='../../images/service-history/not-included.png' class='me-2' />I don't have pets at home</div>";
@@ -1057,7 +1057,7 @@ function getCustomerServiceHistoryData() {
                 countForNoServiceHistoryAvailable++;
             }
             var tblcusServiceHistory = $('#tblcusServiceHistory').DataTable();
-            tblcusServiceHistory.clear();
+            tblcusServiceHistory.clear().draw();
             if (countForNoServiceHistoryAvailable > 0) {
                 for (var i = 0; i < data.length; i++) {
                     var serStartDate = new Date(data[i].serviceDateTime).toLocaleDateString('en-GB');
