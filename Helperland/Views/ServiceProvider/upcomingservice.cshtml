@@ -101,13 +101,13 @@
             <div class="ratings">
                 <div class="category ms-2 d-flex align-items-center">
                     <label class="ms-1 me-2">Rating</label>
-                    <select class="form-select select">
-                        <option selected>All</option>
-                        <option value="1">Excellent</option>
-                        <option value="2">Very Good</option>
+                    <select class="form-select select" id="selSPRatingsRange" onchange="showSPMyRatingsData();">
+                        <option selected value="0">All</option>
+                        <option value="5">Excellent</option>         
+                        <option value="4">Very Good</option>
                         <option value="3">Good</option>
-                        <option value="4">Poor</option>
-                        <option value="5">Very Poor</option>
+                        <option value="2">Poor</option>
+                        <option value="1">Very Poor</option>
                     </select>
                 </div>
                 <table id="tblSPMyRatings" style="width:100%">

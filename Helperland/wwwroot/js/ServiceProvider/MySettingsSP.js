@@ -3,7 +3,7 @@
     showSPNewServiceRequestsData(document.getElementById("hasPetsForNewRequestsOfSP").checked);
     showSPUpcomingServicesData();
     showSPServiceHistoryData();
-    showSPBlockedtbData();
+    showSPBlockedtbData();    
     showSPMyRatingsData();
 });
 function fillCitiesByPostalcodeofSPMySettings(postalcode) {
@@ -578,7 +578,8 @@ function UnBlockCustomerByLoggedinSP(targetuserid) {
 function showSPMyRatingsData() {
     $.ajax({
         url: '/ServiceProvider/getSPMyRatingsData',
-        type: 'get',
+        type: 'post',
+        data: { "ratings": $("#selSPRatingsRange").val() },
         success: function (data) {
             var tblSPMyRatings = $('#tblSPMyRatings').DataTable();
             tblSPMyRatings.clear().draw();
@@ -609,19 +610,22 @@ function showSPMyRatingsData() {
                 tblSPMyRatings.row.add([
                     '<div class="spMyratingsBorder"><div class= "d-flex innerbox" ><div class="colume-1">' + e.servicereqestid + ' <br /><span class="fw-bold">' + e.customername + '</span></div><div class="colume-2">' +
                     '<img src="..//images/upcoming-service/calender.png" alt=""><span class="fw-bold ms-1">' + inputtagdate + '</span> <br>' +
-                    '<img src="..//images/upcoming-service/clock.png" alt=""><span class="ms-1">' + temptime + '</span>'+
+                    '<img src="..//images/upcoming-service/clock.png" alt=""><span class="ms-1">' + temptime + '</span>' +
                     '</div>' +
                     '<div class="colume-3">' +
-                    '<span class="fw-bold">Ratings</span> <br> <div class="d-flex align-items-center"><label>' + strRateStars + '</label> <label class="ms-2 mt-1">' + strRateType +'</label></div>'+
+                    '<span class="fw-bold">Ratings</span> <br> <div class="d-flex align-items-center"><label>' + strRateStars + '</label> <label class="ms-2 mt-1">' + strRateType + '</label></div>' +
                     '</div>' +
                     '</div>' +
                     '<hr / class="m-0 mt-3">' +
                     '<div class="commentbox float-left mt-2">' +
-                    '<span class="fw-bold">Customer Comment</span>' + "  <div>" + e.comment +'</div>'+
+                    '<span class="fw-bold">Customer Comment</span>' + "  <div>" + e.comment + '</div>' +
                     '</div>' +
                     '</div>'
-                ]).draw(false);                 
+                ]).draw(false);
             });
+        },
+        error: function (response) {
+            console.log("error: " + response.responseText);
         }
     });
 }
@@ -710,7 +714,7 @@ function openSPServiceRequestDetailsModal(serviceRequestId, btnAccept, btnCancel
                 }
                 if (btnAccept == 1) {
                     str += "<hr/>";
-                    str += "<button class='btnratesp px-3 py-2 me-1' onclick='acceptServiceRequest(" + serviceRequestId + ")'>Accept</button>";
+                    str += "<button class='btnratesp px-3 py-2 me-1' onclick='acceptServiceRequest(" + serviceRequestId + ")'><span class='d-flex justify-align-center align-items-center'><img class='me-2' src='../../images/service-history/rightmark.png' />Accept</span></button>";
                 }
                 if (btnCancelComplete == 1) {
                     str += "<hr/>";
@@ -718,10 +722,10 @@ function openSPServiceRequestDetailsModal(serviceRequestId, btnAccept, btnCancel
                     date1.setMinutes(date1.getMinutes() + (v.serviceDuration * 60));
                     var date2 = new Date();
                     if (date1 > date2) {
-                        str += "<button class='tblCancel px-3 py-2' onclick='cancelServiceRequestBySP(" + serviceRequestId + ")'>Cancel</button>";
+                        str += "<button class='tblCancel px-3 py-2' onclick='cancelServiceRequestBySP(" + serviceRequestId + ")'><span class='d-flex justify-align-center align-items-center'><img class='me-2' src='../../images/service-history/close-icon-small.png' />Cancel</span></button>";
                     }
                     else {
-                        str += "<button class='btnratesp px-3 py-2 me-1' onclick='completeServiceRequestBySP(" + serviceRequestId + ")'>Completed</button><button class='tblCancel px-3 py-2'  onclick='cancelServiceRequestBySP(" + v.serviceRequestId + ")'>Cancel</button>";
+                        str += "<button class='btnratesp px-3 py-2 me-1' onclick='completeServiceRequestBySP(" + serviceRequestId + ")'><span class='d-flex justify-align-center align-items-center'><img class='me-2' src='../../images/service-history/rightmark.png' />Completed</span></button><button class='tblCancel px-3 py-2'  onclick='cancelServiceRequestBySP(" + v.serviceRequestId + ")'><span class='d-flex justify-align-center align-items-center'><img class='me-2' src='../../images/service-history/close-icon-small.png' />Cancel<span></button>";
                     }       
                 }
                 document.getElementById("dvSPServiceDetailsModalBody").innerHTML = str;

@@ -5,6 +5,7 @@ using Helperland.Repository;
 using Helperland.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -292,24 +293,24 @@ namespace Helperland.Controllers
             return Json(serviceProviderRepository.UnBlockCutomer(targetuserid));
         }
 
-        [HttpGet]
-        public JsonResult getSPMyRatingsData()
+        public JsonResult getSPMyRatingsData(int ratings)
         {
-            var ratings = (from rt in helperLandContext.Ratings
-                           join u in helperLandContext.Users on rt.RatingFrom equals u.UserId
-                           join sr in helperLandContext.ServiceRequests on rt.ServiceRequestId equals sr.ServiceRequestId
-                           where rt.RatingTo == getLoggedinUserId()
-                           select new
-                           {
-                               servicereqestid = rt.ServiceRequestId,
-                               ratingid = rt.RatingId,
-                               customername = u.FirstName + " " + u.LastName,
-                               servistartdateandtime = sr.ServiceStartDate,
-                               rating = rt.Ratings,
-                               comment = rt.Comments,
-                               servicehoures = sr.ServiceHours
-                           }).ToList();
-            return Json(ratings);
+            var ratingsData = (from rt in helperLandContext.Ratings
+                               join u in helperLandContext.Users on rt.RatingFrom equals u.UserId
+                               join sr in helperLandContext.ServiceRequests on rt.ServiceRequestId equals sr.ServiceRequestId
+                               where rt.RatingTo == getLoggedinUserId() && (ratings == 0 ? rt.Ratings > 0 : (rt.Ratings <= ratings && rt.Ratings > (ratings - 1)))
+                               select new
+                               {
+                                   servicereqestid = rt.ServiceRequestId,
+                                   ratingid = rt.RatingId,
+                                   customername = u.FirstName + " " + u.LastName,
+                                   servistartdateandtime = sr.ServiceStartDate,
+                                   rating = rt.Ratings,
+                                   comment = rt.Comments,
+                                   servicehoures = sr.ServiceHours
+                               }).ToList();
+            //var ratingsData= helperLandContext.Ratings.Where(x => x.RatingTo == 44 && x.Ratings > (ratings == 5 ? 0 : ratings) && x.Ratings <= (ratings == 5 ? 5 : (ratings + 1))).Include(x => x.RatingFromNavigation).Include(x => x.ServiceRequest);
+            return Json(ratingsData);
         }
     }
 }

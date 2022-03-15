@@ -131,7 +131,7 @@ function showServiceHistory(id){
   document.getElementById("hdnActiveMenu").value=id;
   setActive(id);
 }
-function showMyRatings(id){
+function showMyRatings(id) {
   document.getElementById("dv-dashboard").style.display="none";
   document.getElementById("dv-new-ser-req").style.display="none";
   document.getElementById("dv-upcoming-services").style.display="none";
