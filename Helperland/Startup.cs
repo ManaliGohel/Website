@@ -42,6 +42,7 @@ namespace Helperland
             services.AddScoped<IServiceRequestExtraRepository, ServiceRequestExtraRepository>();
             services.AddScoped<ICustomerSettingsRepository, CustomerSettingsRepository>();
             services.AddScoped<IServiceProviderRepository, ServiceProviderRepository>();
+            services.AddScoped<IAdminRepository, AdminRepository>();            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

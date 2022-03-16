@@ -8,11 +8,13 @@ function loginUser() {
         document.getElementById("errMsg_loginmodal_email").innerHTML = "Enter valid Email Id!!";
     }
     else {
+        $("#dvLoader").addClass("is-active");
         $.ajax({
             type: "post",
             url: "/Customer/checkForLoginIfUserExistorNot",
             data: { "email": email, "password": password, "isremember": isremember },
             success: function (response) {
+                $("#dvLoader").removeClass("is-active");
                 if (response == "1") {
                     window.location.href = '/admin/index';
                 }
@@ -32,7 +34,8 @@ function loginUser() {
                 }
             },
             error: function (response) {
-                console.log("loginUser() error: " + response.responseText);
+                $("#dvLoader").removeClass("is-active");
+                console.log("login.js->loginUser error: " + response.responseText);
             }
         })
     }    
@@ -57,11 +60,13 @@ function forgotPassword() {
         document.getElementById("errMsg_passwordmodal_email").innerHTML = "Enter valid Email Id!!";
     }
     else {
+        $("#dvLoader").addClass("is-active");
         $.ajax({
             type: "post",
             url: "/Customer/checkForForgotPasswordIfUserExistorNot",
             data: { "email": email },
             success: function (response) {
+                $("#dvLoader").removeClass("is-active");
                 if (response) {
                     $('#forgorpasswordModal').modal('hide');
                     Swal.fire({
@@ -77,7 +82,8 @@ function forgotPassword() {
                 }
             },
             error: function (response) {
-                console.log("forgotPassword() error: " + response.responseText);
+                $("#dvLoader").removeClass("is-active");
+                console.log("login.js->forgotPassword error: " + response.responseText);
             }
         })
     }    
@@ -99,16 +105,19 @@ function emailValidate(email) {
     return regexEmail.test(email); 
 }
 function openLoginModalforBS() {
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         type: "post",
         url: "/BookService/setSessionVarValue",
         data: { "varName": "redirectToBookService", "varValue": "1" },
         success: function () {
+            $("#dvLoader").removeClass("is-active");
             var myLoginModal = new bootstrap.Modal(document.getElementById('loginModal'));
             myLoginModal.show();
         },
         error: function (response) {
-            console.log("error openLoginModalforBS(): " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("login.js->openLoginModalforBS error: " + response.responseText);
         }
     })    
 }

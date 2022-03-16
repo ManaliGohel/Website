@@ -9,11 +9,13 @@ function checkAvailabilityOfSP() {
             spnAvailability.innerHTML = "Enter valid Postal Code!!";
         }
         else {
+            $("#dvLoader").addClass("is-active");
             $.ajax({
                 type: "post",
                 url: "/BookService/checkAvailabilitySP",
                 data: { "zipcode": zipcode },
                 success: function (response) {
+                    $("#dvLoader").removeClass("is-active");
                     if (response) {
                         showSchedulePlanBlock(); 
                         document.getElementById("spnBasicSerHours").innerHTML = 3;
@@ -26,7 +28,8 @@ function checkAvailabilityOfSP() {
                     }
                 },
                 error: function (response) {
-                    alert("error: " + response.responseText);
+                    $("#dvLoader").removeClass("is-active");
+                    console.log("bookservice.js->checkAvailabilityOfSP error: " + response.responseText);
                 }
             })
         }        
@@ -49,13 +52,17 @@ function opentbMakePaymentBS() {
 }
 
 function setSessionVar(varName, varValue) {
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         type: "post",
         url: "/BookService/setSessionVarValue",
         data: { "varName": varName, "varValue": varValue },
-        success: function () {},
+        success: function () {
+            $("#dvLoader").removeClass("is-active");
+        },
         error: function (response) {
-            alert("error: " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("bookservice.js->setSessionVar error: " + response.responseText);
         }
     })
 }
@@ -418,11 +425,13 @@ function showAddNewAddressBtn() {
 
 function setPostalCodeandCities() {    
     document.getElementById("txtPostalCode").value = document.getElementById("txtzipcode").value;
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         type: 'get',
         url: "/BookService/getAllCitiesByPostalCode",
         data: { "postalcode": document.getElementById("txtPostalCode").value },
         success: function (data) {
+            $("#dvLoader").removeClass("is-active");
             if (data != null) {
                 $('#selcityfornewadd').empty();
                 var count = 0;
@@ -438,18 +447,21 @@ function setPostalCodeandCities() {
             }
         },
         error: function (response) {
-            alert("error: " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("bookservice.js->setPostalCodeandCities error: " + response.responseText);
         }
     });
 }
 function getAllUserAddressesbyPostalcode() {
     document.getElementById("dvcontainer-useraddresses").innerHTML = "";
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         type: "get",
         url: "/BookService/getAllUserAddressesbyPostalcode",
         data: { "postalcode": document.getElementById("txtPostalCode").value },
         dataType: "json",
         success: function (data) {
+            $("#dvLoader").removeClass("is-active");
             if (data == "") {
                 document.getElementById("btnContinuetoMakepayment").classList.add("btndisable");
                 document.getElementById("btnContinuetoMakepayment").disabled = true;
@@ -472,7 +484,8 @@ function getAllUserAddressesbyPostalcode() {
             }
         },
         error: function (response) {
-            alert("error: " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("bookservice.js->getAllUserAddressesbyPostalcode error: " + response.responseText);
         }
     })
 }
@@ -518,6 +531,7 @@ function saveUserNewAddress() {
             postalCode: document.getElementById("txtPostalCode").value,
             mobile: document.getElementById("txtMobile").value
         };
+        $("#dvLoader").addClass("is-active");
         $.ajax({
             type: "post",
             dataType: "JSON",
@@ -525,6 +539,7 @@ function saveUserNewAddress() {
             contentType: "application/json",
             url: "/BookService/addNewAddress",
             success: function (response) {
+                $("#dvLoader").removeClass("is-active");
                 if (response > 0) {
                     getAllUserAddressesbyPostalcode();
                     setPostalCodeandCities();
@@ -532,7 +547,8 @@ function saveUserNewAddress() {
                 }
             },
             error: function (response) {
-                alert("error: " + response.responseText);
+                $("#dvLoader").removeClass("is-active");
+                console.log("bookservice.js->saveUserNewAddress error: " + response.responseText);
             }
         })    
     }
@@ -558,7 +574,7 @@ function bookService() {
     completeBooking.Comments = document.getElementById("txtareaComments").value;
     completeBooking.HasPets = document.getElementById("cbhavePets").checked;
     completeBooking.UserAddressID = $("input[type='radio'][name='rbuseradd']:checked").val();
-    console.log(completeBooking);
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         url: "/BookService/saveBookServiceRequest",
         type: "post",
@@ -566,12 +582,14 @@ function bookService() {
         contentType: "application/json",
         data: JSON.stringify(completeBooking),
         success: function (response) {
+            $("#dvLoader").removeClass("is-active");
             if (response > 0) {
                 showCompleteBooking(response);
             }
         },
         error: function (response) {
-            console.log("bookService() error: " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("bookservice.js->bookService error: " + response.responseText);
         }
     });
 }

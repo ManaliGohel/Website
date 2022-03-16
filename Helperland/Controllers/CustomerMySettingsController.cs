@@ -96,6 +96,7 @@ namespace Helperland.Controllers
                           join sp in helperLandContext.Users on (int?)sr.ServiceProviderId equals (int?)sp.UserId into sp1
                           from sp in sp1.DefaultIfEmpty()
                           where (int?)cs.UserId == getLoggedinUserId() && (int?)sr.Status != (int)ServiceStatusEnum.Cancelled && (int?)sr.Status != (int)ServiceStatusEnum.Completed
+                          orderby sr.ServiceRequestId descending
                           select new
                           {
                               CustomerId = (int?)cs.UserId,

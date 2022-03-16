@@ -169,7 +169,7 @@ namespace Helperland.Controllers
                         Password = model.password,
                         CreatedDate = DateTime.Now,
                         UserTypeId = (int)UserTypeIdEnum.Customer,
-                        IsApproved = true,
+                        IsActive = true,
                         ModifiedBy = (int)UserTypeIdEnum.Customer,
                         ModifiedDate = DateTime.Now
                     };

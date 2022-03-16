@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="~/css/home.css">
     <link href="~/css/site.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/mycss2.css">
+    <!-- Loader CSS -->
+    <link href="~/css/loader-css/css-loader.css" rel="stylesheet" />
     <script src="~/lib/jquery/jquery.js"></script>
     <script src="~/lib/jquery-validate/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
@@ -32,6 +34,8 @@
     </style>
 </head>
 <body onscroll="stickyNavbar();" onresize="setLogoByWinSize();" onload="checkForLoginModal(); checkForPasswordModal();">
+    <!-- Loader -->
+    <div class="loader loader-bouncing" id="dvLoader"></div>
     <section class="becomepro-back pb-5">
         <header>
             <nav class="navbar navbar-expand-lg p-2 pt-3" id="navbar">
@@ -52,7 +56,7 @@
                             {
                                 <a href="#" onclick="openLoginModalforBS();" class="navOptionOutline ot1" id="btnBookCleaner">Book a Cleaner</a>
                             }
-                        }                        
+                        }
                         <a asp-action="prices" asp-controller="customer" class="navOptionOutline">Prices</a>
                         <a asp-action="" asp-controller="" class="navOptionOutline">Our Guarantee</a>
                         <a asp-action="" asp-controller="" class="navOptionOutline">Blog</a>
@@ -124,7 +128,7 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-md-12">                                    
+                                <div class="col-md-12">
                                     <input type="password" id="pwd" asp-for="password" maxlength="100" autocomplete="off" class="form-control inputtext ff" placeholder="Password">
                                     <span asp-validation-for="password" class="text-danger"></span>
                                 </div>

@@ -11,11 +11,13 @@ function fillCitiesByPostalcodeofSPMySettings(postalcode) {
         document.getElementById("spnPostalCodeSPAdd").innerHTML = "";
     }
     else if (postalcode.toString().trim().length == 6) {
+        $("#dvLoader").addClass("is-active");
         $.ajax({
             type: 'get',
             url: "/BookService/getAllCitiesByPostalCode",
             data: { "postalcode": postalcode },
             success: function (data) {
+                $("#dvLoader").removeClass("is-active");
                 if (data.length > 0) {
                     document.getElementById("spnPostalCodeSPAdd").innerHTML = "";
                     $('#selSPAddressCity').empty();
@@ -36,7 +38,8 @@ function fillCitiesByPostalcodeofSPMySettings(postalcode) {
                 }
             },
             error: function (response) {
-                alert("error: " + response.responseText);
+                $("#dvLoader").removeClass("is-active");
+                console.log("MySettingsSP.js->fillCitiesByPostalcodeofSPMySettings error: " + response.responseText);
             }
         });
     }
@@ -46,12 +49,14 @@ function fillCitiesByPostalcodeofSPMySettings(postalcode) {
     }
 }
 function showLoggedinSPDetails() {
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         type: "get",
         url: "/ServiceProvider/getLoggedinSPData",
         dataType: "JSON",
         contentType: "application/json",
         success: function (data) {        
+            $("#dvLoader").removeClass("is-active");
             $.each(data, function (i, v) {
                 document.getElementById("txtFirstnameSPMydetails").value = v.firstName;
                 document.getElementById("txtLastnameSPMydetails").value = v.lastName;
@@ -93,7 +98,8 @@ function showLoggedinSPDetails() {
             })           
         },
         error: function (response) {
-            alert("error: " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("MySettingsSP.js->showLoggedinSPDetails error: " + response.responseText);
         }
     });
 }
@@ -180,6 +186,7 @@ function saveSPDetails() {
         else {
             data.SPProfilePicture = $("#imgSPProfie").attr('src');
         }
+        $("#dvLoader").addClass("is-active");
         $.ajax({
             type: "post",
             dataType: "JSON",
@@ -187,6 +194,7 @@ function saveSPDetails() {
             contentType: "application/json",
             url: "/ServiceProvider/updateSPDetails",
             success: function (response) {
+                $("#dvLoader").removeClass("is-active");
                 if (response > 0) {
                     $("#dvSPUpdateSuccess").fadeTo(2000, 500).slideUp(500, function () {
                         $("#dvSPUpdateSuccess").slideUp(500);
@@ -194,7 +202,8 @@ function saveSPDetails() {
                 }
             },
             error: function (response) {
-                alert("error: " + response.responseText);
+                $("#dvLoader").removeClass("is-active");
+                console.log("MySettingsSP.js->saveSPDetails error: " + response.responseText);
             }
         }); 
     }
@@ -267,11 +276,13 @@ function disableSPChangePasswordbtn() {
     document.getElementById("btnSPChangepassword").disabled = true;
 }
 function changeSPPassword() {
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         type: "post",
         dataType: "JSON",
         url: "/CustomerMySettings/checkUserPassword",
         success: function (response) {
+            $("#dvLoader").removeClass("is-active");
             document.getElementById("spnoldpwdSPchangepwd").innerHTML = "";
             if (response.password == document.getElementById("txtoldpwdSPchangepwd").value) {
                 updateSPPassword();
@@ -281,17 +292,20 @@ function changeSPPassword() {
             }
         },
         error: function (response) {
-            alert("error: " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("MySettingsSP.js->changeSPPassword error: " + response.responseText);
         }
     });
 }
 function updateSPPassword() {
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         type: "post",
         dataType: "JSON",
         data: { "password": document.getElementById("txtnewpwdSPchangepwd").value.trim() },
         url: "/CustomerMySettings/updateUserPassword",
         success: function (response) {
+            $("#dvLoader").removeClass("is-active");
             if (response > 0) {
                 clearChangeSPPasswordTab();
                 $("#dvSPChangePassword").fadeTo(2000, 500).slideUp(500, function () {
@@ -300,7 +314,8 @@ function updateSPPassword() {
             }
         },
         error: function (response) {
-            alert("error: " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("MySettingsSP.js->updateSPPassword error: " + response.responseText);
         }
     });
 }
@@ -315,11 +330,13 @@ function clearChangeSPPasswordTab() {
 }
 
 function showSPNewServiceRequestsData(hasPets) {
+    //$("#dvLoader").addClass("is-active");
     $.ajax({
         type: 'get',
         url: "/ServiceProvider/getLoggedinSPNewServiceRequestsData",
         data: { "hasPets": hasPets },
         success: function (data) {
+            //$("#dvLoader").removeClass("is-active");
             var tblspNewServiceRequests = $('#tblNewServiceRequests').DataTable();
             tblspNewServiceRequests.clear().draw();          
             if (data.length > 0) {                
@@ -348,7 +365,8 @@ function showSPNewServiceRequestsData(hasPets) {
             }                      
         },
         error: function (response) {
-            alert("error: " + response.responseText);
+            //$("#dvLoader").removeClass("is-active");
+            console.log("MySettingsSP.js->showSPNewServiceRequestsData error: " + response.responseText);
         }
     });
 }
@@ -366,11 +384,14 @@ function getServiceEndTime(serStartTime, serEndTime) {
 }
 
 function acceptServiceRequest(servicerequestid) {
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         url: '/ServiceProvider/acceptNewServicerequestSP',
         data: { 'serviceid': servicerequestid },
         type: 'post',
         success: function (response) {
+            $("#dvLoader").removeClass("is-active");
+            $("#showSPServiceRequestDetailsModal").modal('hide');
             if (response == false) {
                 Swal.fire({
                     icon: 'success',
@@ -396,16 +417,19 @@ function acceptServiceRequest(servicerequestid) {
             }
         },
         error: function (response) {
-            alert("error: " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("MySettingsSP.js->acceptServiceRequest error: " + response.responseText);
         }
     });
 }
 
 function showSPUpcomingServicesData() {
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         type: 'get',
         url: "/ServiceProvider/getLoggedinSPUpcomingServicesData",
         success: function (data) {
+            $("#dvLoader").removeClass("is-active");
             var tblspUpcomingServices = $('#tblUpcomingServices').DataTable();
             tblspUpcomingServices.clear().draw();
             if (data.length > 0) {
@@ -445,17 +469,21 @@ function showSPUpcomingServicesData() {
             }
         },
         error: function (response) {
-            alert("error: " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("MySettingsSP.js->showSPUpcomingServicesData error: " + response.responseText);
         }
     });
 }
 function completeServiceRequestBySP(srId) {
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         url: '/ServiceProvider/completeSRbySP',
         type: 'post',
         data: { 'servicerequestid': srId },
         success: function (response) {
+            $("#dvLoader").removeClass("is-active");
             if (response > 0) {
+                $("#showSPServiceRequestDetailsModal").modal('hide');
                 Swal.fire({
                     icon: 'success',
                     title: 'Service Request completed Successfully!!',
@@ -465,17 +493,21 @@ function completeServiceRequestBySP(srId) {
             }
         },
         error: function (response) {
-            alert("error: " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("MySettingsSP.js->completeServiceRequestBySP error: " + response.responseText);
         }
     });
 }
 function cancelServiceRequestBySP(srId) {
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         url: '/ServiceProvider/cancelSRbySP',
         type: 'post',
         data: { 'servicerequestid': srId },
         success: function (response) {
+            $("#dvLoader").removeClass("is-active");
             if (response > 0) {
+                $("#showSPServiceRequestDetailsModal").modal('hide');
                 Swal.fire({
                     icon: 'success',
                     title: 'Service Request cancelled Successfully!!',
@@ -485,16 +517,19 @@ function cancelServiceRequestBySP(srId) {
             }
         },
         error: function (response) {
-            alert("error: " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("MySettingsSP.js->cancelServiceRequestBySP error: " + response.responseText);
         }
     });
 }
 
 function showSPServiceHistoryData() {
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         type: 'get',
         url: "/ServiceProvider/getLoggedinSPServiceHistoryData",
         success: function (data) {
+            $("#dvLoader").removeClass("is-active");
             var tblSPServiceHistory = $('#tblSPServiceHistory').DataTable();
             tblSPServiceHistory.clear().draw();
             if (data.length > 0) {
@@ -519,16 +554,19 @@ function showSPServiceHistoryData() {
             }
         },
         error: function (response) {
-            alert("error: " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("MySettingsSP.js->showSPServiceHistoryData error: " + response.responseText);
         }
     });
 }
 
 function showSPBlockedtbData() {
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         url: '/ServiceProvider/getCustomersForSPBlockedData',
         type: 'get',
         success: function (response) {
+            $("#dvLoader").removeClass("is-active");
             var tblspBlockCustomer = $('#tblspBlockCustomer').DataTable();
             tblspBlockCustomer.clear().draw();
             response.forEach(function (e) {
@@ -545,42 +583,60 @@ function showSPBlockedtbData() {
                     strBtnBlockUnblock
                 ]).draw(false);
             });
+        },
+        error: function (response) {
+            $("#dvLoader").removeClass("is-active");
+            console.log("MySettingsSP.js->showSPBlockedtbData error: " + response.responseText);
         }
     });
 }
 function BlockCustomerByLoggedinSP(targetuserid) {
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         url: '/ServiceProvider/BlockCustomerByLoggedinSP',
         type: 'post',
         data: { 'targetuserid': targetuserid },
         success: function (response) {
+            $("#dvLoader").removeClass("is-active");
             if (response > 0) {
                 showSPBlockedtbData();
                 showSPNewServiceRequestsData(document.getElementById("hasPetsForNewRequestsOfSP").checked);
             }
+        },
+        error: function (response) {
+            $("#dvLoader").removeClass("is-active");
+            console.log("MySettingsSP.js->BlockCustomerByLoggedinSP error: " + response.responseText);
         }
     });
 }
 function UnBlockCustomerByLoggedinSP(targetuserid) {
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         url: '/ServiceProvider/UnBlockCustomerByLoggedinSP',
         type: 'post',
         data: { 'targetuserid': targetuserid },
         success: function (response) {
+            $("#dvLoader").removeClass("is-active");
             if (response > 0) {
                 showSPBlockedtbData();
                 showSPNewServiceRequestsData(document.getElementById("hasPetsForNewRequestsOfSP").checked);
             }
+        },
+        error: function (response) {
+            $("#dvLoader").removeClass("is-active");
+            console.log("MySettingsSP.js->UnBlockCustomerByLoggedinSP error: " + response.responseText);
         }
     });
 }
 
 function showSPMyRatingsData() {
+    //$("#dvLoader").addClass("is-active");
     $.ajax({
         url: '/ServiceProvider/getSPMyRatingsData',
         type: 'post',
         data: { "ratings": $("#selSPRatingsRange").val() },
         success: function (data) {
+            //$("#dvLoader").removeClass("is-active");
             var tblSPMyRatings = $('#tblSPMyRatings').DataTable();
             tblSPMyRatings.clear().draw();
             var strRateStars = "";
@@ -625,7 +681,8 @@ function showSPMyRatingsData() {
             });
         },
         error: function (response) {
-            console.log("error: " + response.responseText);
+            //$("#dvLoader").removeClass("is-active");
+            console.log("MySettingsSP.js->showSPMyRatingsData error: " + response.responseText);
         }
     });
 }
@@ -680,12 +737,14 @@ function getSPRateImages(spRate) {
 }
 
 function openSPServiceRequestDetailsModal(serviceRequestId, btnAccept, btnCancelComplete) {
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         type: "get",
         url: "/CustomerMySettings/getServiceRequestDetails",
         data: { "servicerequestid": serviceRequestId },
         dataType: "json",
         success: function (data) {
+            $("#dvLoader").removeClass("is-active");
             var str = "";
             $.each(data, function (i, v) {
                 str += "<div class='fw-bold fs2'>" + new Date(v.serviceStartDateTime).toLocaleDateString('en-GB') + " " + new Date(v.serviceStartDateTime).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) + "-" + getServiceEndTime(new Date(v.serviceStartDateTime).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }), new Date(v.serviceStartDateTime).getHours() + v.serviceDuration) + "</div>";
@@ -725,7 +784,7 @@ function openSPServiceRequestDetailsModal(serviceRequestId, btnAccept, btnCancel
                         str += "<button class='tblCancel px-3 py-2' onclick='cancelServiceRequestBySP(" + serviceRequestId + ")'><span class='d-flex justify-align-center align-items-center'><img class='me-2' src='../../images/service-history/close-icon-small.png' />Cancel</span></button>";
                     }
                     else {
-                        str += "<button class='btnratesp px-3 py-2 me-1' onclick='completeServiceRequestBySP(" + serviceRequestId + ")'><span class='d-flex justify-align-center align-items-center'><img class='me-2' src='../../images/service-history/rightmark.png' />Completed</span></button><button class='tblCancel px-3 py-2'  onclick='cancelServiceRequestBySP(" + v.serviceRequestId + ")'><span class='d-flex justify-align-center align-items-center'><img class='me-2' src='../../images/service-history/close-icon-small.png' />Cancel<span></button>";
+                        str += "<div class='d-flex align-items-center'><button class='btnratesp px-3 py-2 me-1' onclick='completeServiceRequestBySP(" + serviceRequestId + ")'><span class='d-flex justify-align-center align-items-center'><img class='me-2' src='../../images/service-history/rightmark.png' />Completed</span></button><button class='tblCancel px-3 py-2'  onclick='cancelServiceRequestBySP(" + v.serviceRequestId + ")'><span class='d-flex justify-align-center align-items-center'><img class='me-2' src='../../images/service-history/close-icon-small.png' />Cancel<span></button></div>";
                     }       
                 }
                 document.getElementById("dvSPServiceDetailsModalBody").innerHTML = str;
@@ -734,7 +793,8 @@ function openSPServiceRequestDetailsModal(serviceRequestId, btnAccept, btnCancel
             });
         },
         error: function (response) {
-            alert("error: " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("MySettingsSP.js->openSPServiceRequestDetailsModal error: " + response.responseText);
         }
     });
 }

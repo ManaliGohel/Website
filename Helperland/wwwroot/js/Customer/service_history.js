@@ -231,6 +231,7 @@ function addEditUserAddress() {
             mobile: document.getElementById("txtMobilenumberMdladdedit").value.trim()
         };
         if (document.getElementById("hdnCustomerEditAddressId").value == "") {
+            $("#dvLoader").addClass("is-active");
             $.ajax({
                 type: "post",
                 dataType: "JSON",
@@ -238,6 +239,7 @@ function addEditUserAddress() {
                 contentType: "application/json",
                 url: "/BookService/addNewAddress",
                 success: function (response) {
+                    $("#dvLoader").removeClass("is-active");
                     if (response > 0) {
                         $("#addedituseraddressModal").modal('hide');
                         displayLoggedinUserAddresses();
@@ -245,12 +247,14 @@ function addEditUserAddress() {
                     }
                 },
                 error: function (response) {
-                    alert("error: " + response.responseText);
+                    $("#dvLoader").removeClass("is-active");
+                    console.log("service_history.js->addEditUserAddress->addAddress error: " + response.responseText);
                 }
             })    
         }
         else {
             data.addressId = parseInt(document.getElementById("hdnCustomerEditAddressId").value);
+            $("#dvLoader").addClass("is-active");
             $.ajax({
                 type: "post",
                 dataType: "JSON",
@@ -258,6 +262,7 @@ function addEditUserAddress() {
                 contentType: "application/json",
                 url: "/CustomerMySettings/updateCustomerAddress",
                 success: function (response) {
+                    $("#dvLoader").removeClass("is-active");
                     if (response > 0) {
                         $("#addedituseraddressModal").modal('hide');
                         displayLoggedinUserAddresses();
@@ -265,7 +270,8 @@ function addEditUserAddress() {
                     }
                 },
                 error: function (response) {
-                    alert("error: " + response.responseText);
+                    $("#dvLoader").removeClass("is-active");
+                    console.log("service_history.js->addEditUserAddress->editAddress error: " + response.responseText);
                 }
             });
         }
@@ -323,11 +329,13 @@ function disableCustomerChangePasswordbtn() {
     document.getElementById("btnCusChangepassword").disabled = true;
 }
 function changeCusPassword() {
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         type: "post",
         dataType: "JSON",
         url: "/CustomerMySettings/checkUserPassword",
         success: function (response) {
+            $("#dvLoader").removeClass("is-active");
             document.getElementById("spnoldpwdUserchangepwd").innerHTML = "";
             if (response.password == document.getElementById("txtoldpwdUserchangepwd").value) {
                 updateUserPassword();                
@@ -337,17 +345,20 @@ function changeCusPassword() {
             }
         },
         error: function (response) {
-            alert("error: " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("service_history.js->changeCusPassword error: " + response.responseText);
         }
     });
 }
 function updateUserPassword() {
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         type: "post",
         dataType: "JSON",
         data: { "password": document.getElementById("txtnewpwdUserchangepwd").value.trim() },
         url: "/CustomerMySettings/updateUserPassword",
         success: function (response) {
+            $("#dvLoader").removeClass("is-active");
             if (response > 0) {
                 clearChangePasswordTab();
                 $("#dvCusChangePassword").fadeTo(2000, 500).slideUp(500, function () {
@@ -356,18 +367,21 @@ function updateUserPassword() {
             }
         },
         error: function (response) {
-            alert("error: " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("service_history.js->updateUserPassword error: " + response.responseText);
         }
     });
 }
 
 function showUserMyDetails() {
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         type: "get",
         url: "/CustomerMySettings/getLoggedinUserData",
         dataType: "JSON",
         contentType: "application/json",
         success: function (data) {
+            $("#dvLoader").removeClass("is-active");
             document.getElementById("txtFirstnameCusMydetails").value = data.firstName;
             document.getElementById("txtLastnameCusMydetails").value = data.lastName;
             document.getElementById("txtEmailCusMydetails").value = data.email;
@@ -383,7 +397,8 @@ function showUserMyDetails() {
             validateCustomerMydetails();
         },
         error: function (response) {
-            alert("error: " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("service_history.js->showUserMyDetails error: " + response.responseText);
         }
     });
 }
@@ -464,6 +479,7 @@ function saveCustomerDetails() {
             Year: parseInt(document.getElementById("selcusMyDetailsDOBYear").value),
             LanguageId: parseInt(document.getElementById("selcusMyDetailsPreferredLanguage").value)
         };
+        $("#dvLoader").addClass("is-active");
         $.ajax({
             type: "post",
             dataType: "JSON",
@@ -471,12 +487,14 @@ function saveCustomerDetails() {
             contentType: "application/json",
             url: "/CustomerMySettings/updateCustomerDetails",
             success: function (response) {
+                $("#dvLoader").removeClass("is-active");
                 $("#dvCusUpdateSuccess").fadeTo(2000, 500).slideUp(500, function () {
                     $("#dvCusUpdateSuccess").slideUp(500);
                 });
             },
             error: function (response) {
-                alert("error: " + response.responseText);
+                $("#dvLoader").removeClass("is-active");
+                console.log("service_history.js->saveCustomerDetails error: " + response.responseText);
             }
         });   
     }
@@ -484,11 +502,13 @@ function saveCustomerDetails() {
 
 function displayLoggedinUserAddresses() {
     document.getElementById("dvUserAddresses").innerHTML = "";
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         type: "get",
         url: "/CustomerMySettings/getLoggedinUserAddresses",
         dataType: "json",
         success: function (data) {
+            $("#dvLoader").removeClass("is-active");
             if (data == "") {
                 document.getElementById("dvUserAddresses").innerHTML = "<div class='addhead py-2 px-4 fw-bold'>You have no address added yet!</div>";
             }
@@ -500,7 +520,8 @@ function displayLoggedinUserAddresses() {
             }
         },
         error: function (response) {
-            alert("error: " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("service_history.js->displayLoggedinUserAddresses error: " + response.responseText);
         }
     });
 }
@@ -522,11 +543,13 @@ function openAddEditUserAddressModal(addressid, postalcode) {
 }
 function fillCitiesByPostalcode(postalcode) {
     if (postalcode.toString().trim().length >= 6) {
+        $("#dvLoader").addClass("is-active");
         $.ajax({
             type: 'get',
             url: "/BookService/getAllCitiesByPostalCode",
             data: { "postalcode": postalcode },
             success: function (data) {
+                $("#dvLoader").removeClass("is-active");
                 if (data.length > 0) {
                     document.getElementById("spnPostalcodeMdladdedit").innerHTML = "";
                     document.getElementById("txtPostalcodeMdladdedit").value = postalcode;
@@ -553,7 +576,8 @@ function fillCitiesByPostalcode(postalcode) {
                 }
             },
             error: function (response) {
-                alert("error: " + response.responseText);
+                $("#dvLoader").removeClass("is-active");
+                console.log("service_history.js->fillCitiesByPostalcode error: " + response.responseText);
             }
         });
     }
@@ -565,11 +589,13 @@ function fillCitiesByPostalcode(postalcode) {
     }
 }
 function showAddresstoEditModal(addressid) {
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         type: 'get',
         url: "/CustomerMySettings/getAddressByAddressId",
         data: { "addressid": addressid },
         success: function (data) {
+            $("#dvLoader").removeClass("is-active");
             document.getElementById("txtStreetnameMdladdedit").value = data.addressLine1;
             document.getElementById("txtHomenumberMdladdedit").value = data.addressLine2;
             document.getElementById("txtMobilenumberMdladdedit").value = data.mobile;
@@ -583,7 +609,8 @@ function showAddresstoEditModal(addressid) {
             document.getElementById("btnaddedituseraddressModal").disabled = false;
         },
         error: function (response) {
-            alert("error: " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("service_history.js->showAddresstoEditModal error: " + response.responseText);
         }
     });
 }
@@ -603,12 +630,14 @@ function clearAddEditCusAddressModal() {
     document.getElementById("spnMobilenumberMdladdedit").innerHTML = "";
 }
 function deleteCustomerAddress() {
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         type: "post",
         dataType: "JSON",
         data: { "addressid": parseInt(document.getElementById("hdnDeleteCustomerAddressId").value) },
         url: "/CustomerMySettings/deleteCustomerAddress",
         success: function (response) {
+            $("#dvLoader").removeClass("is-active");
             if (response > 0) {
                 $("#deleteuseraddressModal").modal('hide');
                 displayLoggedinUserAddresses();
@@ -616,7 +645,8 @@ function deleteCustomerAddress() {
             }
         },
         error: function (response) {
-            alert("error: " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("service_history.js->deleteCustomerAddress error: " + response.responseText);
         }
     });   
 }
@@ -636,11 +666,13 @@ function redirectToCustomerMysettings() {
 }
 
 function getCustomerDashboardData() {
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         type: "get",
         url: "/CustomerMySettings/getCustomerDashboardData",
         dataType: "json",
         success: function (data) {
+            $("#dvLoader").removeClass("is-active");
             var countForNoServiceRequestAvailable = 0;
             if (data.length == 1) {
                 $.each(data, function (i, v) {
@@ -698,7 +730,8 @@ function getCustomerDashboardData() {
             }
         },
         error: function (response) {
-            alert("error: " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("service_history.js->getCustomerDashboardData error: " + response.responseText);
         }
     });
 }
@@ -758,12 +791,14 @@ function getSPRateImages(spRate) {
 }
 
 function showServiceRequestDetails(serviceRequestId, withRescheduleDelete) { 
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         type: "get",
         url: "/CustomerMySettings/getServiceRequestDetails",
         data: { "servicerequestid": serviceRequestId },
         dataType: "json",
         success: function (data) {
+            $("#dvLoader").removeClass("is-active");
             var str = "";
             $.each(data, function (i, v) {
                 str += "<div class='fw-bold fs2'>" + new Date(v.serviceStartDateTime).toLocaleDateString('en-GB') + " " + new Date(v.serviceStartDateTime).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) + "-" + getServiceEndTime(new Date(v.serviceStartDateTime).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }), new Date(v.serviceStartDateTime).getHours() + v.serviceDuration) + "</div>";
@@ -801,7 +836,8 @@ function showServiceRequestDetails(serviceRequestId, withRescheduleDelete) {
             });
         },
         error: function (response) {
-            alert("error: " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("service_history.js->showServiceRequestDetails error: " + response.responseText);
         }
     });
 }
@@ -831,12 +867,14 @@ function deleteServiceRequest(serviceRequestId) {
     document.getElementById("hdncancelServiceRequestId").value = serviceRequestId;
 }
 function cancelServiceRequest() {    
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         type: "post",
         dataType: "JSON",
         data: { "servicerequestid": document.getElementById("hdncancelServiceRequestId").value},
         url: "/CustomerMySettings/cancelServiceRequest",
         success: function (response) {
+            $("#dvLoader").removeClass("is-active");
             if (response > 0) {
                 $("#deleteServiceRequestModal").modal("hide");
                 Swal.fire({
@@ -849,7 +887,8 @@ function cancelServiceRequest() {
             }
         },
         error: function (response) {
-            alert("error: " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("service_history.js->cancelServiceRequest error: " + response.responseText);
         }
     });  
 }
@@ -888,12 +927,14 @@ function rescheduleServiceRequestValidation() {
                 min = '00';
             }
             var dt1 = new Date(document.getElementById("dtRescheduleDateForService").value.split('-')[0], (document.getElementById("dtRescheduleDateForService").value.split('-')[1] - 1), document.getElementById("dtRescheduleDateForService").value.split('-')[2], hh, min, 0, 0);
+            $("#dvLoader").addClass("is-active");
             $.ajax({
                 type: "get",
                 url: "/CustomerMySettings/getServiceRequestsDetailsForCheckRescheduleSR",
                 data: { "servicerequestid": document.getElementById("hdnServiceRequestIdOfRescheduleSR").value, "serviceproviderid": document.getElementById("hdnServiceProviderIdOfRescheduleSR").value },
                 dataType: "json",
                 success: function (data) {
+                    $("#dvLoader").removeClass("is-active");
                     var vErrCount = 0;
                     var vSucceessCount = 0;
                     var conflictServiceRequestId = 0;
@@ -980,7 +1021,8 @@ function rescheduleServiceRequestValidation() {
                     }
                 },
                 error: function (response) {
-                    alert("error: " + response.responseText);
+                    $("#dvLoader").removeClass("is-active");
+                    console.log("service_history.js->rescheduleServiceRequestValidation error: " + response.responseText);
                 }
             });
         }
@@ -996,6 +1038,7 @@ function updateServiceRequestDateTime() {
     else {
         data.ServiceStartTime = document.getElementById("selRescheduleTimeForService").value + ":00";
     }
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         type: "post",
         dataType: "JSON",
@@ -1003,6 +1046,7 @@ function updateServiceRequestDateTime() {
         contentType: "application/json",
         url: "/CustomerMySettings/updateServiceRequestDateTime",
         success: function (response) {
+            $("#dvLoader").removeClass("is-active");
             if (response > 0) {
                 document.getElementById("spnRescheduleServiceRequestMsg").classList.remove('text-danger');
                 document.getElementById("spnRescheduleServiceRequestMsg").classList.add('text-success');
@@ -1016,7 +1060,8 @@ function updateServiceRequestDateTime() {
             }
         },
         error: function (response) {
-            alert("error: " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("service_history.js->updateServiceRequestDateTime error: " + response.responseText);
         }
     });   
 }
@@ -1037,11 +1082,13 @@ function date_units_diff(a, b, unit_amounts) {
 }
 
 function getCustomerServiceHistoryData() {
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         type: "get",
         url: "/CustomerMySettings/getCustomerServiceHistoryData",
         dataType: "json",
         success: function (data) {
+            $("#dvLoader").removeClass("is-active");
             var countForNoServiceHistoryAvailable = 0;
             if (data.length == 1) {
                 $.each(data, function (i, v) {
@@ -1113,7 +1160,8 @@ function getCustomerServiceHistoryData() {
             }
         },
         error: function (response) {
-            alert("error: " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("service_history.js->getCustomerServiceHistoryData error: " + response.responseText);
         }
     });
 }
@@ -1124,12 +1172,14 @@ var enumServiceStatus = {
     'Cancelled': 4
 };
 function openRateSPModal(srId, spId, spName) {
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         type: "get",
         url: "/CustomerMySettings/checkIfCustomerAlreadyRatedSPForServiceRequest",
         data: { "servicerequestid": srId },
         dataType: "json",
         success: function (response) {
+            $("#dvLoader").removeClass("is-active");
             if (response > 0) {
                 var alreadyRatedSPModal = new bootstrap.Modal(document.getElementById('alreadyRatedSPModal'));
                 alreadyRatedSPModal.show();
@@ -1148,7 +1198,8 @@ function openRateSPModal(srId, spId, spName) {
             }
         },
         error: function (response) {
-            alert("error: " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("service_history.js->openRateSPModal error: " + response.responseText);
         }
     });;    
 }
@@ -1162,6 +1213,7 @@ function submitRateOfSP() {
         Friendly: document.getElementById("lblrtFriendly").textContent,
         QualityOfService: document.getElementById("lblrtQltyofSer").textContent
     };
+    $("#dvLoader").addClass("is-active");
     $.ajax({
         type: "post",
         dataType: "JSON",
@@ -1169,13 +1221,15 @@ function submitRateOfSP() {
         contentType: "application/json",
         url: "/CustomerMySettings/saveRatingsOfSP",
         success: function (response) {
+            $("#dvLoader").removeClass("is-active");
             if (response > 0) {
                 getCustomerServiceHistoryData();
                 $("#rateSPModal").modal("hide");
             }
         },
         error: function (response) {
-            alert("error: " + response.responseText);
+            $("#dvLoader").removeClass("is-active");
+            console.log("service_history.js->submitRateOfSP error: " + response.responseText);
         }
     });    
 }
