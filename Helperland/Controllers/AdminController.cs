@@ -64,5 +64,21 @@ namespace Helperland.Controllers
         {
             return Json((from u in helperLandContext.Users where u.UserTypeId!=(int)UserTypeIdEnum.Admin select u).ToList());
         }
+
+        [HttpGet]
+        public JsonResult getAvailablePostalCodes()
+        {
+            return Json((from z in helperLandContext.Users where z.UserTypeId == (int)UserTypeIdEnum.ServiceProvider select z.ZipCode).Distinct());
+        }
+        [HttpGet]
+        public JsonResult getCustomers()
+        {
+            return Json((from z in helperLandContext.Users where z.UserTypeId == (int)UserTypeIdEnum.Customer select z.FirstName+" "+z.LastName).Distinct());
+        }
+        [HttpGet]
+        public JsonResult getServiceProviders()
+        {
+            return Json((from z in helperLandContext.Users where z.UserTypeId == (int)UserTypeIdEnum.ServiceProvider select z.FirstName + " " + z.LastName).Distinct());
+        }
     }
 }

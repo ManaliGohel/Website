@@ -18,9 +18,25 @@
             var dtstr = $("#dtStartDate").val();
             var dt = new Date(dtstr);
             alert(dt.toLocaleDateString());
-            alert(dt.toLocaleTimeString());
         }
     </script>
+    <style>
+        /* For hide arrows of Number Input type */
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+        /*.chosen-container-single .chosen-single {
+            background: -webkit-gradient(linear,left top,left bottom,color-stop(20%,#fff),color-stop(50%,#fff),color-stop(52%,#fff),to(#fff));
+            background: linear-gradient(#fff 20%,#fff 50%,#fff 52%,#fff 100%);
+        }*/
+    </style>
 </head>
 <body onload="checkForWindowSize();" onresize="navadminMenuSize();">
     <!-- Loader -->
@@ -59,37 +75,43 @@
                 </div>
                 <div class="dv-searchItems-container p-3 mb-4">
                     <div class="row">
-                        <div class="col-md-1 my-1 p-0 ps-1">
-                            <input type="text" class="form-control p-2" placeholder="Service ID">
+                        <div class="col-md-3 p-0 ps-1 my-1">
+                            <input id="txtSRIdAdminPanelSR" class="form-control p-2" placeholder="Service ID" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="20" autocomplete="off" />
                         </div>
-                        <div class="col-md-2 my-1 p-0 ps-1">
-                            <select class="form-select select p-2">
-                                <option value="0">Customer</option>
-                                <option value="1">...</option>
+                        <div class="col-md-3 p-0 ps-1 my-1">
+                            <input id="txtZipcodeAdminPanelSR" class="form-control p-2" placeholder="Zipcode" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="6" autocomplete="off" />
+                        </div>
+                        <div class="col-md-3 p-0 ps-1 my-1">
+                            <input id="txtCustomerAdminPanelSR" type="text" class="form-control" placeholder="Customer" />
+                        </div>
+                        <div class="col-md-3 p-0 ps-1 my-1">
+                            <input id="txtSPAdminPanelSR" type="text" class="form-control" placeholder="Service provider" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 p-0 ps-1 my-1">
+                            <select class="form-select select p-2" id="selSerStatusAdminPanel">
+                                <option value="">Status</option>
+                                @{
+                                    foreach (int i in Enum.GetValues(typeof(ServiceStatusEnum)))
+                                    {
+                                        <option value=@Enum.GetName(typeof(ServiceStatusEnum), @i)>@Enum.GetName(typeof(ServiceStatusEnum), @i)</option>
+                                    }
+                                }
                             </select>
                         </div>
-                        <div class="col-md-2 my-1 p-0 ps-1">
-                            <select class="form-select select p-2">
-                                <option value="0">Service provider</option>
-                                <option value="1">...</option>
-                            </select>
+                        <div class="col-md-3 p-0 ps-1 my-1">
+                            <input id="dtFromDateAdminPanelSR" placeholder="From Date" type="text" onfocus="(this.type='date')" class="textbox-n form-control p-2">
+                            <span class="text-danger small" id="spndtFromDateAdminPanelSR"></span>
                         </div>
-                        <div class="col-md-1 my-1 p-0 ps-1">
-                            <select class="form-select select p-2">
-                                <option value="0">Status</option>
-                                <option value="1">...</option>
-                            </select>
+                        <div class="col-md-3 p-0 ps-1 my-1">
+                            <input id="dtToDateAdminPanelSR" placeholder="To Date" type="text" onfocus="(this.type='date')" class="textbox-n form-control p-2">
+                            <span class="text-danger small" id="spndtToDateAdminPanelSR"></span>
                         </div>
-                        <div class="col-md-2 my-1 p-0 ps-1">
-                            <input id="dtStartDate" placeholder="Start Date" type="text" onfocus="(this.type='datetime-local')" class="textbox-n form-control p-2">
+                        <div class="col-md-1 p-0 ps-1 my-1">
+                            <button class="btnSearch" onclick="filterInAdminPanelServiceRequests();">Search</button>
                         </div>
-                        <div class="col-md-2 my-1 p-0 ps-1">
-                            <input id="dtEndDate" placeholder="End Date" type="text" onfocus="(this.type='datetime-local')" class="textbox-n form-control p-2">
-                        </div>
-                        <div class="col-md-1 my-1 p-0 ps-1">
-                            <button class="btnSearch" onclick="myfun();">Search</button>
-                        </div>
-                        <div class="col-md-1 my-1 p-0 ps-1">
+                        <div class="col-md-1 p-0 ps-1 my-1">
                             <button class="btnClear">Clear</button>
                         </div>
                     </div>
@@ -119,31 +141,44 @@
                 </div>
                 <div class="dv-searchItems-container p-3 mb-4">
                     <div class="row">
-                        <div class="col-md-3 my-1">
-                            <select class="form-select select">
-                                <option value="0">User name</option>
-                                <option value="1">...</option>
+                        <div class="col-md-3 p-0 ps-1 my-1">
+                            <input type="text" class="form-control" placeholder="User name" />
+                        </div>
+                        <div class="col-md-3 p-0 ps-1 my-1">
+                            <select class="form-select select p-2">
+                                <option value="0">User Type</option>
+                                @{
+                                    foreach (int i in Enum.GetValues(typeof(UserTypeIdEnum)))
+                                    {
+                                        if (@Enum.GetName(typeof(UserTypeIdEnum), @i) != "Admin")
+                                        {
+                                            <option value=@Enum.GetName(typeof(UserTypeIdEnum), @i)>@Enum.GetName(typeof(UserTypeIdEnum), @i)</option>
+                                        }
+                                    }
+                                }
                             </select>
                         </div>
-                        <div class="col-md-2 my-1">
-                            <select class="form-select select">
-                                <option value="0">User role</option>
-                                <option value="1">...</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3 my-1">
+                        <div class="col-md-3 p-0 ps-1 my-1">
                             <div class="input-group">
                                 <div class="input-group-text">+49</div>
-                                <input type="text" class="form-control" placeholder="Phone number">
+                                <input class="form-control p-2" placeholder="Phone number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="10" autocomplete="off" />
                             </div>
                         </div>
-                        <div class="col-md-2 my-1">
-                            <input type="text" class="form-control" placeholder="Zipcode">
+                        <div class="col-md-3 p-0 ps-1 my-1">
+                            <input class="form-control p-2" placeholder="Postal code" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="6" autocomplete="off" />
                         </div>
-                        <div class="col-md-1 my-1">
-                            <button class="btnSearch">Search</button>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 p-0 ps-1 my-1">
+                            <input id="dtFromDateAdminPanelUM" placeholder="From Date" type="text" onfocus="(this.type='date')" class="textbox-n form-control p-2">
                         </div>
-                        <div class="col-md-1 my-1">
+                        <div class="col-md-3 p-0 ps-1 my-1">
+                            <input id="dtToDateAdminPanelUM" placeholder="To Date" type="text" onfocus="(this.type='date')" class="textbox-n form-control p-2">
+                        </div>
+                        <div class="col-md-1 p-0 ps-1 my-1">
+                            <button class="btnSearch" onclick="filterInAdminPanelUserManagement();">Search</button>
+                        </div>
+                        <div class="col-md-1 p-0 ps-1 my-1">
                             <button class="btnClear">Clear</button>
                         </div>
                     </div>
@@ -183,6 +218,8 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="~/js/Admin/adminJS.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
     <script>
         $(document).ready(function () {
             $('#tblUserManagement').DataTable({
@@ -191,6 +228,7 @@
                 "bPaginate": true, //hide pagination
                 "bFilter": false, //hide Search bar
                 "bInfo": true, // hide showing entries
+                searching: true
             });
         });
         $(document).ready(function () {
@@ -200,10 +238,16 @@
                 "bPaginate": true, //hide pagination
                 "bFilter": false, //hide Search bar
                 "bInfo": true, // hide showing entries
+                searching: true
             });
         });
     </script>
 
+
+    <!-- Search Bar in Select Script -->
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js" integrity="sha512-rMGGF4wg1R73ehtnxXBt5mbUfN9JUJwbk21KMlnLZDJh7BkPmeovBuddZCENJddHYYMkCh9hPFnPmS9sspki8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" integrity="sha512-yVvxUQV0QESBt1SyZbNJMAwyKvFTLMyXSyBHDO4BG5t7k/Lw34tyqlSDlKIrIENIzCl+RVUNjmCPG+V/GMesRw==" crossorigin="anonymous" referrerpolicy="no-referrer" />*@
     <!-- script for sidebar navigation -->
     <partial name="_SidebarNavigationLayout" />
 </body>

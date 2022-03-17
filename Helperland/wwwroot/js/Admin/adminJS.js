@@ -1,6 +1,10 @@
 ﻿$(document).ready(function () {
+    //$(".chosen").chosen();
     showAdminPanelServiceRequestsData();
     showAdminPanelUserManagementData();
+    //fillAvailableZipcodes();
+    //fillCustomers();
+    //fillServiceProviders();
 });
 
 function showAdminPanelServiceRequestsData() {
@@ -143,7 +147,6 @@ function showAdminPanelUserManagementData() {
             $("#dvLoader").removeClass("is-active");
             var tblUserManagement = $('#tblUserManagement').DataTable();
             tblUserManagement.clear().draw();
-            console.log(data);
             $.each(data, function (i, v) {
                 var UserType = "";
                 var colStatus = "";
@@ -196,3 +199,170 @@ var enumUserType = {
     'Customer': 2,
     'ServiceProvider': 3
 };
+
+function filterInAdminPanelServiceRequests() {
+    var tblSerReq = $("#tblSerReq").DataTable();
+    document.getElementById("spndtToDateAdminPanelSR").innerHTML = "";
+    document.getElementById("spndtFromDateAdminPanelSR").innerHTML = "";
+    if ($("#dtFromDateAdminPanelSR").val().trim() != "" && $("#dtToDateAdminPanelSR").val().trim() == "") {
+        document.getElementById("spndtToDateAdminPanelSR").innerHTML = "Enter To Date for Date Filter!";
+    }
+    else if ($("#dtFromDateAdminPanelSR").val().trim() == "" && $("#dtToDateAdminPanelSR").val().trim() != "") {
+        document.getElementById("spndtFromDateAdminPanelSR").innerHTML = "Enter From Date for Date Filter!";
+    }
+    else {
+        var vDTCount = 0;
+        if (new Date($("#dtFromDateAdminPanelSR").val()) > new Date($("#dtToDateAdminPanelSR").val())) {
+            document.getElementById("spndtFromDateAdminPanelSR").innerHTML = "From Date must be smaller or equal to To Date!";
+            vDTCount++;
+        }
+        if (vDTCount == 0) {
+            document.getElementById("spndtFromDateAdminPanelSR").innerHTML = "";
+            jQuery.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+                    var min = new Date(parseInt($("#dtFromDateAdminPanelSR").val().toString().split('-')[0]), parseInt(parseInt($("#dtFromDateAdminPanelSR").val().toString().split('-')[1]) - 1), parseInt($("#dtFromDateAdminPanelSR").val().toString().split('-')[2]), 0, 0, 0, 0);
+                    var max = new Date(parseInt($("#dtToDateAdminPanelSR").val().toString().split('-')[0]), parseInt(parseInt($("#dtToDateAdminPanelSR").val().toString().split('-')[1]) - 1), parseInt($("#dtToDateAdminPanelSR").val().toString().split('-')[2]), 0, 0, 0, 0);
+                    var date = new Date(parseInt(data[1].toString().trim().split(' ')[0].split('/')[2]), parseInt(parseInt(data[1].toString().trim().split(' ')[0].split('/')[1]) - 1), parseInt(data[1].toString().trim().split(' ')[0].split('/')[0]), 0, 0, 0, 0);
+                    var inputtagdate = AppendZero(AppendZero((date.getMonth() + 1).toString()) + "-" + date.getDate().toString()) + "-" + date.getFullYear().toString();
+                    if (
+                        (min === null && max === null) ||
+                        (min === null && date <= max) ||
+                        (min <= date && max === null) ||
+                        (min <= date && date <= max)
+                    ) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+            );
+            tblSerReq.draw();
+        }
+    }
+    if ($("#txtSRIdAdminPanelSR").val().trim() != "") {
+        tblSerReq.columns(0).search($("#txtSRIdAdminPanelSR").val()).draw();
+    }
+    else {
+        tblSerReq.columns(0).search("").draw();
+    }
+    if ($("#txtZipcodeAdminPanelSR").val().trim() != "") {
+        tblSerReq.columns(2).search($("#txtZipcodeAdminPanelSR").val()).draw();
+    }
+    else {
+        tblSerReq.columns(2).search("").draw();
+    }
+    if ($("#txtCustomerAdminPanelSR").val().trim() != "") {
+        tblSerReq.columns(2).search($("#txtCustomerAdminPanelSR").val()).draw();
+    }
+    else {
+        tblSerReq.columns(2).search("").draw();
+    }
+    if ($("#txtSPAdminPanelSR").val().trim() != "") {
+        tblSerReq.columns(3).search($("#txtSPAdminPanelSR").val()).draw();
+    } 
+    else {
+        tblSerReq.columns(3).search("").draw();
+    }
+    tblSerReq.columns(4).search($("#selSerStatusAdminPanel").val()).draw();
+}
+function filterInAdminPanelUserManagement() {
+    var tblUserManagement = $("#tblUserManagement").DataTable();
+    jQuery.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            var min = new Date(parseInt($("#dtFromDateAdminPanelUM").val().toString().split('-')[0]), parseInt(parseInt($("#dtFromDateAdminPanelUM").val().toString().split('-')[1]) - 1), parseInt($("#dtFromDateAdminPanelUM").val().toString().split('-')[2]), 0, 0, 0, 0);
+            var max = new Date(parseInt($("#dtToDateAdminPanelUM").val().toString().split('-')[0]), parseInt(parseInt($("#dtToDateAdminPanelUM").val().toString().split('-')[1]) - 1), parseInt($("#dtToDateAdminPanelUM").val().toString().split('-')[2]), 0, 0, 0, 0);
+            var date = new Date(parseInt(data[1].toString().split('/')[2]), parseInt(parseInt(data[1].toString().split('/')[1]) - 1), parseInt(data[1].toString().split('/')[0]), 0, 0, 0, 0);
+            if (
+                (min === null && max === null) ||
+                (min === null && date <= max) ||
+                (min <= date && max === null) ||
+                (min <= date && date <= max)
+            ) {
+                console.log('success');
+                return true;
+            }
+            else {
+                console.log('error');
+                return false;
+            }
+        }
+    );
+    tblUserManagement.draw();
+}
+function AppendZero(input) {
+    if (input.length == 1) {
+        return '0' + input;
+    }
+    return input;
+}
+document.getElementById("dtFromDateAdminPanelSR").addEventListener('change', function (e) {
+    if (!document.getElementById("dtFromDateAdminPanelSR").value)
+        document.getElementById("spndtToDateAdminPanelSR").innerHTML = "";
+    else
+        document.getElementById("spndtFromDateAdminPanelSR").innerHTML = "";
+});
+document.getElementById("dtToDateAdminPanelSR").addEventListener('change', function (e) {
+    if (!document.getElementById("dtToDateAdminPanelSR").value)
+        document.getElementById("spndtFromDateAdminPanelSR").innerHTML = "";
+    else
+        document.getElementById("spndtToDateAdminPanelSR").innerHTML = "";
+});
+
+//function fillAvailableZipcodes() {
+//    $("#dvLoader").addClass("is-active");
+//    $.ajax({
+//        type: 'get',
+//        url: "/Admin/getAvailablePostalCodes",
+//        success: function (data) {
+//            $("#dvLoader").removeClass("is-active");
+//            $('#selAvailableZipcodes').empty();
+//            $('#selAvailableZipcodes').append('<option value="Zipcode" selected>Zipcode</option>');
+//            $.each(data, function (i, v) {
+//                $('#selAvailableZipcodes').append('<option value="' + v + '">' + v + '</option>');
+//            });
+//        },
+//        error: function (response) {
+//            $("#dvLoader").removeClass("is-active");
+//            console.log("adminJS.js->fillAvailableZipcodes error: " + response.responseText);
+//        }
+//    });
+//}
+//function fillCustomers() {
+//    $("#dvLoader").addClass("is-active");
+//    $.ajax({
+//        type: 'get',
+//        url: "/Admin/getCustomers",
+//        success: function (data) {
+//            $("#dvLoader").removeClass("is-active");
+//            $('#selCustomers').empty();
+//            $('#selCustomers').append('<option value="Customer" selected>Customer</option>');
+//            $.each(data, function (i, v) {
+//                $('#selCustomers').append('<option value="' + v + '">' + v + '</option>');
+//            })
+//        },
+//        error: function (response) {
+//            $("#dvLoader").removeClass("is-active");
+//            console.log("adminJS.js->fillCustomers error: " + response.responseText);
+//        }
+//    });
+//}
+//function fillServiceProviders() {
+//    $("#dvLoader").addClass("is-active");
+//    $.ajax({
+//        type: 'get',
+//        url: "/Admin/getServiceProviders",
+//        success: function (data) {
+//            $("#dvLoader").removeClass("is-active");
+//            $('#selServiceProviders').empty();
+//            $('#selServiceProviders').append('<option value="Service provider" selected>Service provider</option>');
+//            $.each(data, function (i, v) {
+//                $('#selServiceProviders').append('<option value="' + v + '">' + v + '</option>');
+//            })
+//        },
+//        error: function (response) {
+//            $("#dvLoader").removeClass("is-active");
+//            console.log("adminJS.js->fillServiceProviders error: " + response.responseText);
+//        }
+//    });
+//}
