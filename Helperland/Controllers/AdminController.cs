@@ -2,6 +2,7 @@
 using Helperland.Enums;
 using Helperland.Models;
 using Helperland.Repository;
+using Helperland.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -24,7 +25,10 @@ namespace Helperland.Controllers
         public IActionResult Index()
         {
             if (HttpContext.Session.GetInt32("UserType") == (int)UserTypeIdEnum.Admin)
+            {
+                ViewBag.UserName = HttpContext.Session.GetString("UserName");
                 return View();
+            }
             else
                 return RedirectToAction("index", "customer");
         }
@@ -62,7 +66,7 @@ namespace Helperland.Controllers
         [HttpGet]
         public JsonResult getAdminPanelUserManagementData()
         {
-            return Json((from u in helperLandContext.Users where u.UserTypeId!=(int)UserTypeIdEnum.Admin select u).ToList());
+            return Json((from u in helperLandContext.Users select u).ToList());
         }
 
         [HttpGet]
@@ -79,6 +83,19 @@ namespace Helperland.Controllers
         public JsonResult getServiceProviders()
         {
             return Json((from z in helperLandContext.Users where z.UserTypeId == (int)UserTypeIdEnum.ServiceProvider select z.FirstName + " " + z.LastName).Distinct());
+        }
+        public int getLoggedinUserId()
+        {
+            if (HttpContext.Request.Cookies["UserId"] != null)
+                return Int32.Parse(HttpContext.Request.Cookies["UserId"]);
+            else
+                return (int)HttpContext.Session.GetInt32("UserId");
+        }
+
+        [HttpPost]
+        public JsonResult updateServiceRequestDateTime([FromBody] EditServiceRequestbyAdminViewModel editServiceRequestbyAdminViewModel)
+        {
+            return Json(adminRepository.editServiceRequest(editServiceRequestbyAdminViewModel, getLoggedinUserId()));
         }
     }
 }

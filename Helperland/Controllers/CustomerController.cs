@@ -50,7 +50,7 @@ namespace Helperland.Controllers
                 if (user != null && user.IsApproved == true)
                 {
                     HttpContext.Session.SetInt32("UserType", user.UserTypeId);
-                    HttpContext.Session.SetString("UserName", user.FirstName);
+                    HttpContext.Session.SetString("UserName", user.FirstName+' '+user.LastName);
                     if (user.UserTypeId == (int)UserTypeIdEnum.Customer)
                         return RedirectToAction("servicehistory", "customer");
                     else if (user.UserTypeId == (int)UserTypeIdEnum.ServiceProvider)
@@ -215,7 +215,7 @@ namespace Helperland.Controllers
                         HttpContext.Response.Cookies.Append("UserId", isExist.UserId.ToString(), cookieOptions);
                     }
                     HttpContext.Session.SetInt32("UserType", isExist.UserTypeId);
-                    HttpContext.Session.SetString("UserName", isExist.FirstName);
+                    HttpContext.Session.SetString("UserName", isExist.FirstName+" "+isExist.LastName);
                     HttpContext.Session.SetInt32("UserId", isExist.UserId);
                     if (HttpContext.Session.GetString("redirectToBookService") == "1")
                     {

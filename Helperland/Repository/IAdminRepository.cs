@@ -1,4 +1,6 @@
 ﻿using Helperland.Models;
+using Helperland.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +10,6 @@ namespace Helperland.Repository
 {
     public interface IAdminRepository
     {
-        
+        public int editServiceRequest([FromBody] EditServiceRequestbyAdminViewModel editServiceRequestbyAdminViewModel, int adminid);
     }
 }

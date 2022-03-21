@@ -13,6 +13,7 @@
     <!-- Data table CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="~/css/mycss.css">
+    <link href="~/css/site.css" rel="stylesheet" />
     <script>
         function myfun() {
             var dtstr = $("#dtStartDate").val();
@@ -51,7 +52,7 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
                         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                            <li class="m-2"><a asp-action="" asp-controller=""><img class="img-um-profile" id="imgadminuser" src="~/images/admin-user_management/admin-user.png"><img class="img-um-profile" id="imgadminuser-black" src="~/images/admin-user_management/admin-user-black.png"><span class="ps-2 pro-user-name">James Smith</span></a></li>
+                            <li class="m-2"><a asp-action="" asp-controller=""><img class="img-um-profile" id="imgadminuser" src="~/images/admin-user_management/admin-user.png"><img class="img-um-profile" id="imgadminuser-black" src="~/images/admin-user_management/admin-user-black.png"><span class="ps-2 pro-user-name">@ViewBag.UserName</span></a></li>
                             <li class="m-2"><a asp-action="logout" asp-controller="customer"><img class="img-um-logout pt-1 ps-1" id="imgadminuserlogout" src="~/images/admin-user_management/logout.png"><img class="img-um-logout pt-1 ps-1" id="imgadminuserlogout-black" src="~/images/admin-user_management/logout-black.png"></a></li>
                             <li class="pt-3 admin-hdr-menu"><hr></li>
                             <li class="py-3 ps-2 admin-hdr-menu"><a id="lnkadmin-ser-req1" href="#" onclick="showAdminSerReq('lnkadmin-ser-req1');">Service Requests</a></li>
@@ -82,10 +83,10 @@
                             <input id="txtZipcodeAdminPanelSR" class="form-control p-2" placeholder="Zipcode" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="6" autocomplete="off" />
                         </div>
                         <div class="col-md-3 p-0 ps-1 my-1">
-                            <input id="txtCustomerAdminPanelSR" type="text" class="form-control" placeholder="Customer" />
+                            <input id="txtCustomerAdminPanelSR" type="text" class="form-control" placeholder="Customer" autocomplete="off" maxlength="200" />
                         </div>
                         <div class="col-md-3 p-0 ps-1 my-1">
-                            <input id="txtSPAdminPanelSR" type="text" class="form-control" placeholder="Service provider" />
+                            <input id="txtSPAdminPanelSR" type="text" class="form-control" placeholder="Service provider" autocomplete="off" maxlength="200" />
                         </div>
                     </div>
                     <div class="row">
@@ -101,18 +102,18 @@
                             </select>
                         </div>
                         <div class="col-md-3 p-0 ps-1 my-1">
-                            <input id="dtFromDateAdminPanelSR" placeholder="From Date" type="text" onfocus="(this.type='date')" class="textbox-n form-control p-2">
+                            <input id="dtFromDateAdminPanelSR" placeholder="From Date" type="text" onfocus="(this.type='date')" onfocusout="makeText(this.id);" class="textbox-n form-control p-2 calender-icon form-control dateForService adminPanelDate">
                             <span class="text-danger small" id="spndtFromDateAdminPanelSR"></span>
                         </div>
                         <div class="col-md-3 p-0 ps-1 my-1">
-                            <input id="dtToDateAdminPanelSR" placeholder="To Date" type="text" onfocus="(this.type='date')" class="textbox-n form-control p-2">
+                            <input id="dtToDateAdminPanelSR" placeholder="To Date" type="text" onfocus="(this.type='date')" onfocusout="makeText(this.id);" class="textbox-n form-control p-2 calender-icon form-control dateForService adminPanelDate">
                             <span class="text-danger small" id="spndtToDateAdminPanelSR"></span>
                         </div>
                         <div class="col-md-1 p-0 ps-1 my-1">
                             <button class="btnSearch" onclick="filterInAdminPanelServiceRequests();">Search</button>
                         </div>
                         <div class="col-md-1 p-0 ps-1 my-1">
-                            <button class="btnClear">Clear</button>
+                            <button class="btnClear" onclick="clearFilterDataOfAdminPanelSRs();">Clear</button>
                         </div>
                     </div>
                 </div>
@@ -142,18 +143,15 @@
                 <div class="dv-searchItems-container p-3 mb-4">
                     <div class="row">
                         <div class="col-md-3 p-0 ps-1 my-1">
-                            <input type="text" class="form-control" placeholder="User name" />
+                            <input type="text" id="txtUsernameAdminPanelUM" class="form-control" placeholder="User name" maxlength="200" autocomplete="off" />
                         </div>
                         <div class="col-md-3 p-0 ps-1 my-1">
-                            <select class="form-select select p-2">
-                                <option value="0">User Type</option>
+                            <select class="form-select select p-2" id="selUsertypeAdminPanelUM">
+                                <option value="">User Type</option>
                                 @{
                                     foreach (int i in Enum.GetValues(typeof(UserTypeIdEnum)))
                                     {
-                                        if (@Enum.GetName(typeof(UserTypeIdEnum), @i) != "Admin")
-                                        {
-                                            <option value=@Enum.GetName(typeof(UserTypeIdEnum), @i)>@Enum.GetName(typeof(UserTypeIdEnum), @i)</option>
-                                        }
+                                        <option value=@Enum.GetName(typeof(UserTypeIdEnum), @i)>@Enum.GetName(typeof(UserTypeIdEnum), @i)</option>
                                     }
                                 }
                             </select>
@@ -161,25 +159,27 @@
                         <div class="col-md-3 p-0 ps-1 my-1">
                             <div class="input-group">
                                 <div class="input-group-text">+49</div>
-                                <input class="form-control p-2" placeholder="Phone number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="10" autocomplete="off" />
+                                <input class="form-control p-2" id="txtPhoneAdminPanelUM" placeholder="Phone number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="10" autocomplete="off" />
                             </div>
                         </div>
                         <div class="col-md-3 p-0 ps-1 my-1">
-                            <input class="form-control p-2" placeholder="Postal code" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="6" autocomplete="off" />
+                            <input class="form-control p-2" id="txtPostalcodeAdminPanelUM" placeholder="Postal code" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="6" autocomplete="off" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-3 p-0 ps-1 my-1">
-                            <input id="dtFromDateAdminPanelUM" placeholder="From Date" type="text" onfocus="(this.type='date')" class="textbox-n form-control p-2">
+                            <input id="dtFromDateAdminPanelUM" placeholder="From Date" type="text" onfocus="(this.type='date')" onfocusout="makeText(this.id);" class="textbox-n form-control p-2 calender-icon form-control dateForService adminPanelDate">
+                            <span class="text-danger small" id="spndtFromDateAdminPanelUM"></span>
                         </div>
                         <div class="col-md-3 p-0 ps-1 my-1">
-                            <input id="dtToDateAdminPanelUM" placeholder="To Date" type="text" onfocus="(this.type='date')" class="textbox-n form-control p-2">
+                            <input id="dtToDateAdminPanelUM" placeholder="To Date" type="text" onfocus="(this.type='date')" onfocusout="makeText(this.id);" class="textbox-n form-control p-2 calender-icon form-control dateForService adminPanelDate">
+                            <span class="text-danger small" id="spndtToDateAdminPanelUM"></span>
                         </div>
                         <div class="col-md-1 p-0 ps-1 my-1">
                             <button class="btnSearch" onclick="filterInAdminPanelUserManagement();">Search</button>
                         </div>
                         <div class="col-md-1 p-0 ps-1 my-1">
-                            <button class="btnClear">Clear</button>
+                            <button class="btnClear" onclick="clearFilterDataOfAdminPanelUM();">Clear</button>
                         </div>
                     </div>
                 </div>
@@ -206,6 +206,84 @@
         </div>
         <input type="hidden" id="hdnadminActiveMenu" value="">
     </section>
+
+    <!-- Modal 5 Add/Edit User Address -->
+    <div class="modal fade" id="editServiceRequestAdminPanelModal" aria-hidden="true" aria-labelledby="editServiceRequestAdminPanelModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="mdlheader">Edit Service Request</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="hdnServiceRequestIdOfEditSRbyAdmin" />
+                    <input type="hidden" id="hdnServiceDurationOfEditSRbyAdmin" />
+                    <input type="hidden" id="hdnServiceProviderIdOfEditSRbyAdmin" />
+                    <div class="mb-3 ms-3 ps-1">
+                        <span class="small text-danger" id="spneditServicerequestAdminPanelSRs"></span>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-md-6 mb-1">
+                            <label class="fw-bold">Date</label>
+                            <input type="date" id="dtEditSRAdminPanelSRs" min="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")" class="dateForService calender-icon form-control dateForServiceReschedule adminPanelDate" />
+                            <div><span class="small text-danger mb-2" id="spndtEditSRAdminPanelSRs"></span></div>
+                        </div>
+                        <div class="col-md-6 mb-1">
+                            <label class="fw-bold">Time</label>
+                            <select class="form-select select" id="selTimeEditSRAdminPanelSRs">
+                                @{
+                                    for (int i = 8; i <= 17; i++)
+                                    {
+                                        <option value="@i">@i:00</option>
+                                        if (@i != 17)
+                                        {
+                                            <option value="@i.5">@i:30</option>
+                                        }
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row m-2 ms-3 fw-bold">Service Address</div>
+                    <div class="row m-2">
+                        <div class="col-md-6 mb-1">
+                            <label>Street name</label>
+                            <input type="text" class="form-control" id="txtStreetnameEditSRAdminPanel" autocomplete="off" maxlength="200" />
+                            <span class="small text-danger" id="spnStreetnameEditSRAdminPanel"></span>
+                        </div>
+                        <div class="col-md-6 mb-1">
+                            <label>House number</label>
+                            <input type="text" class="form-control" id="txtHousenumberEditSRAdminPanel" autocomplete="off" maxlength="200" />
+                            <span class="small text-danger" id="spnHousenumberEditSRAdminPanel"></span>
+                        </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-md-6 mb-1">
+                            <label>Postal code</label>
+                            <input class="form-control" type="number" id="txtPostalcodeEditSRAdminPanel" onkeyup="fillCitiesByPostalcode(this.value, '');" maxlength="6" autocomplete="off" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeypress="return event.charCode &gt;= 48 &amp;&amp; event.charCode &lt;= 57" />
+                            <span class="text-danger small" id="spnPostalcodeEditSRAdminPanel"></span>
+                        </div>
+                        <div class="col-md-6 mb-1">
+                            <label>City</label>
+                            <select class="form-select select" id="selCityEditSRAdminPanel"></select>
+                        </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-md-12 mb-1">
+                            <label class="fw-bold mb-1">Why do you want to reschedule service request?</label>
+                            <textarea placeholder="Why do you want to reschedule service request?" class="form-control textarea" rows="4"></textarea>
+                            <span class="text-danger small" id="spnEditSRcomment"></span>
+                        </div>
+                    </div>
+                    <div class="row m-2 mt-3">
+                        <div class="col-md-12">
+                            <button class="btnLogin" id="btnEditSRbyAdmin" onclick="editServiceRequestbyAdmin();">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Script -->
     <script src="~/js/myjs.js"></script>
@@ -242,7 +320,6 @@
             });
         });
     </script>
-
 
     <!-- Search Bar in Select Script -->
     @*<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>

@@ -64,7 +64,7 @@
 #loginModal .modal-dialog, #forgorpasswordModal .modal-dialog {
     max-width: 370px;
 }
-#addedituseraddressModal .modal-dialog {
+#addedituseraddressModal .modal-dialog, #editServiceRequestAdminPanelModal .modal-dialog {
     max-width: 600px;
     color: #646464;
 }

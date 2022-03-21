@@ -43,7 +43,7 @@ function showAdminPanelServiceRequestsData() {
                     colSP = "<div class='media-object'><div class='float-start dvProfileImageContainer d-flex justify-content-center align-items-center me-2'>" + spProfile + "</div><div><label>" + spName + "</label><div class='d-flex align-items-center'>" + spRateImages + "<label class='ps-2'>" + spRate + "</label></div></div></div>";
                 }
                 if (v.serviceStatus == enumServiceStatus.New || v.serviceStatus == enumServiceStatus.Pending) {
-                    colActions += "<a href='#' id='ddActions' role='button' data-bs-toggle='dropdown' aria-expanded='false'><div class='threeVerDotMenuLayer d-flex justify-content-center align-items-center'><div class='threeVerDotMenu'></div></div></a><ul class='dropdown-menu p-3 ddActions' aria-labelledby='ddActions'><li><a class='dropdown-item' href='#'>Edit & Reschedule</a></li><li><a class='dropdown-item' href='#'>Cancel</a></li></ul></div>";
+                    colActions += "<a href='#' id='ddActions' role='button' data-bs-toggle='dropdown' aria-expanded='false'><div class='threeVerDotMenuLayer d-flex justify-content-center align-items-center'><div class='threeVerDotMenu'></div></div></a><ul class='dropdown-menu p-3 ddActions' aria-labelledby='ddActions'><li><a class='dropdown-item' href='#' onclick='openEditServiceRequestModal(" + SRId + ")'>Edit & Reschedule</a></li><li><a class='dropdown-item' href='#'>Cancel</a></li></ul></div>";
                 }
                 else {
                     colActions += "<div class='onHover threeVerDotMenuLayer d-flex justify-content-center align-items-center'><div class='threeVerDotMenu'></div></div></div>";
@@ -162,7 +162,7 @@ function showAdminPanelUserManagementData() {
                         colActions = "<div class='py-0 dropstart dropstart'><a href='#' id='ddActions' role='button' data-bs-toggle='dropdown' aria-expanded='false'><div class='threeVerDotMenuLayer d-flex justify-content-center align-items-center'><div class='threeVerDotMenu'></div></div></a><ul class='dropdown-menu p-3 ddActions' aria-labelledby='ddActions'><li><a class='dropdown-item' href='#'>Activate</a></li></ul></div>";
                     }
                 }
-                else {
+                else if (v.userTypeId == enumUserType.ServiceProvider) {
                     UserType = "Service Provider";
                     if (v.isApproved == true) {
                         colStatus = "<label class='lblserstatus active py-1 px-3'>Approved</label>";
@@ -172,6 +172,9 @@ function showAdminPanelUserManagementData() {
                         colStatus = "<label class='lblserstatus inactive py-1 px-3'>Not Approved</label>";
                         colActions = "<div class='py-0 dropstart dropstart'><a href='#' id='ddActions' role='button' data-bs-toggle='dropdown' aria-expanded='false'><div class='threeVerDotMenuLayer d-flex justify-content-center align-items-center'><div class='threeVerDotMenu'></div></div></a><ul class='dropdown-menu p-3 ddActions' aria-labelledby='ddActions'><li><a class='dropdown-item' href='#'>Approve</a></li></ul></div>";
                     }
+                }
+                else {
+                    UserType = "Admin";
                 }
                 var PostalCode = "";
                 if (v.zipCode != null) {
@@ -220,14 +223,17 @@ function filterInAdminPanelServiceRequests() {
             document.getElementById("spndtFromDateAdminPanelSR").innerHTML = "";
             jQuery.fn.dataTable.ext.search.push(
                 function (settings, data, dataIndex) {
-                    var min = new Date(parseInt($("#dtFromDateAdminPanelSR").val().toString().split('-')[0]), parseInt(parseInt($("#dtFromDateAdminPanelSR").val().toString().split('-')[1]) - 1), parseInt($("#dtFromDateAdminPanelSR").val().toString().split('-')[2]), 0, 0, 0, 0);
-                    var max = new Date(parseInt($("#dtToDateAdminPanelSR").val().toString().split('-')[0]), parseInt(parseInt($("#dtToDateAdminPanelSR").val().toString().split('-')[1]) - 1), parseInt($("#dtToDateAdminPanelSR").val().toString().split('-')[2]), 0, 0, 0, 0);
+                    var min = "";
+                    var max = "";                    
+                    if (document.getElementById("dtFromDateAdminPanelSR").value != "" && document.getElementById("dtToDateAdminPanelSR").value!="") {
+                        min = new Date(parseInt($("#dtFromDateAdminPanelSR").val().toString().split('-')[0]), parseInt(parseInt($("#dtFromDateAdminPanelSR").val().toString().split('-')[1]) - 1), parseInt($("#dtFromDateAdminPanelSR").val().toString().split('-')[2]), 0, 0, 0, 0);
+                        max = new Date(parseInt($("#dtToDateAdminPanelSR").val().toString().split('-')[0]), parseInt(parseInt($("#dtToDateAdminPanelSR").val().toString().split('-')[1]) - 1), parseInt($("#dtToDateAdminPanelSR").val().toString().split('-')[2]), 0, 0, 0, 0);
+                    }                    
                     var date = new Date(parseInt(data[1].toString().trim().split(' ')[0].split('/')[2]), parseInt(parseInt(data[1].toString().trim().split(' ')[0].split('/')[1]) - 1), parseInt(data[1].toString().trim().split(' ')[0].split('/')[0]), 0, 0, 0, 0);
-                    var inputtagdate = AppendZero(AppendZero((date.getMonth() + 1).toString()) + "-" + date.getDate().toString()) + "-" + date.getFullYear().toString();
                     if (
-                        (min === null && max === null) ||
-                        (min === null && date <= max) ||
-                        (min <= date && max === null) ||
+                        (min === "" && max === "") ||
+                        (min === "" && date <= max) ||
+                        (min <= date && max === "") ||
                         (min <= date && date <= max)
                     ) {
                         return true;
@@ -241,22 +247,16 @@ function filterInAdminPanelServiceRequests() {
         }
     }
     if ($("#txtSRIdAdminPanelSR").val().trim() != "") {
-        tblSerReq.columns(0).search($("#txtSRIdAdminPanelSR").val()).draw();
+        tblSerReq.columns(0).search("^" + $("#txtSRIdAdminPanelSR").val() + "$", true, false, true).draw(true);
     }
     else {
         tblSerReq.columns(0).search("").draw();
     }
-    if ($("#txtZipcodeAdminPanelSR").val().trim() != "") {
-        tblSerReq.columns(2).search($("#txtZipcodeAdminPanelSR").val()).draw();
+    if ($("#txtZipcodeAdminPanelSR").val().trim() != "" || $("#txtCustomerAdminPanelSR").val().trim() != "") {
+        tblSerReq.columns(2).search($("#txtCustomerAdminPanelSR").val().trim() +' '+ $("#txtZipcodeAdminPanelSR").val().trim()).draw();
     }
     else {
-        tblSerReq.columns(2).search("").draw();
-    }
-    if ($("#txtCustomerAdminPanelSR").val().trim() != "") {
-        tblSerReq.columns(2).search($("#txtCustomerAdminPanelSR").val()).draw();
-    }
-    else {
-        tblSerReq.columns(2).search("").draw();
+        tblSerReq.columns(2).search("").draw(true);
     }
     if ($("#txtSPAdminPanelSR").val().trim() != "") {
         tblSerReq.columns(3).search($("#txtSPAdminPanelSR").val()).draw();
@@ -268,27 +268,66 @@ function filterInAdminPanelServiceRequests() {
 }
 function filterInAdminPanelUserManagement() {
     var tblUserManagement = $("#tblUserManagement").DataTable();
-    jQuery.fn.dataTable.ext.search.push(
-        function (settings, data, dataIndex) {
-            var min = new Date(parseInt($("#dtFromDateAdminPanelUM").val().toString().split('-')[0]), parseInt(parseInt($("#dtFromDateAdminPanelUM").val().toString().split('-')[1]) - 1), parseInt($("#dtFromDateAdminPanelUM").val().toString().split('-')[2]), 0, 0, 0, 0);
-            var max = new Date(parseInt($("#dtToDateAdminPanelUM").val().toString().split('-')[0]), parseInt(parseInt($("#dtToDateAdminPanelUM").val().toString().split('-')[1]) - 1), parseInt($("#dtToDateAdminPanelUM").val().toString().split('-')[2]), 0, 0, 0, 0);
-            var date = new Date(parseInt(data[1].toString().split('/')[2]), parseInt(parseInt(data[1].toString().split('/')[1]) - 1), parseInt(data[1].toString().split('/')[0]), 0, 0, 0, 0);
-            if (
-                (min === null && max === null) ||
-                (min === null && date <= max) ||
-                (min <= date && max === null) ||
-                (min <= date && date <= max)
-            ) {
-                console.log('success');
-                return true;
-            }
-            else {
-                console.log('error');
-                return false;
-            }
+    document.getElementById("spndtToDateAdminPanelUM").innerHTML = "";
+    document.getElementById("spndtFromDateAdminPanelUM").innerHTML = "";
+    if ($("#dtFromDateAdminPanelUM").val().trim() != "" && $("#dtToDateAdminPanelUM").val().trim() == "") {
+        document.getElementById("spndtToDateAdminPanelUM").innerHTML = "Enter To Date for Date Filter!";
+    }
+    else if ($("#dtFromDateAdminPanelUM").val().trim() == "" && $("#dtToDateAdminPanelUM").val().trim() != "") {
+        document.getElementById("spndtFromDateAdminPanelUM").innerHTML = "Enter From Date for Date Filter!";
+    }
+    else {
+        var vDTCount = 0;
+        if (new Date($("#dtFromDateAdminPanelUM").val()) > new Date($("#dtToDateAdminPanelUM").val())) {
+            document.getElementById("spndtFromDateAdminPanelUM").innerHTML = "From Date must be smaller or equal to To Date!";
+            vDTCount++;
         }
-    );
-    tblUserManagement.draw();
+        if (vDTCount == 0) {
+            document.getElementById("spndtFromDateAdminPanelUM").innerHTML = "";
+            jQuery.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+                    var min = "";
+                    var max = "";
+                    if (document.getElementById("dtFromDateAdminPanelUM").value != "" && document.getElementById("dtToDateAdminPanelUM").value != "") {
+                        min = new Date(parseInt($("#dtFromDateAdminPanelUM").val().toString().split('-')[0]), parseInt(parseInt($("#dtFromDateAdminPanelUM").val().toString().split('-')[1]) - 1), parseInt($("#dtFromDateAdminPanelUM").val().toString().split('-')[2]), 0, 0, 0, 0);
+                        max = new Date(parseInt($("#dtToDateAdminPanelUM").val().toString().split('-')[0]), parseInt(parseInt($("#dtToDateAdminPanelUM").val().toString().split('-')[1]) - 1), parseInt($("#dtToDateAdminPanelUM").val().toString().split('-')[2]), 0, 0, 0, 0);
+                    }                    
+                    var date = new Date(parseInt(data[1].toString().split('/')[2]), parseInt(parseInt(data[1].toString().split('/')[1]) - 1), parseInt(data[1].toString().split('/')[0]), 0, 0, 0, 0);
+                    if (
+                        (min === "" && max === "") ||
+                        (min === "" && date <= max) ||
+                        (min <= date && max === "") ||
+                        (min <= date && date <= max)
+                    ) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+            );
+            tblUserManagement.draw();
+        }
+    }
+    if ($("#txtUsernameAdminPanelUM").val().trim() != "") {
+        tblUserManagement.columns(0).search($("#txtUsernameAdminPanelUM").val()).draw();
+    }
+    else {
+        tblUserManagement.columns(0).search("").draw();
+    }
+    tblUserManagement.columns(2).search($("#selUsertypeAdminPanelUM").val()).draw();
+    if ($("#txtPhoneAdminPanelUM").val().trim() != "") {
+        tblUserManagement.columns(3).search($("#txtPhoneAdminPanelUM").val()).draw();
+    }
+    else {
+        tblUserManagement.columns(3).search("").draw();
+    }
+    if ($("#txtPostalcodeAdminPanelUM").val().trim() != "") {
+        tblUserManagement.columns(4).search($("#txtPostalcodeAdminPanelUM").val()).draw();
+    }
+    else {
+        tblUserManagement.columns(4).search("").draw();
+    }
 }
 function AppendZero(input) {
     if (input.length == 1) {
@@ -298,16 +337,364 @@ function AppendZero(input) {
 }
 document.getElementById("dtFromDateAdminPanelSR").addEventListener('change', function (e) {
     if (!document.getElementById("dtFromDateAdminPanelSR").value)
+    {
         document.getElementById("spndtToDateAdminPanelSR").innerHTML = "";
+        $('#dtFromDateAdminPanelSR').attr('type', 'text');
+    }
     else
         document.getElementById("spndtFromDateAdminPanelSR").innerHTML = "";
 });
 document.getElementById("dtToDateAdminPanelSR").addEventListener('change', function (e) {
     if (!document.getElementById("dtToDateAdminPanelSR").value)
+    {
         document.getElementById("spndtFromDateAdminPanelSR").innerHTML = "";
+        $('#dtToDateAdminPanelSR').attr('type', 'text');
+    }
     else
         document.getElementById("spndtToDateAdminPanelSR").innerHTML = "";
 });
+document.getElementById("dtFromDateAdminPanelUM").addEventListener('change', function (e) {
+    if (!document.getElementById("dtFromDateAdminPanelUM").value) {
+        document.getElementById("spndtToDateAdminPanelUM").innerHTML = "";
+        $('#dtFromDateAdminPanelUM').attr('type', 'text');
+    }
+    else
+        document.getElementById("spndtFromDateAdminPanelUM").innerHTML = "";
+});
+document.getElementById("dtToDateAdminPanelUM").addEventListener('change', function (e) {
+    if (!document.getElementById("dtToDateAdminPanelUM").value) {
+        document.getElementById("spndtFromDateAdminPanelUM").innerHTML = "";
+        $('#dtToDateAdminPanelUM').attr('type', 'text');
+    }
+    else
+        document.getElementById("spndtToDateAdminPanelUM").innerHTML = "";
+});
+function makeText(id) {
+    if (document.getElementById(id).value == "") {
+        $('#'+id).attr('type', 'text');
+    }
+}
+function clearFilterDataOfAdminPanelSRs() {
+    document.getElementById("txtSRIdAdminPanelSR").value = ""; 
+    document.getElementById("txtZipcodeAdminPanelSR").value = "";
+    document.getElementById("txtCustomerAdminPanelSR").value = "";
+    document.getElementById("txtSPAdminPanelSR").value = ""; 
+    document.getElementById("selSerStatusAdminPanel").value = ""; 
+    $('#dtFromDateAdminPanelSR').attr('type', 'text');
+    $('#dtToDateAdminPanelSR').attr('type', 'text');
+    document.getElementById("dtFromDateAdminPanelSR").value = ""; 
+    document.getElementById("dtToDateAdminPanelSR").value = "";
+    document.getElementById("spndtFromDateAdminPanelSR").innerHTML = "";
+    document.getElementById("spndtToDateAdminPanelSR").innerHTML = "";
+    filterInAdminPanelServiceRequests();
+}
+function clearFilterDataOfAdminPanelUM() {
+    document.getElementById("txtUsernameAdminPanelUM").value = "";
+    document.getElementById("selUsertypeAdminPanelUM").value = "";
+    document.getElementById("txtPhoneAdminPanelUM").value = "";
+    document.getElementById("txtPostalcodeAdminPanelUM").value = "";
+    $('#dtFromDateAdminPanelUM').attr('type', 'text');
+    $('#dtToDateAdminPanelUM').attr('type', 'text');
+    document.getElementById("dtFromDateAdminPanelUM").value = "";
+    document.getElementById("dtToDateAdminPanelUM").value = "";
+    document.getElementById("spndtFromDateAdminPanelUM").innerHTML = "";
+    document.getElementById("spndtToDateAdminPanelUM").innerHTML = "";
+    filterInAdminPanelUserManagement();
+}
+
+function openEditServiceRequestModal(srid) {
+    document.getElementById("spneditServicerequestAdminPanelSRs").innerHTML = "";
+    $.ajax({
+        type: 'get',
+        url: "/CustomerMySettings/getServiceRequestDetails",
+        data: { "servicerequestid": srid },
+        success: function (data) {
+            console.log(data);
+            $.each(data, function (i, v) {
+                const date = new Date(v.serviceStartDateTime.split('T')[0] + " " + v.serviceStartDateTime.split('T')[1]);
+                $("#dtEditSRAdminPanelSRs").val(date.getFullYear().toString() + "-" + AppendZero((date.getMonth() + 1).toString()) + "-" + AppendZero(date.getDate().toString()));
+                var time = "";
+                if (date.getMinutes() == 30) {
+                    time = date.getHours() + ".5";
+                }
+                else {
+                    time = date.getHours();
+                }
+                document.getElementById("selTimeEditSRAdminPanelSRs").value = time;
+                document.getElementById("txtPostalcodeEditSRAdminPanel").value = v.postalcode;
+                fillCitiesByPostalcode(v.postalcode, v.city);     
+                document.getElementById("txtStreetnameEditSRAdminPanel").value = v.addressLine1;
+                document.getElementById("txtHousenumberEditSRAdminPanel").value = v.addressLine2;
+                document.getElementById("hdnServiceRequestIdOfEditSRbyAdmin").value = srid;
+                document.getElementById("hdnServiceDurationOfEditSRbyAdmin").value = v.serviceDuration;
+                document.getElementById("hdnServiceProviderIdOfEditSRbyAdmin").value = v.serviceProviderId;
+                var editServiceRequestAdminPanelModal = new bootstrap.Modal(document.getElementById('editServiceRequestAdminPanelModal'));
+                editServiceRequestAdminPanelModal.show();
+            });            
+        },
+        error: function (response) {
+            console.log("adminJS.js->openEditServiceRequestModal error: " + response.responseText);
+        }
+    });    
+}
+function fillCitiesByPostalcode(postalcode, city) {
+    if (postalcode.toString().trim().length >= 6) {
+        $.ajax({
+            type: 'get',
+            url: "/BookService/getAllCitiesByPostalCode",
+            data: { "postalcode": postalcode },
+            success: function (data) {
+                if (data.length > 0) {
+                    document.getElementById("spnPostalcodeEditSRAdminPanel").innerHTML = "";
+                    document.getElementById("txtPostalcodeEditSRAdminPanel").value = postalcode;
+                    $('#selCityEditSRAdminPanel').empty();
+                    var count = 0;
+                    $.each(data, function (i, v) {
+                        if (count == 0) {
+                            $('#selCityEditSRAdminPanel').append('<option value="' + v.state + '" selected>' + v.city + '</option>');
+                            count++;
+                        }
+                        else {
+                            $('#selCityEditSRAdminPanel').append('<option value="' + v.state + '">' + v.city + '</option>');
+                        }
+                    });
+                    if (city != "") {
+                        for (var i = 0; i < document.getElementById("selCityEditSRAdminPanel").options.length; i++) {
+                            if (document.getElementById("selCityEditSRAdminPanel").options[i].text == city) {
+                                document.getElementById("selCityEditSRAdminPanel").selectedIndex = i;
+                                break;
+                            }
+                        }
+                    }
+                    document.getElementById("btnEditSRbyAdmin").classList.remove("btndisable");
+                    document.getElementById("btnEditSRbyAdmin").disabled = false;
+                }
+                else {
+                    $('#selCityEditSRAdminPanel').empty();
+                    document.getElementById("spnPostalcodeEditSRAdminPanel").innerHTML = "This postal code is not available with us!!";
+                    document.getElementById("btnEditSRbyAdmin").classList.add("btndisable");
+                    document.getElementById("btnEditSRbyAdmin").disabled = true;
+                }
+            },
+            error: function (response) {
+                console.log("adminJS.js->fillCitiesByPostalcode error: " + response.responseText);
+            }
+        });
+    }
+    else {
+        $('#selCityEditSRAdminPanel').empty();
+        document.getElementById("spnPostalcodeEditSRAdminPanel").innerHTML = "";
+        document.getElementById("btnEditSRbyAdmin").classList.add("btndisable");
+        document.getElementById("btnEditSRbyAdmin").disabled = true;
+    }
+}
+
+function editServiceRequestbyAdmin() {
+    if ((parseFloat(document.getElementById("selTimeEditSRAdminPanelSRs").value) + parseFloat(document.getElementById("hdnServiceDurationOfEditSRbyAdmin").value)) > 20) {
+        document.getElementById("spneditServicerequestAdminPanelSRs").innerHTML = "Booking change not saved! Helper must be able to finish cleaning by 8pm. Please try again!!";
+    }
+    else {
+        if (document.getElementById("hdnServiceProviderIdOfEditSRbyAdmin").value == "") {
+            updateServiceRequestDateTimebyAdmin();
+        }
+        else {
+            var hh = "";
+            var min = "";
+            if (document.getElementById("selTimeEditSRAdminPanelSRs").value.includes(".")) {
+                hh = document.getElementById("selTimeEditSRAdminPanelSRs").value.split('.')[0];
+                min = '30';
+            }
+            else {
+                hh = document.getElementById("selTimeEditSRAdminPanelSRs").value;
+                min = '00';
+            }
+            var dt1 = new Date(document.getElementById("dtEditSRAdminPanelSRs").value.split('-')[0], (document.getElementById("dtEditSRAdminPanelSRs").value.split('-')[1] - 1), document.getElementById("dtEditSRAdminPanelSRs").value.split('-')[2], hh, min, 0, 0);
+            $("#dvLoader").addClass("is-active");
+            $.ajax({
+                type: "get",
+                url: "/CustomerMySettings/getServiceRequestsDetailsForCheckRescheduleSR",
+                data: { "servicerequestid": document.getElementById("hdnServiceRequestIdOfEditSRbyAdmin").value, "serviceproviderid": document.getElementById("hdnServiceProviderIdOfEditSRbyAdmin").value },
+                dataType: "json",
+                success: function (data) {
+                    $("#dvLoader").removeClass("is-active");
+                    var vErrCount = 0;
+                    var vSucceessCount = 0;
+                    var conflictServiceRequestId = 0;
+                    var conflictServiceRequestDateTime = 0;
+                    var conflictServiceRequestDuration = 0;
+                    $.each(data, function (i, v) {
+                        var dt2 = new Date(v.serviceStartDateTime.toString().split('T')[0].split('-')[0], (v.serviceStartDateTime.toString().split('T')[0].split('-')[1] - 1), v.serviceStartDateTime.toString().split('T')[0].split('-')[2], v.serviceStartDateTime.toString().split('T')[1].split(':')[0], v.serviceStartDateTime.toString().split('T')[1].split(':')[1], v.serviceStartDateTime.toString().split('T')[1].split(':')[2]);
+                        var xx = 0;
+                        conflictServiceRequestId = v.serviceRequestId;
+                        conflictServiceRequestDateTime = v.serviceStartDateTime;
+                        conflictServiceRequestDuration = v.serviceDuration;
+                        if (date_units_diff(dt1, dt2).slice(0, -2)[0] == 0) {
+                            if ((date_units_diff(dt1, dt2).slice(0, -2)[1]) < 0) {
+                                xx = (date_units_diff(dt1, dt2).slice(0, -2)[1]).toString().split("-")[1];
+                                if (date_units_diff(dt1, dt2).slice(0, -2)[2].toString().includes('30')) {
+                                    xx = parseFloat(xx + ".5");
+                                }
+                                else {
+                                    xx = parseFloat(xx);
+                                }
+                                if ((xx - (parseFloat(v.serviceDuration) + 1)) >= 0) {
+                                    vSucceessCount++;
+                                }
+                                else {
+                                    vErrCount++;
+                                    return false;
+                                }
+                            }
+                            else if ((date_units_diff(dt1, dt2).slice(0, -2)[1]) == 0) {
+                                vErrCount++;
+                                return false;
+                            }
+                            else {
+                                xx = date_units_diff(dt1, dt2).slice(0, -2)[1];
+                                if (date_units_diff(dt1, dt2).slice(0, -2)[2] == 30) {
+                                    xx = parseFloat(xx + ".5");
+                                }
+                                else {
+                                    xx = parseFloat(xx);
+                                }
+                                if ((xx - (parseFloat(document.getElementById("hdnServiceDurationOfEditSRbyAdmin").value) + 1)) >= 0) {
+                                    vSucceessCount++;
+                                }
+                                else {
+                                    vErrCount++;
+                                    return false;
+                                }
+                            }
+                        }
+                        else {
+                            vSucceessCount++;
+                        }
+                    });
+                    if (vSucceessCount != 0 && vErrCount == 0) {
+                        document.getElementById("spneditServicerequestAdminPanelSRs").innerHTML = "";
+                        updateServiceRequestDateTimebyAdmin();
+                    }
+                    else {
+                        let d = new Date(conflictServiceRequestDateTime.toString().split('T')[0].split('-')[0], conflictServiceRequestDateTime.toString().split('T')[0].split('-')[1], conflictServiceRequestDateTime.toString().split('T')[0].split('-')[2]);
+                        let ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
+                        let mo = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+                        let da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d);
+                        var x = conflictServiceRequestDateTime.toString().split('T')[1].split(':')[0];
+                        if (conflictServiceRequestDateTime.toString().split('T')[1].split(':')[1].toString().includes('30')) {
+                            x = x + ".5";
+                        }
+                        x = parseFloat(x) + conflictServiceRequestDuration;
+                        var y = 0;
+                        if (x.toString().includes('.')) {
+                            y = x.toString().split('.')[0];
+                            if (y < 10) {
+                                y = '0' + y;
+                            }
+                            y = y + ":30";
+                        }
+                        else {
+                            y = x;
+                            if (y < 10) {
+                                y = '0' + y;
+                            }
+                            y = y + ':00';
+                        }
+                        document.getElementById("spneditServicerequestAdminPanelSRs").innerHTML = "Another service request has been assigned to the service provider on <strong>" + `${da}-${mo}-${ye}` + "</strong> from <strong>" + conflictServiceRequestDateTime.toString().split('T')[1].split(':')[0] + ":" + conflictServiceRequestDateTime.toString().split('T')[1].split(':')[1] + "</strong> to <strong>" + y + "</strong>. Either choose another date or pick up a different time slot.";
+                    }
+                },
+                error: function (response) {
+                    $("#dvLoader").removeClass("is-active");
+                    console.log("adminJS.js->editServiceRequestbyAdmin error: " + response.responseText);
+                }
+            });
+        }
+    }
+}
+function updateServiceRequestDateTimebyAdmin() {
+    var vCount = 0;
+    if (!document.getElementById("dtEditSRAdminPanelSRs").value) {
+        document.getElementById("spndtEditSRAdminPanelSRs").innerHTML = "Select Date for Service!";
+        vCount--;
+    }
+    else {
+        document.getElementById("spndtEditSRAdminPanelSRs").innerHTML = "";
+        vCount++;
+    }
+    if (!document.getElementById("txtStreetnameEditSRAdminPanel").value) {
+        document.getElementById("spnStreetnameEditSRAdminPanel").innerHTML = "Street name Required!";
+        vCount--;
+    }
+    else {
+        document.getElementById("spnStreetnameEditSRAdminPanel").innerHTML = "";
+        vCount++;
+    }
+    if (!document.getElementById("txtHousenumberEditSRAdminPanel").value) {
+        document.getElementById("spnHousenumberEditSRAdminPanel").innerHTML = "House number Required!";
+        vCount--;
+    }
+    else {
+        document.getElementById("spnHousenumberEditSRAdminPanel").innerHTML = "";
+        vCount++;
+    }
+    if (vCount == 3) {
+        var data = {};
+        data.serviceRequestId = document.getElementById("hdnServiceRequestIdOfEditSRbyAdmin").value;
+        data.serviceStartDate = document.getElementById("dtEditSRAdminPanelSRs").value;
+        if (document.getElementById("selTimeEditSRAdminPanelSRs").value.includes(".")) {
+            data.ServiceStartTime = document.getElementById("selTimeEditSRAdminPanelSRs").value.split('.')[0] + ":30";
+        }
+        else {
+            data.ServiceStartTime = document.getElementById("selTimeEditSRAdminPanelSRs").value + ":00";
+        }
+        data.addressLine1 = document.getElementById("txtStreetnameEditSRAdminPanel").value;
+        data.addressLine2 = document.getElementById("txtHousenumberEditSRAdminPanel").value;
+        data.city = $("#selCityEditSRAdminPanel").val();
+        data.state = $("#selCityEditSRAdminPanel option:selected").text();
+        data.postalCode = document.getElementById("txtPostalcodeEditSRAdminPanel").value;
+        $("#dvLoader").addClass("is-active");
+        $.ajax({
+            type: "post",
+            dataType: "JSON",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            url: "/Admin/updateServiceRequestDateTime",
+            success: function (response) {
+                $("#dvLoader").removeClass("is-active");
+                console.log(response);
+                if (response > 0) {
+                    document.getElementById("spneditServicerequestAdminPanelSRs").classList.remove('text-danger');
+                    document.getElementById("spneditServicerequestAdminPanelSRs").classList.add('text-success');
+                    document.getElementById("spneditServicerequestAdminPanelSRs").innerHTML = "Service Request Updated Successfully!!";
+                    setTimeout(function () {
+                        $('#editServiceRequestAdminPanelModal').modal('hide');
+                        document.getElementById("spneditServicerequestAdminPanelSRs").classList.remove('text-success');
+                        document.getElementById("spneditServicerequestAdminPanelSRs").classList.add('text-danger');
+                    }, 2000);
+                    showAdminPanelServiceRequestsData();
+                }
+            },
+            error: function (response) {
+                $("#dvLoader").removeClass("is-active");
+                console.log("adminJS.js->updateServiceRequestDateTimebyAdmin error: " + response.responseText);
+            }
+        });
+    }
+}
+function date_units_diff(a, b, unit_amounts) {
+    var split_to_whole_units = function (milliseconds, unit_amounts) {
+        time_data = [milliseconds];
+        for (i = 0; i < unit_amounts.length; i++) {
+            time_data.push(parseInt(time_data[i] / unit_amounts[i]));
+            time_data[i] = time_data[i] % unit_amounts[i];
+        }; return time_data.reverse();
+    }; if (unit_amounts == undefined) {
+        unit_amounts = [1000, 60, 60, 24];
+    };
+    var utc_a = new Date(a.toUTCString());
+    var utc_b = new Date(b.toUTCString());
+    var diff = (utc_b - utc_a);
+    return split_to_whole_units(diff, unit_amounts);
+}
 
 //function fillAvailableZipcodes() {
 //    $("#dvLoader").addClass("is-active");

@@ -890,13 +890,15 @@ table.dataTable tbody td{
     position: relative;
     z-index: 1;
     padding-left: 37px;
+    cursor: pointer;
 }
-.dateForService, .timeForService{
+.dateForService, .timeForService {
     position: relative;
     padding-left: 35px;
     padding-right: 0px !important;
     width: 150px;
     float: left;
+    cursor: pointer;
 }
 .dateForService::-webkit-inner-spin-button,
 .dateForService::-webkit-calendar-picker-indicator {
@@ -904,9 +906,11 @@ table.dataTable tbody td{
     background: transparent url(../images/book-service/icon-calendar-blue.png) 9px center no-repeat!important;
     left: -25px;
     position: absolute;
+    cursor: pointer;
 }
-.dateForServiceReschedule{
+.dateForServiceReschedule {
     width: 100%;
+    cursor: pointer;
 }
 .cock-icon{
     background: transparent url(../images/upcoming-service/clock.png) 9px center no-repeat!important;
@@ -1313,6 +1317,13 @@ table.dataTable tbody td{
     height: 100%;
     left: 0;
     top: 0;
+}
+.adminPanelDate{
+    padding-left: 35px !important;
+    width: 100% !important;    
+}
+#tblSerReq_filter, #tblUserManagement_filter {
+    display: none;
 }
 
 /* Responsive */
