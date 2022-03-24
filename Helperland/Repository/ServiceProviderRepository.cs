@@ -1,7 +1,9 @@
-﻿using Helperland.Data;
+﻿using Helperland.Core;
+using Helperland.Data;
 using Helperland.Enums;
 using Helperland.Models;
 using Helperland.ViewModels;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -13,10 +15,12 @@ namespace Helperland.Repository
     public class ServiceProviderRepository: IServiceProviderRepository
     {
         private readonly HelperLandContext helperLandContext;
+        private readonly IConfiguration configuration;
 
-        public ServiceProviderRepository(HelperLandContext helperLandContext)
+        public ServiceProviderRepository(HelperLandContext helperLandContext, IConfiguration configuration)
         {
             this.helperLandContext = helperLandContext;
+            this.configuration = configuration;
         }
         public int updateServiceProviderDetails(int spId, SPMyDetailsViewModel spMyDetailsViewModel)
         {
@@ -92,6 +96,20 @@ namespace Helperland.Repository
                 sr.ModifiedBy = spid;
                 sr.ModifiedDate = DateTime.Now;
             }
+            EmailModel emailModel = new EmailModel();
+            emailModel.To = helperLandContext.Users.Where(u => u.UserId == sr.UserId).Select(u => u.Email).FirstOrDefault(); 
+            if (statuscode== (int)ServiceStatusEnum.Cancelled)
+            {
+                emailModel.Subject = "Service Request Cancelled by Service Provider!";
+                emailModel.Body = "Cancelled Service ID: <strong>" + servicerequestid + "</strong>";
+            }
+            else if(statuscode == (int)ServiceStatusEnum.Completed)
+            {
+                emailModel.Subject = "Service Request Completed by Service Provider!";
+                emailModel.Body = "Completed Service ID: <strong>" + servicerequestid + "</strong>";
+            }
+            MailHelper mailhelper = new MailHelper(configuration);
+            mailhelper.Send(emailModel);
             helperLandContext.ServiceRequests.Update(sr);
             return helperLandContext.SaveChanges();
         }

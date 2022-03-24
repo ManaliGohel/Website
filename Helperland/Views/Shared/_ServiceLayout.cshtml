@@ -48,6 +48,11 @@
             -moz-appearance: textfield;
         }
     </style>
+    <script>
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+    </script>
 </head>
 @{
     string onloadCalls = "", onresizeCalls = "";
@@ -93,12 +98,12 @@
                                     }
                                 }
                                 <li class="mt-3 mx-2"><a class="py-2 px-3 navApplyBorder" asp-action="prices" asp-controller="customer">Prices & services</a></li>
-                                <li class="mt-3 mx-2"><a class="py-2 px-3 navApplyBorder" asp-action="" asp-controller="">Warranty</a></li>
-                                <li class="mt-3 mx-2"><a class="py-2 px-3 navApplyBorder" asp-action="" asp-controller="">Blog</a></li>
+                                <li class="mt-3 mx-2"><a class="py-2 px-3 navApplyBorder" href="#">Warranty</a></li>
+                                <li class="mt-3 mx-2"><a class="py-2 px-3 navApplyBorder" href="#">Blog</a></li>
                                 <li class="mt-3 mx-2"><a class="py-2 px-3 navApplyBorder" asp-action="contactus" asp-controller="customer">Contact</a></li>
-                                <li><a class="px-5" asp-action="" asp-controller=""><div class="dv-upser-not-pro dv-not-border d-flex justify-content-center align-items-center"><div class="dv-notification d-flex justify-content-center align-items-center">0</div><img class="img-upser-not" src="~/images/upcoming-service/icon-notification.png" id="imgnotification"><img class="img-upser-not" src="~/images/upcoming-service/icon-notification-black.png" id="imgnotification-black"></div></a></li>
+                                <li><a class="px-5" href="#"><div class="dv-upser-not-pro dv-not-border d-flex justify-content-center align-items-center"><div class="dv-notification d-flex justify-content-center align-items-center">0</div><img class="img-upser-not" src="~/images/upcoming-service/icon-notification.png" id="imgnotification"><img class="img-upser-not" src="~/images/upcoming-service/icon-notification-black.png" id="imgnotification-black"></div></a></li>
                                 <li>
-                                    <a class="px-5" asp-action="" asp-controller="" id="ddProfile" role="button" data-bs-toggle="dropdown" aria-expanded="false"><div class="dv-upser-not-pro d-flex justify-content-center align-items-center"><img class="img-upser-pro" src="~/images/upcoming-service/profile.png" id="imgprofile"><img class="img-upser-pro" src="~/images/upcoming-service/profile-black.png" id="imgprofile-black"><div class="dv-downarr"><img class="img-pro-downarr" src="~/images/upcoming-service/down-arrow.png"></div></div></a>
+                                    <a class="px-5" href="#" id="ddProfile" role="button" data-bs-toggle="dropdown" aria-expanded="false"><div class="dv-upser-not-pro d-flex justify-content-center align-items-center"><img class="img-upser-pro" src="~/images/upcoming-service/profile.png" id="imgprofile"><img class="img-upser-pro" src="~/images/upcoming-service/profile-black.png" id="imgprofile-black"><div class="dv-downarr"><img class="img-pro-downarr" src="~/images/upcoming-service/down-arrow.png"></div></div></a>
                                     <ul class="dropdown-menu p-3 ms-2 ddProfile" aria-labelledby="ddProfile" style="right: 10px; left: auto;">
                                         <li class="dropdown-item ddProfileNoHover">Welcome,<br><span id="proname">@ViewBag.UserName</span></li>
                                         <li><hr></li>
@@ -122,12 +127,12 @@
                         <div class="navbar-nav ms-auto">
                             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                                 <li class="mt-3 mx-2"><a class="py-2 px-3 navApplyBorder" asp-action="prices" asp-controller="customer">Prices & services</a></li>
-                                <li class="mt-3 mx-2"><a class="py-2 px-3 navApplyBorder" asp-action="" asp-controller="">Warranty</a></li>
-                                <li class="mt-3 mx-2"><a class="py-2 px-3 navApplyBorder" asp-action="" asp-controller="">Blog</a></li>
+                                <li class="mt-3 mx-2"><a class="py-2 px-3 navApplyBorder" href="#">Warranty</a></li>
+                                <li class="mt-3 mx-2"><a class="py-2 px-3 navApplyBorder" href="#">Blog</a></li>
                                 <li class="mt-3 mx-2"><a class="py-2 px-3 navApplyBorder" asp-action="contactus" asp-controller="customer">Contact</a></li>
-                                <li><a class="px-5" asp-action="" asp-controller=""><div class="dv-upser-not-pro dv-not-border d-flex justify-content-center align-items-center"><div class="dv-notification d-flex justify-content-center align-items-center">0</div><img class="img-upser-not" src="~/images/upcoming-service/icon-notification.png" id="imgnotification"><img class="img-upser-not" src="~/images/upcoming-service/icon-notification-black.png" id="imgnotification-black"></div></a></li>
+                                <li><a class="px-5" href="#"><div class="dv-upser-not-pro dv-not-border d-flex justify-content-center align-items-center"><div class="dv-notification d-flex justify-content-center align-items-center">0</div><img class="img-upser-not" src="~/images/upcoming-service/icon-notification.png" id="imgnotification"><img class="img-upser-not" src="~/images/upcoming-service/icon-notification-black.png" id="imgnotification-black"></div></a></li>
                                 <li>
-                                    <a class="px-5" asp-action="" asp-controller="" id="ddProfile" role="button" data-bs-toggle="dropdown" aria-expanded="false"><div class="dv-upser-not-pro d-flex justify-content-center align-items-center"><img class="img-upser-pro" src="~/images/upcoming-service/profile.png" id="imgprofile"><img class="img-upser-pro" src="~/images/upcoming-service/profile-black.png" id="imgprofile-black"><div class="dv-downarr"><img class="img-pro-downarr" src="~/images/upcoming-service/down-arrow.png"></div></div></a>
+                                    <a class="px-5" href="#" id="ddProfile" role="button" data-bs-toggle="dropdown" aria-expanded="false"><div class="dv-upser-not-pro d-flex justify-content-center align-items-center"><img class="img-upser-pro" src="~/images/upcoming-service/profile.png" id="imgprofile"><img class="img-upser-pro" src="~/images/upcoming-service/profile-black.png" id="imgprofile-black"><div class="dv-downarr"><img class="img-pro-downarr" src="~/images/upcoming-service/down-arrow.png"></div></div></a>
                                     <ul class="dropdown-menu p-3 ms-2 ddProfile" aria-labelledby="ddProfile" style="right: 10px; left: auto;">
                                         <li class="dropdown-item ddProfileNoHover">Welcome, <br><span id="proname">@ViewBag.UserName</span></li>
                                         <li><hr></li>
@@ -275,7 +280,6 @@
     {
         <script src="~/js/Customer/service_history.js"></script>
         <script src="~/js/BookService/bookservice.js"></script>
-
     }
     <!-- Sweet alert -->
     <link href="~/lib/limonte-sweetalert2/sweetalert2.css" rel="stylesheet" />

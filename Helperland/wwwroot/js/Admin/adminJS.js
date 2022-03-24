@@ -1,11 +1,70 @@
 ﻿$(document).ready(function () {
-    //$(".chosen").chosen();
     showAdminPanelServiceRequestsData();
     showAdminPanelUserManagementData();
-    //fillAvailableZipcodes();
-    //fillCustomers();
-    //fillServiceProviders();
 });
+$("#txtCustomerAdminPanelSR").select2({
+    placeholder: "Customer",
+    theme: "bootstrap4",
+    allowClear: false,
+    ajax: {
+        url: "/Admin/getCustomers",
+        dataType: "json",
+        data: function (params) {
+            var query =
+            {
+                searchTerm: params.term,
+            };
+            return query;
+        },
+        processResults: function (data, params) {
+            return {
+                results: data
+            };
+        }
+    }
+});
+$("#txtSPAdminPanelSR").select2({
+    placeholder: "Service provider",
+    theme: "bootstrap4",
+    allowClear: false,
+    ajax: {
+        url: "/Admin/getServiceProviders",
+        dataType: "json",
+        data: function (params) {
+            var query =
+            {
+                searchTerm: params.term,
+            };
+            return query;
+        },
+        processResults: function (data, params) {
+            return {
+                results: data
+            };
+        }
+    }
+});
+$("#txtUsernameAdminPanelUM").select2({
+    placeholder: "User name",
+    theme: "bootstrap4",
+    allowClear: false,
+    ajax: {
+        url: "/Admin/getUsers",
+        dataType: "json",
+        data: function (params) {
+            var query =
+            {
+                searchTerm: params.term,
+            };
+            return query;
+        },
+        processResults: function (data, params) {
+            return {
+                results: data
+            };
+        }
+    }
+});  
 
 function showAdminPanelServiceRequestsData() {
     $("#dvLoader").addClass("is-active");
@@ -13,10 +72,11 @@ function showAdminPanelServiceRequestsData() {
         type: 'get',
         url: '/Admin/getAdminPanelServiceRequestsData',
         dataType: 'json',
-        success: function (data) {            
+        success: function (data) {
             $("#dvLoader").removeClass("is-active");
             var tblSerReq = $('#tblSerReq').DataTable();
             tblSerReq.clear().draw();
+            console.log(typeof (data));
             $.each(data, function (i, v) {
                 var SRId = v.serviceRequestId;
                 var serStartDate = new Date(v.serviceStartDateTime).toLocaleDateString('en-GB');
@@ -37,13 +97,13 @@ function showAdminPanelServiceRequestsData() {
                         spProfile = "<img src='../.." + v.serviceProviderProfile + "' class='dvProfileImageContainer'>";
                     }
                     if (v.serviceProviderRate != null) {
-                        spRate = v.serviceProviderRate;                        
+                        spRate = v.serviceProviderRate;
                     }
                     spRateImages = getSPRateImages(spRate);
                     colSP = "<div class='media-object'><div class='float-start dvProfileImageContainer d-flex justify-content-center align-items-center me-2'>" + spProfile + "</div><div><label>" + spName + "</label><div class='d-flex align-items-center'>" + spRateImages + "<label class='ps-2'>" + spRate + "</label></div></div></div>";
                 }
                 if (v.serviceStatus == enumServiceStatus.New || v.serviceStatus == enumServiceStatus.Pending) {
-                    colActions += "<a href='#' id='ddActions' role='button' data-bs-toggle='dropdown' aria-expanded='false'><div class='threeVerDotMenuLayer d-flex justify-content-center align-items-center'><div class='threeVerDotMenu'></div></div></a><ul class='dropdown-menu p-3 ddActions' aria-labelledby='ddActions'><li><a class='dropdown-item' href='#' onclick='openEditServiceRequestModal(" + SRId + ")'>Edit & Reschedule</a></li><li><a class='dropdown-item' href='#'>Cancel</a></li></ul></div>";
+                    colActions += "<a href='#' id='ddActions' role='button' data-bs-toggle='dropdown' aria-expanded='false'><div class='threeVerDotMenuLayer d-flex justify-content-center align-items-center'><div class='threeVerDotMenu'></div></div></a><ul class='dropdown-menu p-3 ddActions' aria-labelledby='ddActions'><li><a class='dropdown-item' href='#' onclick='openEditServiceRequestModal(" + SRId + ")'>Edit & Reschedule</a></li><li><a class='dropdown-item' href='#' onclick='openCancelServiceRequestModal(" + SRId + ")'>Cancel</a></li></ul></div>";
                 }
                 else {
                     colActions += "<div class='onHover threeVerDotMenuLayer d-flex justify-content-center align-items-center'><div class='threeVerDotMenu'></div></div></div>";
@@ -68,7 +128,7 @@ function showAdminPanelServiceRequestsData() {
                     colStatus,
                     colActions
                 ]).draw(false);
-            });         
+            });                    
         },
         error: function (response) {
             $("#dvLoader").removeClass("is-active");
@@ -155,22 +215,28 @@ function showAdminPanelUserManagementData() {
                     UserType = "Customer";
                     if (v.isActive == true) {
                         colStatus = "<label class='lblserstatus active py-1 px-3'>Active</label>";
-                        colActions = "<div class='py-0 dropstart dropstart'><a href='#' id='ddActions' role='button' data-bs-toggle='dropdown' aria-expanded='false'><div class='threeVerDotMenuLayer d-flex justify-content-center align-items-center'><div class='threeVerDotMenu'></div></div></a><ul class='dropdown-menu p-3 ddActions' aria-labelledby='ddActions'><li><a class='dropdown-item' href='#'>Deactivate</a></li></ul></div>";
+                        colActions = "<div class='py-0 dropstart dropstart'><a href='#' id='ddActions' role='button' data-bs-toggle='dropdown' aria-expanded='false'><div class='threeVerDotMenuLayer d-flex justify-content-center align-items-center'><div class='threeVerDotMenu'></div></div></a><ul class='dropdown-menu p-3 ddActions' aria-labelledby='ddActions'><li><a class='dropdown-item' href='#' onclick='adminUserManagementActions(" + v.userId + ", " + enumAdminUserManagementActions.Deactivate + ")'>Deactivate</a></li></ul></div>";
                     }
                     else {
                         colStatus = "<label class='lblserstatus inactive py-1 px-3'>Inactive</label>";
-                        colActions = "<div class='py-0 dropstart dropstart'><a href='#' id='ddActions' role='button' data-bs-toggle='dropdown' aria-expanded='false'><div class='threeVerDotMenuLayer d-flex justify-content-center align-items-center'><div class='threeVerDotMenu'></div></div></a><ul class='dropdown-menu p-3 ddActions' aria-labelledby='ddActions'><li><a class='dropdown-item' href='#'>Activate</a></li></ul></div>";
+                        colActions = "<div class='py-0 dropstart dropstart'><a href='#' id='ddActions' role='button' data-bs-toggle='dropdown' aria-expanded='false'><div class='threeVerDotMenuLayer d-flex justify-content-center align-items-center'><div class='threeVerDotMenu'></div></div></a><ul class='dropdown-menu p-3 ddActions' aria-labelledby='ddActions'><li><a class='dropdown-item' href='#' onclick='adminUserManagementActions(" + v.userId + ", " + enumAdminUserManagementActions.Activate + ")'>Activate</a></li></ul></div>";
                     }
                 }
                 else if (v.userTypeId == enumUserType.ServiceProvider) {
                     UserType = "Service Provider";
                     if (v.isApproved == true) {
-                        colStatus = "<label class='lblserstatus active py-1 px-3'>Approved</label>";
-                        colActions = "<div class='py-0 dropstart dropstart'><a href='#' id='ddActions' role='button' data-bs-toggle='dropdown' aria-expanded='false'><div class='threeVerDotMenuLayer d-flex justify-content-center align-items-center'><div class='threeVerDotMenu'></div></div></a><ul class='dropdown-menu p-3 ddActions' aria-labelledby='ddActions'><li><a class='dropdown-item' href='#'>Disapprove</a></li></ul></div>";
+                        if (v.isActive == true) {
+                            colStatus = "<label class='lblserstatus active py-1 px-3'>Active</label>";
+                            colActions = "<div class='py-0 dropstart dropstart'><a href='#' id='ddActions' role='button' data-bs-toggle='dropdown' aria-expanded='false'><div class='threeVerDotMenuLayer d-flex justify-content-center align-items-center'><div class='threeVerDotMenu'></div></div></a><ul class='dropdown-menu p-3 ddActions' aria-labelledby='ddActions'><li><a class='dropdown-item' href='#' onclick='adminUserManagementActions(" + v.userId + ", " + enumAdminUserManagementActions.Deactivate + ")'>Deactivate</a></li></ul></div>";
+                        }
+                        else {
+                            colStatus = "<label class='lblserstatus inactive py-1 px-3'>Inactive</label>";
+                            colActions = "<div class='py-0 dropstart dropstart'><a href='#' id='ddActions' role='button' data-bs-toggle='dropdown' aria-expanded='false'><div class='threeVerDotMenuLayer d-flex justify-content-center align-items-center'><div class='threeVerDotMenu'></div></div></a><ul class='dropdown-menu p-3 ddActions' aria-labelledby='ddActions'><li><a class='dropdown-item' href='#' onclick='adminUserManagementActions(" + v.userId + ", " + enumAdminUserManagementActions.Activate + ")'>Activate</a></li></ul></div>";
+                        }
                     }
                     else {
-                        colStatus = "<label class='lblserstatus inactive py-1 px-3'>Not Approved</label>";
-                        colActions = "<div class='py-0 dropstart dropstart'><a href='#' id='ddActions' role='button' data-bs-toggle='dropdown' aria-expanded='false'><div class='threeVerDotMenuLayer d-flex justify-content-center align-items-center'><div class='threeVerDotMenu'></div></div></a><ul class='dropdown-menu p-3 ddActions' aria-labelledby='ddActions'><li><a class='dropdown-item' href='#'>Approve</a></li></ul></div>";
+                        colStatus = "<label class='lblserstatus pending py-1 px-3'>Not Approved</label>";
+                        colActions = "<div class='py-0 dropstart dropstart'><a href='#' id='ddActions' role='button' data-bs-toggle='dropdown' aria-expanded='false'><div class='threeVerDotMenuLayer d-flex justify-content-center align-items-center'><div class='threeVerDotMenu'></div></div></a><ul class='dropdown-menu p-3 ddActions' aria-labelledby='ddActions'><li><a class='dropdown-item' href='#' onclick='adminUserManagementActions(" + v.userId + ", " + enumAdminUserManagementActions.Approve + ")'>Approve</a></li></ul></div>";
                     }
                 }
                 else {
@@ -252,13 +318,13 @@ function filterInAdminPanelServiceRequests() {
     else {
         tblSerReq.columns(0).search("").draw();
     }
-    if ($("#txtZipcodeAdminPanelSR").val().trim() != "" || $("#txtCustomerAdminPanelSR").val().trim() != "") {
-        tblSerReq.columns(2).search($("#txtCustomerAdminPanelSR").val().trim() +' '+ $("#txtZipcodeAdminPanelSR").val().trim()).draw();
+    if ($("#txtZipcodeAdminPanelSR").val().trim() != "" || $("#txtCustomerAdminPanelSR").val() != null) {
+        tblSerReq.columns(2).search($("#txtCustomerAdminPanelSR").val() +' '+ $("#txtZipcodeAdminPanelSR").val().trim()).draw();
     }
     else {
         tblSerReq.columns(2).search("").draw(true);
     }
-    if ($("#txtSPAdminPanelSR").val().trim() != "") {
+    if ($("#txtSPAdminPanelSR").val() != null) {
         tblSerReq.columns(3).search($("#txtSPAdminPanelSR").val()).draw();
     } 
     else {
@@ -309,7 +375,7 @@ function filterInAdminPanelUserManagement() {
             tblUserManagement.draw();
         }
     }
-    if ($("#txtUsernameAdminPanelUM").val().trim() != "") {
+    if ($("#txtUsernameAdminPanelUM").val() != null) {
         tblUserManagement.columns(0).search($("#txtUsernameAdminPanelUM").val()).draw();
     }
     else {
@@ -377,19 +443,19 @@ function makeText(id) {
 function clearFilterDataOfAdminPanelSRs() {
     document.getElementById("txtSRIdAdminPanelSR").value = ""; 
     document.getElementById("txtZipcodeAdminPanelSR").value = "";
-    document.getElementById("txtCustomerAdminPanelSR").value = "";
-    document.getElementById("txtSPAdminPanelSR").value = ""; 
+    $('#txtCustomerAdminPanelSR').val(null).trigger('change');
+    $('#txtSPAdminPanelSR').val(null).trigger('change');
     document.getElementById("selSerStatusAdminPanel").value = ""; 
     $('#dtFromDateAdminPanelSR').attr('type', 'text');
     $('#dtToDateAdminPanelSR').attr('type', 'text');
     document.getElementById("dtFromDateAdminPanelSR").value = ""; 
     document.getElementById("dtToDateAdminPanelSR").value = "";
     document.getElementById("spndtFromDateAdminPanelSR").innerHTML = "";
-    document.getElementById("spndtToDateAdminPanelSR").innerHTML = "";
-    filterInAdminPanelServiceRequests();
+    document.getElementById("spndtToDateAdminPanelSR").innerHTML = "";    
+    $("#tblSerReq").DataTable().search('').columns().search('').draw();
 }
 function clearFilterDataOfAdminPanelUM() {
-    document.getElementById("txtUsernameAdminPanelUM").value = "";
+    $('#txtUsernameAdminPanelUM').val(null).trigger('change');
     document.getElementById("selUsertypeAdminPanelUM").value = "";
     document.getElementById("txtPhoneAdminPanelUM").value = "";
     document.getElementById("txtPostalcodeAdminPanelUM").value = "";
@@ -399,7 +465,7 @@ function clearFilterDataOfAdminPanelUM() {
     document.getElementById("dtToDateAdminPanelUM").value = "";
     document.getElementById("spndtFromDateAdminPanelUM").innerHTML = "";
     document.getElementById("spndtToDateAdminPanelUM").innerHTML = "";
-    filterInAdminPanelUserManagement();
+    $("#tblUserManagement").DataTable().search('').columns().search('').draw();
 }
 
 function openEditServiceRequestModal(srid) {
@@ -409,7 +475,6 @@ function openEditServiceRequestModal(srid) {
         url: "/CustomerMySettings/getServiceRequestDetails",
         data: { "servicerequestid": srid },
         success: function (data) {
-            console.log(data);
             $.each(data, function (i, v) {
                 const date = new Date(v.serviceStartDateTime.split('T')[0] + " " + v.serviceStartDateTime.split('T')[1]);
                 $("#dtEditSRAdminPanelSRs").val(date.getFullYear().toString() + "-" + AppendZero((date.getMonth() + 1).toString()) + "-" + AppendZero(date.getDate().toString()));
@@ -660,7 +725,6 @@ function updateServiceRequestDateTimebyAdmin() {
             url: "/Admin/updateServiceRequestDateTime",
             success: function (response) {
                 $("#dvLoader").removeClass("is-active");
-                console.log(response);
                 if (response > 0) {
                     document.getElementById("spneditServicerequestAdminPanelSRs").classList.remove('text-danger');
                     document.getElementById("spneditServicerequestAdminPanelSRs").classList.add('text-success');
@@ -696,60 +760,78 @@ function date_units_diff(a, b, unit_amounts) {
     return split_to_whole_units(diff, unit_amounts);
 }
 
-//function fillAvailableZipcodes() {
-//    $("#dvLoader").addClass("is-active");
-//    $.ajax({
-//        type: 'get',
-//        url: "/Admin/getAvailablePostalCodes",
-//        success: function (data) {
-//            $("#dvLoader").removeClass("is-active");
-//            $('#selAvailableZipcodes').empty();
-//            $('#selAvailableZipcodes').append('<option value="Zipcode" selected>Zipcode</option>');
-//            $.each(data, function (i, v) {
-//                $('#selAvailableZipcodes').append('<option value="' + v + '">' + v + '</option>');
-//            });
-//        },
-//        error: function (response) {
-//            $("#dvLoader").removeClass("is-active");
-//            console.log("adminJS.js->fillAvailableZipcodes error: " + response.responseText);
-//        }
-//    });
-//}
-//function fillCustomers() {
-//    $("#dvLoader").addClass("is-active");
-//    $.ajax({
-//        type: 'get',
-//        url: "/Admin/getCustomers",
-//        success: function (data) {
-//            $("#dvLoader").removeClass("is-active");
-//            $('#selCustomers').empty();
-//            $('#selCustomers').append('<option value="Customer" selected>Customer</option>');
-//            $.each(data, function (i, v) {
-//                $('#selCustomers').append('<option value="' + v + '">' + v + '</option>');
-//            })
-//        },
-//        error: function (response) {
-//            $("#dvLoader").removeClass("is-active");
-//            console.log("adminJS.js->fillCustomers error: " + response.responseText);
-//        }
-//    });
-//}
-//function fillServiceProviders() {
-//    $("#dvLoader").addClass("is-active");
-//    $.ajax({
-//        type: 'get',
-//        url: "/Admin/getServiceProviders",
-//        success: function (data) {
-//            $("#dvLoader").removeClass("is-active");
-//            $('#selServiceProviders').empty();
-//            $('#selServiceProviders').append('<option value="Service provider" selected>Service provider</option>');
-//            $.each(data, function (i, v) {
-//                $('#selServiceProviders').append('<option value="' + v + '">' + v + '</option>');
-//            })
-//        },
-//        error: function (response) {
-//            $("#dvLoader").removeClass("is-active");
-//            console.log("adminJS.js->fillServiceProviders error: " + response.responseText);
-//        }
-//    });
-//}
+function openCancelServiceRequestModal(srid) {
+    document.getElementById("hdncancelServiceRequestIdbyAdmin").value = srid;
+    var cancelServiceRequestbyAdminModal = new bootstrap.Modal(document.getElementById('cancelServiceRequestbyAdminModal'));
+    cancelServiceRequestbyAdminModal.show();
+}
+function cancelServiceRequestbyAdmin() {
+    $("#dvLoader").addClass("is-active");
+    $.ajax({
+        type: "post",
+        dataType: "JSON",
+        data: { "srid": document.getElementById("hdncancelServiceRequestIdbyAdmin").value },
+        url: "/Admin/cancelServiceRequest",
+        success: function (response) {
+            $("#dvLoader").removeClass("is-active");
+            if (response > 0) {
+                showAdminPanelServiceRequestsData();
+                $("#cancelServiceRequestbyAdminModal").modal("hide");
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Service Request has been cancelled Successfully!!',
+                    text: 'Cancelled Service Request Id: ' + document.getElementById("hdncancelServiceRequestIdbyAdmin").value + "!!"
+                });
+                document.getElementById("hdncancelServiceRequestIdbyAdmin").value = "";
+            }            
+        },
+        error: function (response) {
+            $("#dvLoader").removeClass("is-active");
+            console.log("adminJS.js->cancelServiceRequestbyAdmin error: " + response.responseText);
+        }
+    });    
+}
+
+function adminUserManagementActions(userId, actionid) {
+    $("#dvLoader").addClass("is-active");
+    $.ajax({
+        type: "post",
+        dataType: "JSON",
+        data: { "userid": userId, "actionid": actionid },
+        url: "/Admin/userManagementUpdateActions",
+        success: function (response) {
+            $("#dvLoader").removeClass("is-active");
+            if (response > 0) {
+                showAdminPanelUserManagementData();
+                var strtitle = "";
+                var strtext = "";
+                if (actionid == enumAdminUserManagementActions.Activate) {
+                    strtitle = 'User Activated Successfully!!';
+                    strtext = 'Activated User ID: ' + userId + '!!';
+                }
+                else if (actionid == enumAdminUserManagementActions.Deactivate) {
+                    strtitle = 'User Deactivated Successfully!!';
+                    strtext = 'Deactivated User ID: ' + userId + '!!';
+                }
+                else if (actionid == enumAdminUserManagementActions.Approve) {
+                    strtitle = 'User Approved Successfully!!';
+                    strtext = 'Approved User ID: ' + userId + '!!';
+                }
+                Swal.fire({
+                    icon: 'success',
+                    title: strtitle,
+                    text: strtext
+                });
+            }
+        },
+        error: function (response) {
+            $("#dvLoader").removeClass("is-active");
+            console.log("adminJS.js->adminUserManagementActions error: " + response.responseText);
+        }
+    });    
+}
+var enumAdminUserManagementActions = {
+    'Activate': 1,
+    'Deactivate': 2,
+    'Approve': 3
+};

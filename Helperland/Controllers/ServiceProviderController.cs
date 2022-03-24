@@ -1,4 +1,5 @@
-﻿using Helperland.Data;
+﻿using Helperland.Core;
+using Helperland.Data;
 using Helperland.Enums;
 using Helperland.Models;
 using Helperland.Repository;
@@ -6,6 +7,7 @@ using Helperland.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -18,11 +20,13 @@ namespace Helperland.Controllers
     {
         private readonly HelperLandContext helperLandContext;
         private readonly IServiceProviderRepository serviceProviderRepository;
+        private readonly IConfiguration configuration;
 
-        public ServiceProviderController(HelperLandContext helperLandContext, IServiceProviderRepository serviceProviderRepository)
+        public ServiceProviderController(HelperLandContext helperLandContext, IServiceProviderRepository serviceProviderRepository, IConfiguration configuration)
         {
             this.helperLandContext = helperLandContext;
             this.serviceProviderRepository = serviceProviderRepository;
+            this.configuration = configuration;
         }
         public IActionResult becomeaprovider()
         {
@@ -31,32 +35,26 @@ namespace Helperland.Controllers
         [HttpPost]
         public IActionResult becomeaprovider(SignupViewModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                User user = new User
                 {
-                    User user = new User
-                    {
-                        FirstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.firstname),
-                        LastName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.lastname),
-                        Email = model.email,
-                        Mobile = model.mobile,
-                        Password = model.password,
-                        CreatedDate = DateTime.Now,
-                        UserTypeId = (int)UserTypeIdEnum.ServiceProvider,
-                        IsApproved = false,
-                        ModifiedBy = (int)UserTypeIdEnum.ServiceProvider,
-                        ModifiedDate = DateTime.Now
-                    };
-                    helperLandContext.Add(user);
-                    helperLandContext.SaveChanges();
-                    TempData["msg"] = "Registration completed Successfully! Now you can Login after Admin approve your Registration...";
-                    return RedirectToAction("becomeaprovider", "ServiceProvider");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+                    FirstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.firstname),
+                    LastName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.lastname),
+                    Email = model.email,
+                    Mobile = model.mobile,
+                    Password = model.password,
+                    CreatedDate = DateTime.Now,
+                    UserTypeId = (int)UserTypeIdEnum.ServiceProvider,
+                    IsApproved = false,
+                    IsActive = true,
+                    ModifiedBy = (int)UserTypeIdEnum.ServiceProvider,
+                    ModifiedDate = DateTime.Now
+                };
+                helperLandContext.Add(user);
+                helperLandContext.SaveChanges();
+                TempData["msg"] = "Registration completed Successfully! Now you can Login after Admin approve your Registration...";
+                return RedirectToAction("becomeaprovider", "ServiceProvider");
             }
             return View();
         }
@@ -132,9 +130,9 @@ namespace Helperland.Controllers
                           on sr.UserId equals u.UserId
                           join sra in helperLandContext.ServiceRequestAddresses
                           on sr.ServiceRequestId equals sra.ServiceRequestId
-                          join fb in helperLandContext.FavoriteAndBlockeds on (int?)sr.UserId equals (int?)fb.TargetUserId into fb1
+                          join fb in helperLandContext.FavoriteAndBlockeds on getLoggedinUserId() equals (int?)fb.UserId into fb1
                           from fb in fb1.DefaultIfEmpty()
-                          where sr.ZipCode == getLoggedinSPPostalcode() && sr.Status == (int)ServiceStatusEnum.New && sr.HasPets == hasPets && (int?)fb.TargetUserId!=(int?)sr.UserId
+                          where sr.ZipCode == getLoggedinSPPostalcode() && sr.Status == (int)ServiceStatusEnum.New && sr.HasPets == hasPets && (int?)fb.TargetUserId != (int?)sr.UserId 
                           select new
                           {
                               ServiceRequestId = sr.ServiceRequestId,
@@ -187,6 +185,32 @@ namespace Helperland.Controllers
                     srData.SpacceptedDate = DateTime.Now;
                     srData.Status = (int)ServiceStatusEnum.Pending;
                     helperLandContext.ServiceRequests.Update(srData);
+                    var emails = (from sp in helperLandContext.Users
+                                    join fb in helperLandContext.FavoriteAndBlockeds
+                                    on sp.UserId equals fb.UserId into fb1
+                                    from fb in fb1.DefaultIfEmpty()
+                                    where sp.ZipCode== requestToAccept.ZipCode && sp.UserId!=requestToAccept.ServiceProviderId && sp.UserTypeId == (int)UserTypeIdEnum.ServiceProvider && sp.IsApproved == true && requestToAccept.UserId != fb.TargetUserId
+                                    select sp.Email).ToList();
+                    EmailModel emailModel = new EmailModel();
+                    string stremails = "";
+                    var vCount = 0;
+                    foreach (var e in emails)
+                    {
+                        if (vCount == 0)
+                        {
+                            stremails += e;
+                            vCount++;
+                        }
+                        else
+                        {
+                            stremails += "," + e;
+                        }
+                    }
+                    emailModel.To = stremails;
+                    emailModel.Subject = "Service Request no more Available!";
+                    emailModel.Body = "Service Request <strong>" + requestToAccept.ServiceRequestId + "</strong> has already been accepted by someone and is no more available to You!";
+                    MailHelper mailhelper = new MailHelper(configuration);
+                    mailhelper.Send(emailModel);
                     helperLandContext.SaveChanges();
                 }
                 else

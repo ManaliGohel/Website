@@ -433,7 +433,12 @@ function validateCustomerMydetails() {
         document.getElementById("spnFirstnameCusMydetails").innerHTML = "";
         document.getElementById("spnLastnameCusMydetails").innerHTML = "";
         document.getElementById("spnMobileCusMydetails").innerHTML = "";
-        document.getElementById("spnDOBCusMydetails").innerHTML = "";
+        if (dateCheck(parseInt(document.getElementById('selcusMyDetailsDOBYear').value), parseInt(document.getElementById('selcusMyDetailsDOBMonth').value), parseInt(document.getElementById('selcusMyDetailsDOBDate').value))) {
+            document.getElementById("spnDOBCusMydetails").innerHTML = "";
+        }
+        else {
+            document.getElementById("spnDOBCusMydetails").innerHTML = "Enter valid Date of Birth!";
+        }
     }
     else {
         if (document.getElementById("txtFirstnameCusMydetails").value.trim().length > 0) {
@@ -455,7 +460,12 @@ function validateCustomerMydetails() {
             document.getElementById("spnMobileCusMydetails").innerHTML = "Enter Mobile number!"; 
         }
         if (parseInt(document.getElementById('selcusMyDetailsDOBDate').value) > 0 && parseInt(document.getElementById('selcusMyDetailsDOBMonth').value) > 0 && parseInt(document.getElementById('selcusMyDetailsDOBYear').value) > 0) {
-            document.getElementById("spnDOBCusMydetails").innerHTML = "";
+            if (dateCheck(parseInt(document.getElementById('selcusMyDetailsDOBYear').value), parseInt(document.getElementById('selcusMyDetailsDOBMonth').value), parseInt(document.getElementById('selcusMyDetailsDOBDate').value))) {
+                document.getElementById("spnDOBCusMydetails").innerHTML = "";
+            }
+            else {
+                document.getElementById("spnDOBCusMydetails").innerHTML = "Enter valid Date of Birth!";
+            }
         }
         else {
             document.getElementById("spnDOBCusMydetails").innerHTML = "Enter Date of Birth!";
@@ -464,39 +474,48 @@ function validateCustomerMydetails() {
         document.getElementById("btnsaveCustomerDetails").disabled = true;
     }
 }
+function dateCheck(year, month, day) {
+    var d = new Date(year + "-" + AppendZero(month) + "-" + AppendZero(day));
+    if (d.getFullYear().toString() == year && (d.getMonth() + 1).toString() == month && d.getDate().toString() == day) {
+        return true;
+    }
+    return false;
+}
 function saveCustomerDetails() {
     if (document.getElementById("txtMobileCusMydetails").value.trim().length < 10) {
         document.getElementById("spnMobileCusMydetails").innerHTML = "Enter valid Mobile number!";
     }
     else {        
         document.getElementById("spnMobileCusMydetails").innerHTML = "";
-        var data = {
-            FirstName: document.getElementById("txtFirstnameCusMydetails").value.trim(),
-            LastName: document.getElementById("txtLastnameCusMydetails").value.trim(),
-            Mobile: document.getElementById("txtMobileCusMydetails").value.trim(),
-            Date: parseInt(document.getElementById("selcusMyDetailsDOBDate").value),
-            Month: parseInt(document.getElementById("selcusMyDetailsDOBMonth").value),
-            Year: parseInt(document.getElementById("selcusMyDetailsDOBYear").value),
-            LanguageId: parseInt(document.getElementById("selcusMyDetailsPreferredLanguage").value)
-        };
-        $("#dvLoader").addClass("is-active");
-        $.ajax({
-            type: "post",
-            dataType: "JSON",
-            data: JSON.stringify(data),
-            contentType: "application/json",
-            url: "/CustomerMySettings/updateCustomerDetails",
-            success: function (response) {
-                $("#dvLoader").removeClass("is-active");
-                $("#dvCusUpdateSuccess").fadeTo(2000, 500).slideUp(500, function () {
-                    $("#dvCusUpdateSuccess").slideUp(500);
-                });
-            },
-            error: function (response) {
-                $("#dvLoader").removeClass("is-active");
-                console.log("service_history.js->saveCustomerDetails error: " + response.responseText);
-            }
-        });   
+        if (document.getElementById("spnDOBCusMydetails").innerHTML == "") {
+            var data = {
+                FirstName: document.getElementById("txtFirstnameCusMydetails").value.trim(),
+                LastName: document.getElementById("txtLastnameCusMydetails").value.trim(),
+                Mobile: document.getElementById("txtMobileCusMydetails").value.trim(),
+                Date: parseInt(document.getElementById("selcusMyDetailsDOBDate").value),
+                Month: parseInt(document.getElementById("selcusMyDetailsDOBMonth").value),
+                Year: parseInt(document.getElementById("selcusMyDetailsDOBYear").value),
+                LanguageId: parseInt(document.getElementById("selcusMyDetailsPreferredLanguage").value)
+            };
+            $("#dvLoader").addClass("is-active");
+            $.ajax({
+                type: "post",
+                dataType: "JSON",
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                url: "/CustomerMySettings/updateCustomerDetails",
+                success: function (response) {
+                    $("#dvLoader").removeClass("is-active");
+                    $("#dvCusUpdateSuccess").fadeTo(2000, 500).slideUp(500, function () {
+                        $("#dvCusUpdateSuccess").slideUp(500);
+                    });
+                },
+                error: function (response) {
+                    $("#dvLoader").removeClass("is-active");
+                    console.log("service_history.js->saveCustomerDetails error: " + response.responseText);
+                }
+            });
+        }           
     }
 }
 

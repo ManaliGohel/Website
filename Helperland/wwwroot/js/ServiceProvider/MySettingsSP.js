@@ -155,8 +155,14 @@ function saveSPDetails() {
     }
     else if (document.getElementById("selSPMyDetailsDOBDate").value != "0" || document.getElementById("selSPMyDetailsDOBMonth").value != "0" || document.getElementById("selSPMyDetailsDOBYear").value != "0") {
         if (document.getElementById("selSPMyDetailsDOBDate").value != "0" && document.getElementById("selSPMyDetailsDOBMonth").value != "0" && document.getElementById("selSPMyDetailsDOBYear").value != "0") {
-            vSPDetailsCount++;
-            document.getElementById("spnDOBSPMydetails").innerHTML = "";
+            if (dateCheck(parseInt(document.getElementById("selSPMyDetailsDOBYear").value), parseInt(document.getElementById("selSPMyDetailsDOBMonth").value), parseInt(document.getElementById("selSPMyDetailsDOBDate").value))) {
+                vSPDetailsCount++;
+                document.getElementById("spnDOBSPMydetails").innerHTML = "";
+            }
+            else {
+                vSPDetailsCount--;
+                document.getElementById("spnDOBSPMydetails").innerHTML = "Enter valid Date of Birth!";
+            }
         }
         else {
             vSPDetailsCount--;
@@ -207,6 +213,13 @@ function saveSPDetails() {
             }
         }); 
     }
+}
+function dateCheck(year, month, day) {
+    var d = new Date(year + "-" + AppendZero(month) + "-" + AppendZero(day));
+    if (d.getFullYear().toString() == year && (d.getMonth() + 1).toString() == month && d.getDate().toString() == day) {
+        return true;
+    }
+    return false;
 }
 
 function selectedAvatarImage(selectedImageId) {
@@ -330,13 +343,11 @@ function clearChangeSPPasswordTab() {
 }
 
 function showSPNewServiceRequestsData(hasPets) {
-    //$("#dvLoader").addClass("is-active");
     $.ajax({
         type: 'get',
         url: "/ServiceProvider/getLoggedinSPNewServiceRequestsData",
         data: { "hasPets": hasPets },
         success: function (data) {
-            //$("#dvLoader").removeClass("is-active");
             var tblspNewServiceRequests = $('#tblNewServiceRequests').DataTable();
             tblspNewServiceRequests.clear().draw();          
             if (data.length > 0) {                
@@ -365,7 +376,6 @@ function showSPNewServiceRequestsData(hasPets) {
             }                      
         },
         error: function (response) {
-            //$("#dvLoader").removeClass("is-active");
             console.log("MySettingsSP.js->showSPNewServiceRequestsData error: " + response.responseText);
         }
     });
@@ -630,13 +640,11 @@ function UnBlockCustomerByLoggedinSP(targetuserid) {
 }
 
 function showSPMyRatingsData() {
-    //$("#dvLoader").addClass("is-active");
     $.ajax({
         url: '/ServiceProvider/getSPMyRatingsData',
         type: 'post',
         data: { "ratings": $("#selSPRatingsRange").val() },
         success: function (data) {
-            //$("#dvLoader").removeClass("is-active");
             var tblSPMyRatings = $('#tblSPMyRatings').DataTable();
             tblSPMyRatings.clear().draw();
             var strRateStars = "";
@@ -681,7 +689,6 @@ function showSPMyRatingsData() {
             });
         },
         error: function (response) {
-            //$("#dvLoader").removeClass("is-active");
             console.log("MySettingsSP.js->showSPMyRatingsData error: " + response.responseText);
         }
     });

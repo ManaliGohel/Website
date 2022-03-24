@@ -407,6 +407,10 @@ nav .drop-down li a {
     left: 0;
     top: 0;
 }
+.wpimg{
+    height: 60px;
+    width: 60px;
+}
 
 @media (max-width:1450px) {
     .blog-left-bg, .blog-right-bg{

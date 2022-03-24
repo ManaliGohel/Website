@@ -1,10 +1,13 @@
-﻿using Helperland.Data;
+﻿using Helperland.Core;
+using Helperland.Data;
 using Helperland.Enums;
 using Helperland.Models;
 using Helperland.Repository;
 using Helperland.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,13 +22,15 @@ namespace Helperland.Controllers
         private readonly HelperLandContext helperLandContext;
         private readonly ICustomerSettingsRepository customerSettingsRepository;
         private readonly IServiceRequestRepository serviceRequestRepository;
+        private readonly IConfiguration configuration;
 
         public CustomerMySettingsController(HelperLandContext helperLandContext, ICustomerSettingsRepository customerSettingsRepository,
-                                            IServiceRequestRepository serviceRequestRepository)
+                                            IServiceRequestRepository serviceRequestRepository, IConfiguration configuration)
         {
             this.helperLandContext = helperLandContext;
             this.customerSettingsRepository = customerSettingsRepository;
             this.serviceRequestRepository = serviceRequestRepository;
+            this.configuration = configuration;
         }
 
         [HttpGet]
@@ -164,6 +169,50 @@ namespace Helperland.Controllers
                 serviceRequest.ModifiedDate = DateTime.Now;
             }
             helperLandContext.ServiceRequests.Update(serviceRequest);
+            var emails = (from sr in helperLandContext.ServiceRequests
+                          join u in helperLandContext.Users on sr.UserId equals u.UserId
+                          join sp in helperLandContext.Users on sr.ServiceProviderId equals sp.UserId into sp1
+                          from sp in sp1.DefaultIfEmpty()
+                          where sr.ServiceRequestId == rescheduleServiceRequestViewModel.ServiceRequestId
+                          select new
+                          {
+                              serviceProviderEmail = sp.Email,
+                              availableSps = (from u in helperLandContext.Users
+                                              join fb in helperLandContext.FavoriteAndBlockeds on u.UserId equals fb.UserId into fb1
+                                              from fb in fb1.DefaultIfEmpty()
+                                              where u.ZipCode == sr.ZipCode && u.IsApproved == true && u.UserTypeId == (int)UserTypeIdEnum.ServiceProvider && Convert.ToInt16(getLoggedinUserId()) != fb.TargetUserId
+                                              select u.Email).AsNoTracking().ToList()
+                          }).AsNoTracking().ToList();
+            EmailModel emailModel = new EmailModel();
+            string stremails = "";
+            var vCount = 0;
+            foreach (var e in emails)
+            {
+                if (e.serviceProviderEmail != null)
+                {
+                    stremails += e.serviceProviderEmail;
+                }
+                else
+                {
+                    foreach (var sps in e.availableSps)
+                    {
+                        if (vCount == 0)
+                        {
+                            stremails += sps;
+                            vCount++;
+                        }
+                        else
+                        {
+                            stremails += "," + sps;
+                        }                        
+                    }
+                }
+            }
+            emailModel.To = stremails;
+            emailModel.Subject = "Service Request Reschedule by Customer!";
+            emailModel.Body = "Service ID: <strong>" + rescheduleServiceRequestViewModel.ServiceRequestId + "</strong><br/><br/>Reschedule Service Date & Time: <strong>" + rescheduleServiceRequestViewModel.ServiceStartDate + " " + rescheduleServiceRequestViewModel.ServiceStartTime + "</strong>";
+            MailHelper mailhelper = new MailHelper(configuration);
+            mailhelper.Send(emailModel);
             return Json(helperLandContext.SaveChanges());
         }
 
@@ -178,6 +227,50 @@ namespace Helperland.Controllers
                 serviceRequest.ModifiedDate = DateTime.Now;
             }
             helperLandContext.ServiceRequests.Update(serviceRequest);
+            var emails = (from sr in helperLandContext.ServiceRequests
+                          join u in helperLandContext.Users on sr.UserId equals u.UserId
+                          join sp in helperLandContext.Users on sr.ServiceProviderId equals sp.UserId into sp1
+                          from sp in sp1.DefaultIfEmpty()
+                          where sr.ServiceRequestId == servicerequestid
+                          select new
+                          {
+                              serviceProviderEmail = sp.Email,
+                              availableSps = (from u in helperLandContext.Users
+                                              join fb in helperLandContext.FavoriteAndBlockeds on u.UserId equals fb.UserId into fb1
+                                              from fb in fb1.DefaultIfEmpty()
+                                              where u.ZipCode == sr.ZipCode && u.IsApproved == true && u.UserTypeId == (int)UserTypeIdEnum.ServiceProvider && Convert.ToInt16(getLoggedinUserId()) != fb.TargetUserId
+                                              select u.Email).AsNoTracking().ToList()
+                          }).AsNoTracking().ToList();
+            EmailModel emailModel = new EmailModel();
+            string stremails = "";
+            var vCount = 0;
+            foreach (var e in emails)
+            {
+                if (e.serviceProviderEmail != null)
+                {
+                    stremails += e.serviceProviderEmail;
+                }
+                else
+                {
+                    foreach (var sps in e.availableSps)
+                    {
+                        if (vCount == 0)
+                        {
+                            stremails += sps;
+                            vCount++;
+                        }
+                        else
+                        {
+                            stremails += "," + sps;
+                        }
+                    }
+                }
+            }
+            emailModel.To = stremails;
+            emailModel.Subject = "Service Request Cancelled by Customer!";
+            emailModel.Body = "Cancelled Service ID: <strong>" + servicerequestid + "</strong>";
+            MailHelper mailhelper = new MailHelper(configuration);
+            mailhelper.Send(emailModel);
             return Json(helperLandContext.SaveChanges());
         }
 

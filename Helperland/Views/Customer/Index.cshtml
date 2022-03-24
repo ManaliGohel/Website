@@ -16,6 +16,11 @@
     <script src="~/lib/jquery/jquery.js"></script>
     <script src="~/lib/jquery-validate/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script>
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+    </script>
 </head>
 <body onload="checkForLoginModal();checkForPasswordModal();" onscroll="stickyNavbar();" onresize="setLogoByWinSize();">
     <!-- Loader -->
@@ -43,17 +48,17 @@
                                 }
                             }
                             <a asp-action="prices" asp-controller="customer" class="navOptionOutline">Prices</a>
-                            <a asp-action="" asp-controller="" class="navOptionOutline">Our Guarantee</a>
-                            <a asp-action="" asp-controller="" class="navOptionOutline">Blog</a>
+                            <a href="#" class="navOptionOutline">Our Guarantee</a>
+                            <a href="#" class="navOptionOutline">Blog</a>
                             <a asp-action="contactus" asp-controller="customer" class="navOptionOutline">Contact us</a>
-                            <a asp-action="" asp-controller="" class="navOptionOutline ot1" id="btnLogin" data-bs-toggle="modal" data-bs-target="#loginModal" role="button">Login</a>
+                            <a href="#" class="navOptionOutline ot1" id="btnLogin" data-bs-toggle="modal" data-bs-target="#loginModal" role="button">Login</a>
                             <a asp-action="becomeaprovider" asp-controller="ServiceProvider" class="navOptionOutline ot1" id="btnBecomeHelper">Become a Helper</a>
                             <div id="navcountry">
                                 <a id="ddCountry" class="p-0 m-0" role="button" data-bs-toggle="dropdown" aria-expanded="false"><div id="ddCountryImgContainer"><img src="~/images/Home/india.jpg" class="ps-4 pe-2 pt-2"><div class="dv-downarr"><img class="img-pro-downarr" src="~/images/upcoming-service/down-arrow.png"></div></div></a>
                                 <ul class="dropdown-menu ms-2 mt-2" aria-labelledby="ddCountry" style="width: 5%; right: 10px; left: auto;">
-                                    <li class="liddCountry p-0 m-0"><a class="dropdown-item" asp-action="" asp-controller=""><img src="~/images/Home/canada.jpg" alt="canada"></a></li>
-                                    <li class="liddCountry p-0 m-0"><a class="dropdown-item" asp-action="" asp-controller=""><img src="~/images/Home/us.jpg" alt="us"></a></li>
-                                    <li class="liddCountry p-0 m-0"><a class="dropdown-item" asp-action="" asp-controller=""><img src="~/images/Home/uk.png" alt="uk"></a></li>
+                                    <li class="liddCountry p-0 m-0"><a class="dropdown-item" href="#"><img src="~/images/Home/canada.jpg" alt="canada"></a></li>
+                                    <li class="liddCountry p-0 m-0"><a class="dropdown-item" href="#"><img src="~/images/Home/us.jpg" alt="us"></a></li>
+                                    <li class="liddCountry p-0 m-0"><a class="dropdown-item" href="#"><img src="~/images/Home/uk.png" alt="uk"></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -221,10 +226,10 @@
 
     <div class="container-fluid customer-outer-container py-5">
         <div class="row">
-            <div class="col-md-1 d-flex justify-content-center" id="test">
-                <a asp-action="" asp-controller="" onclick="topnavigation();"><div class="topnav"><img src="~/images/Home/forma-1.png" alt="forma-1"></div></a>
+            <div class="col-md-1 d-flex justify-content-center mb-1" id="test">
+                <a href="#" onclick="topnavigation();"><div class="topnav"><img src="~/images/Home/forma-1.png" alt="forma-1"></div></a>
             </div>
-            <div class="col-md-10 text-center">
+            <div class="col-md-10 text-center mb-1">
                 <p class="newsletter">GET OUR NEWSLETTER</p>
                 <div>
                     <input type="text" class="form-control-sm rounded-pill textbox" placeholder="YOUR EMAIL">
@@ -232,7 +237,7 @@
                 </div>
             </div>
             <div class="col-md-1 d-flex justify-content-center">
-                <img src="~/images/Home/layer-598.png" alt="layer-598">
+                <img src="~/images/Home/layer-598.png" alt="layer-598" class="wpimg">
             </div>
         </div>
     </div>
@@ -246,19 +251,19 @@
                     <td class="col-md-8">
                         <a asp-action="index" asp-controller="customer">HOME</a>
                         <a asp-action="aboutus" asp-controller="customer">ABOUT</a>
-                        <a asp-action="" asp-controller="">TESTIMONIALS</a>
+                        <a href="#">TESTIMONIALS</a>
                         <a asp-action="faq" asp-controller="customer">FAQs</a>
-                        <a asp-action="" asp-controller="">INSURANCE POLICY</a>
-                        <a asp-action="" asp-controller="">IMPRESSUM</a>
+                        <a href="#">INSURANCE POLICY</a>
+                        <a href="#">IMPRESSUM</a>
                     </td>
                     <td class="col-md-2">
-                        <a asp-action="" asp-controller="" class="pe-2"><img src="~/images/Home/fb.png" alt="fb"></a>
-                        <a asp-action="" asp-controller=""><img src="~/images/Home/insta.png" alt="insta"></a>
+                        <a href="#" class="pe-2"><img src="~/images/Home/fb.png" alt="fb"></a>
+                        <a href="#"><img src="~/images/Home/insta.png" alt="insta"></a>
                     </td>
                 </tr>
                 <tr class="row footer2 align-items-center">
                     <td class="col-md-11 text-center">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat nunc libero, ac malesuada ligula aliquam ac. <a asp-action="" asp-controller="" class="privacypolicy">Privacy Policy</a>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut feugiat nunc libero, ac malesuada ligula aliquam ac. <a href="#" class="privacypolicy">Privacy Policy</a>
                     </td>
                     <td class="col-md-1" align="right">
                         <input type="button" value="OK!" class="btnok">

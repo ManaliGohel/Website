@@ -33,11 +33,14 @@
         input[type=number] {
             -moz-appearance: textfield;
         }
-        /*.chosen-container-single .chosen-single {
-            background: -webkit-gradient(linear,left top,left bottom,color-stop(20%,#fff),color-stop(50%,#fff),color-stop(52%,#fff),to(#fff));
-            background: linear-gradient(#fff 20%,#fff 50%,#fff 52%,#fff 100%);
-        }*/
     </style>
+    <link href="~/lib/select2/css/select2.css" rel="stylesheet" />
+    <link href="https://raw.githack.com/ttskch/select2-bootstrap4-theme/master/dist/select2-bootstrap4.css" rel="stylesheet" />
+    <script>
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+    </script>
 </head>
 <body onload="checkForWindowSize();" onresize="navadminMenuSize();">
     <!-- Loader -->
@@ -52,9 +55,9 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
                         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                            <li class="m-2"><a asp-action="" asp-controller=""><img class="img-um-profile" id="imgadminuser" src="~/images/admin-user_management/admin-user.png"><img class="img-um-profile" id="imgadminuser-black" src="~/images/admin-user_management/admin-user-black.png"><span class="ps-2 pro-user-name">@ViewBag.UserName</span></a></li>
-                            <li class="m-2"><a asp-action="logout" asp-controller="customer"><img class="img-um-logout pt-1 ps-1" id="imgadminuserlogout" src="~/images/admin-user_management/logout.png"><img class="img-um-logout pt-1 ps-1" id="imgadminuserlogout-black" src="~/images/admin-user_management/logout-black.png"></a></li>
-                            <li class="pt-3 admin-hdr-menu"><hr></li>
+                            <li class="my-0 ms-2"><a href="#" class="d-flex align-items-center"><img class="img-um-profile" id="imgadminuser" src="~/images/admin-user_management/admin-user.png"><img class="img-um-profile" id="imgadminuser-black" src="~/images/admin-user_management/admin-user-black.png"><span class="ps-2 pro-user-name">@ViewBag.UserName</span></a></li>
+                            <li class="my-0 mx-2"><a asp-action="logout" asp-controller="customer" class="d-flex align-items-center"><img class="img-um-logout pt-1 ps-1" id="imgadminuserlogout" src="~/images/admin-user_management/logout.png"><img class="img-um-logout pt-1 ps-1" id="imgadminuserlogout-black" src="~/images/admin-user_management/logout-black.png"></a></li>
+                            <li class="admin-hdr-menu"><hr></li>
                             <li class="py-3 ps-2 admin-hdr-menu"><a id="lnkadmin-ser-req1" href="#" onclick="showAdminSerReq('lnkadmin-ser-req1');">Service Requests</a></li>
                             <li class="pt-3 ps-2 admin-hdr-menu"><a id="lnkadmin-user-management1" href="#" onclick="showAdminUserManagement('lnkadmin-user-management1');">User Management</a></li>
                         </ul>
@@ -83,10 +86,10 @@
                             <input id="txtZipcodeAdminPanelSR" class="form-control p-2" placeholder="Zipcode" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type="number" maxlength="6" autocomplete="off" />
                         </div>
                         <div class="col-md-3 p-0 ps-1 my-1">
-                            <input id="txtCustomerAdminPanelSR" type="text" class="form-control" placeholder="Customer" autocomplete="off" maxlength="200" />
+                            <select name="txtCustomerAdminPanelSR" class="form-control select" id="txtCustomerAdminPanelSR"></select>
                         </div>
                         <div class="col-md-3 p-0 ps-1 my-1">
-                            <input id="txtSPAdminPanelSR" type="text" class="form-control" placeholder="Service provider" autocomplete="off" maxlength="200" />
+                            <select name="txtSPAdminPanelSR" class="form-control select" id="txtSPAdminPanelSR"></select>
                         </div>
                     </div>
                     <div class="row">
@@ -138,12 +141,11 @@
             <div id="dvadmin-user-management" class="p-4">
                 <div class="dv-um-top">
                     <div class="title" id="dvadmintitle">User Management</div>
-                    <div class="pt-2" id="dvadminaddnewuser"><a asp-action="" asp-controller="" class="addNewUser"><img class="pe-2" src="~/images/admin-user_management/add.png">Add New User</a></div>
                 </div>
                 <div class="dv-searchItems-container p-3 mb-4">
                     <div class="row">
                         <div class="col-md-3 p-0 ps-1 my-1">
-                            <input type="text" id="txtUsernameAdminPanelUM" class="form-control" placeholder="User name" maxlength="200" autocomplete="off" />
+                            <select name="txtUsernameAdminPanelUM" class="form-control select" id="txtUsernameAdminPanelUM"></select>
                         </div>
                         <div class="col-md-3 p-0 ps-1 my-1">
                             <select class="form-select select p-2" id="selUsertypeAdminPanelUM">
@@ -207,7 +209,7 @@
         <input type="hidden" id="hdnadminActiveMenu" value="">
     </section>
 
-    <!-- Modal 5 Add/Edit User Address -->
+    <!-- Modal 5 Edit/Reschedule Service Request -->
     <div class="modal fade" id="editServiceRequestAdminPanelModal" aria-hidden="true" aria-labelledby="editServiceRequestAdminPanelModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -285,9 +287,32 @@
         </div>
     </div>
 
-    <!-- Script -->
-    <script src="~/js/myjs.js"></script>
-    <script src="~/js/user_management.js"></script>
+    <!-- Modal 5 Cancel Service Request -->
+    <div class="modal fade" id="cancelServiceRequestbyAdminModal" aria-hidden="true" aria-labelledby="cancelServiceRequestbyAdminModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="mdlheader">Cancel Service Request</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body m-2">
+                    <label class="mb-1">Why do you want to cancel the service request?</label>
+                    <div class="row mb-2">
+                        <div class="col-md-12">
+                            <textarea class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <input type="hidden" id="hdncancelServiceRequestIdbyAdmin" />
+                    <input type="button" class="btnLogin fs6" value="Cancel Now" onclick="cancelServiceRequestbyAdmin();" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sweet alert -->
+    <link href="~/lib/limonte-sweetalert2/sweetalert2.css" rel="stylesheet" />
+    <script src="~/lib/limonte-sweetalert2/sweetalert2.js"></script>
+
     <!-- jquery -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- fontawesome -->
@@ -295,21 +320,49 @@
     <!-- Data Table -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    <script src="~/js/Admin/adminJS.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
+
+    <script src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.1.0/js/buttons.print.min.js"></script>
+
+    <!-- Select2 Script -->
+    <script src="~/lib/select2/js/select2.full.min.js"></script>
+    <script src="~/lib/select2/js/select2.js"></script>
+    <!-- Script -->
+    <script src="~/js/myjs.js"></script>
+    <script src="~/js/user_management.js"></script>
+    <script src="~/js/Admin/adminJS.js"></script>
     <script>
         $(document).ready(function () {
             $('#tblUserManagement').DataTable({
-                "dom": 't<"bottom"flp i><"clear">',
+                "dom": 'Bt<"bottom"flp i><"clear">',
                 "order": [[3, "desc"]],
                 "bPaginate": true, //hide pagination
                 "bFilter": false, //hide Search bar
                 "bInfo": true, // hide showing entries
-                searching: true
+                searching: true,
+                buttons: {
+                    dom: {
+                        button: {
+                            tag: 'button',
+                            className: ''
+                        }
+                    },
+                    buttons: [{
+                        extend: 'excel',
+                        text: 'Export',
+                        className: "btnExport2",
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5]
+                        },
+                    }]
+                }
             });
-        });
-        $(document).ready(function () {
             $('#tblSerReq').DataTable({
                 "dom": 't<"bottom"flp i><"clear">',
                 "order": [[3, "desc"]],
@@ -318,14 +371,24 @@
                 "bInfo": true, // hide showing entries
                 searching: true
             });
+            $("div#tblUserManagement_wrapper").find($(".dt-buttons")).attr('style', 'float:right !important');
         });
     </script>
 
-    <!-- Search Bar in Select Script -->
-    @*<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js" integrity="sha512-rMGGF4wg1R73ehtnxXBt5mbUfN9JUJwbk21KMlnLZDJh7BkPmeovBuddZCENJddHYYMkCh9hPFnPmS9sspki8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" integrity="sha512-yVvxUQV0QESBt1SyZbNJMAwyKvFTLMyXSyBHDO4BG5t7k/Lw34tyqlSDlKIrIENIzCl+RVUNjmCPG+V/GMesRw==" crossorigin="anonymous" referrerpolicy="no-referrer" />*@
-    <!-- script for sidebar navigation -->
+    <style>
+        #select2-ajaxSelect2-container {
+            height: 45px !important;
+        }
+        .select2-selection .select2-selection--single, .select2-container--bootstrap4 .select2-selection--single {
+            height: 45px !important;
+            align-items: center;
+            display: flex;
+        }
+        .select2-container {
+            width: 100% !important;
+        }
+    </style>
+
     <partial name="_SidebarNavigationLayout" />
 </body>
 </html>

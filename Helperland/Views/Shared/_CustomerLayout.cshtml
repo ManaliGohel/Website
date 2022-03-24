@@ -30,6 +30,11 @@
     <script src="~/lib/jquery/jquery.js"></script>
     <script src="~/lib/jquery-validate/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script>
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () { null };
+    </script>
 </head>
 @{ 
     string onloadCalls = "";
@@ -65,10 +70,10 @@
                             }
                         }
                         <li class="my-2 mx-2"><a class="navOnlyBorder py-2 px-3" asp-action="prices" asp-controller="customer">Prices & services</a></li>
-                        <li class="my-2 mx-2"><a class="py-2 px-3 navApplyBorder" asp-action="" asp-controller="">Warranty</a></li>
-                        <li class="my-2 mx-2"><a class="py-2 px-3 navApplyBorder" asp-action="" asp-controller="">Blog</a></li>
+                        <li class="my-2 mx-2"><a class="py-2 px-3 navApplyBorder" href="#">Warranty</a></li>
+                        <li class="my-2 mx-2"><a class="py-2 px-3 navApplyBorder" href="#">Blog</a></li>
                         <li class="my-2 mx-2"><a class="py-2 px-3 navApplyBorder" asp-action="contactus" asp-controller="customer">Contact</a></li>
-                        <li class="my-2 mx-2"><a class="navBorderWBack py-2 px-3" asp-action="" asp-controller="" id="btnLogin" data-bs-toggle="modal" data-bs-target="#loginModal" role="button">Login</a></li>
+                        <li class="my-2 mx-2"><a class="navBorderWBack py-2 px-3" href="#" id="btnLogin" data-bs-toggle="modal" data-bs-target="#loginModal" role="button">Login</a></li>
                         <li class="my-2 mx-2"><a class="navBorderWBack py-2 px-3" asp-action="becomeaprovider" asp-controller="ServiceProvider">Become a Helper</a></li>
                     </ul>
                 </div>
@@ -87,10 +92,10 @@
     {
         <div class="container-fluid pb-5">
             <div class="row">
-                <div class="col-md-1 d-flex justify-content-center">
-                    <a asp-action="" asp-controller="" onclick="topnavigation();"><div class="topnav"><img src="~/images/Home/forma-1.png" alt="forma-1"></div></a>
+                <div class="col-md-1 d-flex justify-content-center mb-1">
+                    <a href="#" onclick="topnavigation();"><div class="topnav"><img src="~/images/Home/forma-1.png" alt="forma-1"></div></a>
                 </div>
-                <div class="col-md-10 text-center">
+                <div class="col-md-10 text-center mb-1">
                     <p class="newsletter">GET OUR NEWSLETTER</p>
                     <div>
                         <input type="text" class="form-control-sm rounded-pill textbox" placeholder="YOUR EMAIL">
@@ -98,7 +103,7 @@
                     </div>
                 </div>
                 <div class="col-md-1 d-flex justify-content-center">
-                    <img src="~/images/Home/layer-598.png" alt="layer-598">
+                    <img src="~/images/Home/layer-598.png" alt="layer-598" class="wpimg">
                 </div>
             </div>
         </div>

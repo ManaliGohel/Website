@@ -11,5 +11,7 @@ namespace Helperland.Repository
     public interface IAdminRepository
     {
         public int editServiceRequest([FromBody] EditServiceRequestbyAdminViewModel editServiceRequestbyAdminViewModel, int adminid);
+        public int cancelServiceRequest(int srid, int adminid);
+        public int userManagementUpdateActions(int userid, int actionid);
     }
 }

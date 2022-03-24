@@ -23,7 +23,6 @@ namespace Helperland.Controllers
 {
     public class CustomerController : Controller
     {
-        private readonly ILogger<CustomerController> _logger;
         private readonly HelperLandContext helperLandContext;
         private readonly IConfiguration configuration;
         private readonly IHostingEnvironment _hostingEnvironment;
@@ -31,11 +30,10 @@ namespace Helperland.Controllers
         private readonly string _key = "HELPERLAND";
         private User _user;
 
-        public CustomerController(ILogger<CustomerController> logger, HelperLandContext helperLandContext,
+        public CustomerController(HelperLandContext helperLandContext,
                                    IHostingEnvironment hostingEnvironment, IConfiguration configuration,
                                    IDataProtectionProvider dataProtectionProvider)
         {
-            _logger = logger;
             this.helperLandContext = helperLandContext;
             this.configuration = configuration;
             this._hostingEnvironment = hostingEnvironment;
@@ -140,9 +138,13 @@ namespace Helperland.Controllers
         }
         public IActionResult bookservice()
         {
-            if (HttpContext.Session.GetInt32("UserType") != null)
+            if (HttpContext.Session.GetInt32("UserType") == (int)UserTypeIdEnum.Customer)
+            {
                 ViewBag.UserName = HttpContext.Session.GetString("UserName");
-            return View();
+                return View();
+            }
+            else
+                return RedirectToAction("index", "customer");
         }
         public IActionResult Privacy()
         {
@@ -156,32 +158,26 @@ namespace Helperland.Controllers
         [HttpPost]
         public IActionResult customersignup(SignupViewModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                User user = new User
                 {
-                    User user = new User
-                    {
-                        FirstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.firstname),
-                        LastName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.lastname),
-                        Email = model.email,
-                        Mobile = model.mobile,
-                        Password = model.password,
-                        CreatedDate = DateTime.Now,
-                        UserTypeId = (int)UserTypeIdEnum.Customer,
-                        IsActive = true,
-                        ModifiedBy = (int)UserTypeIdEnum.Customer,
-                        ModifiedDate = DateTime.Now
-                    };
-                    helperLandContext.Add(user);
-                    helperLandContext.SaveChanges();
-                    TempData["msg"] = "Account Created Successfully!!";
-                    return RedirectToAction("customersignup", "customer");
-                }
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+                    FirstName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.firstname),
+                    LastName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(model.lastname),
+                    Email = model.email,
+                    Mobile = model.mobile,
+                    Password = model.password,
+                    CreatedDate = DateTime.Now,
+                    UserTypeId = (int)UserTypeIdEnum.Customer,
+                    IsApproved = true,
+                    IsActive = true,
+                    ModifiedBy = (int)UserTypeIdEnum.Customer,
+                    ModifiedDate = DateTime.Now
+                };
+                helperLandContext.Add(user);
+                helperLandContext.SaveChanges();
+                TempData["msg"] = "Account Created Successfully!!";
+                return RedirectToAction("customersignup", "customer");
             }
             return View();
         }
@@ -206,24 +202,29 @@ namespace Helperland.Controllers
             {
                 if (isExist.IsApproved == true)
                 {
-                    if (isremember == true)
+                    if (isExist.IsActive == true)
                     {
-                        CookieOptions cookieOptions = new CookieOptions();
-                        cookieOptions.Expires = new DateTimeOffset(DateTime.Now.AddMonths(1));
-                        HttpContext.Response.Cookies.Append("EmailId", isExist.Email, cookieOptions);
-                        HttpContext.Response.Cookies.Append("Password", isExist.Password, cookieOptions);
-                        HttpContext.Response.Cookies.Append("UserId", isExist.UserId.ToString(), cookieOptions);
-                    }
-                    HttpContext.Session.SetInt32("UserType", isExist.UserTypeId);
-                    HttpContext.Session.SetString("UserName", isExist.FirstName+" "+isExist.LastName);
-                    HttpContext.Session.SetInt32("UserId", isExist.UserId);
-                    if (HttpContext.Session.GetString("redirectToBookService") == "1")
-                    {
-                        result = "Book Service";
-                        HttpContext.Session.Remove("redirectToBookService");
+                        if (isremember == true)
+                        {
+                            CookieOptions cookieOptions = new CookieOptions();
+                            cookieOptions.Expires = new DateTimeOffset(DateTime.Now.AddMonths(1));
+                            HttpContext.Response.Cookies.Append("EmailId", isExist.Email, cookieOptions);
+                            HttpContext.Response.Cookies.Append("Password", isExist.Password, cookieOptions);
+                            HttpContext.Response.Cookies.Append("UserId", isExist.UserId.ToString(), cookieOptions);
+                        }
+                        HttpContext.Session.SetInt32("UserType", isExist.UserTypeId);
+                        HttpContext.Session.SetString("UserName", isExist.FirstName + " " + isExist.LastName);
+                        HttpContext.Session.SetInt32("UserId", isExist.UserId);
+                        if (HttpContext.Session.GetString("redirectToBookService") == "1")
+                        {
+                            result = "Book Service";
+                            HttpContext.Session.Remove("redirectToBookService");
+                        }
+                        else
+                            result = isExist.UserTypeId.ToString();
                     }
                     else
-                        result = isExist.UserTypeId.ToString();                    
+                        result = "You are Deactivated by Admin!!";
                 }
                 else
                     result = "Still you are not Approved by Admin!!";

@@ -1,10 +1,12 @@
-﻿using Helperland.Data;
+﻿using Helperland.Core;
+using Helperland.Data;
 using Helperland.Enums;
 using Helperland.Models;
 using Helperland.Repository;
 using Helperland.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,18 +52,18 @@ namespace Helperland.Controllers
                             ServiceStartDateTime = sr.ServiceStartDate,
                             ServiceDuration = sr.ServiceHours,
                             CustomerName = uc.FirstName + " " + uc.LastName,
-                            StreetName= sra.AddressLine1,
-                            HouseNumber= sra.AddressLine2,
-                            PostalCode=sra.PostalCode,
-                            City=sra.City,
-                            State=sra.State,
+                            StreetName = sra.AddressLine1,
+                            HouseNumber = sra.AddressLine2,
+                            PostalCode = sra.PostalCode,
+                            City = sra.City,
+                            State = sra.State,
                             ServiceProviderId = (int?)sr.ServiceProviderId,
                             ServiceProviderProfile = usp.UserProfilePicture,
                             ServiceProviderName = usp.FirstName + ' ' + usp.LastName,
                             ServiceProviderRate = (decimal?)rt.Ratings,
                             ServiceStatus = sr.Status
                         }).ToList();
-            return Json(data); 
+            return Json(data);
         }
         [HttpGet]
         public JsonResult getAdminPanelUserManagementData()
@@ -70,20 +72,51 @@ namespace Helperland.Controllers
         }
 
         [HttpGet]
-        public JsonResult getAvailablePostalCodes()
+        public JsonResult getCustomers(string searchTerm)
         {
-            return Json((from z in helperLandContext.Users where z.UserTypeId == (int)UserTypeIdEnum.ServiceProvider select z.ZipCode).Distinct());
+            var users = helperLandContext.Users.Where(u => u.UserTypeId == (int)UserTypeIdEnum.Customer).ToList();
+            if (searchTerm != null)
+            {
+                users = helperLandContext.Users.Where(u => (u.FirstName.Contains(searchTerm) || u.LastName.Contains(searchTerm)) && u.UserTypeId == (int)UserTypeIdEnum.Customer).Distinct().ToList();
+            }
+            var data = users.Select(u => new
+            {
+                id = u.FirstName + " " + u.LastName,
+                text = u.FirstName + " " + u.LastName
+            }).Distinct();
+            return Json(data);
         }
         [HttpGet]
-        public JsonResult getCustomers()
+        public JsonResult getServiceProviders(string searchTerm)
         {
-            return Json((from z in helperLandContext.Users where z.UserTypeId == (int)UserTypeIdEnum.Customer select z.FirstName+" "+z.LastName).Distinct());
+            var users = helperLandContext.Users.Where(u => u.UserTypeId == (int)UserTypeIdEnum.ServiceProvider).ToList();
+            if (searchTerm != null)
+            {
+                users = helperLandContext.Users.Where(u => (u.FirstName.Contains(searchTerm) || u.LastName.Contains(searchTerm)) && u.UserTypeId == (int)UserTypeIdEnum.ServiceProvider).Distinct().ToList();
+            }
+            var data = users.Select(u => new
+            {
+                id = u.FirstName + " " + u.LastName,
+                text = u.FirstName + " " + u.LastName
+            }).Distinct();
+            return Json(data);
         }
         [HttpGet]
-        public JsonResult getServiceProviders()
+        public JsonResult getUsers(string searchTerm)
         {
-            return Json((from z in helperLandContext.Users where z.UserTypeId == (int)UserTypeIdEnum.ServiceProvider select z.FirstName + " " + z.LastName).Distinct());
+            var users = helperLandContext.Users.ToList();
+            if (searchTerm != null)
+            {
+                users = helperLandContext.Users.Where(u => u.FirstName.Contains(searchTerm) || u.LastName.Contains(searchTerm)).Distinct().ToList();
+            }
+            var data = users.Select(u => new
+            {
+                id = u.FirstName + " " + u.LastName,
+                text = u.FirstName + " " + u.LastName
+            }).Distinct();
+            return Json(data);
         }
+
         public int getLoggedinUserId()
         {
             if (HttpContext.Request.Cookies["UserId"] != null)
@@ -96,6 +129,18 @@ namespace Helperland.Controllers
         public JsonResult updateServiceRequestDateTime([FromBody] EditServiceRequestbyAdminViewModel editServiceRequestbyAdminViewModel)
         {
             return Json(adminRepository.editServiceRequest(editServiceRequestbyAdminViewModel, getLoggedinUserId()));
+        }
+
+        [HttpPost]
+        public JsonResult cancelServiceRequest(int srid)
+        {
+            return Json(adminRepository.cancelServiceRequest(srid, getLoggedinUserId()));
+        }
+
+        [HttpPost]
+        public JsonResult userManagementUpdateActions(int userid, int actionid)
+        {
+            return Json(adminRepository.userManagementUpdateActions(userid, actionid));
         }
     }
 }

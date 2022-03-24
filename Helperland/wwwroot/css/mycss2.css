@@ -192,8 +192,10 @@ input[type=text], input[type=email], input[type=password], input[type=date], inp
 @media (max-width:754px) {
     .dv-howitworks-left {
         justify-content: center;
+        text-align: center;
     }
     .dv-howitworks-right {
         justify-content: center;
+        text-align: center;
     }
  }

@@ -10,7 +10,7 @@ function checkForWindowSize(){
         document.getElementById("hdnadminActiveMenu").value="lnkadmin-ser-req1";
     }
 }
-function navadminMenuSize(){
+function navadminMenuSize() {
     var navMenu=document.getElementById("navbarCollapse");
     if(window.outerWidth>=991){
       navMenu.classList.remove("navMenu");
