@@ -38,5 +38,7 @@ namespace Helperland.ViewModels
         public bool PaymentDone { get; set; }
         [JsonPropertyName("UserAddressID")]
         public string UserAddressID { get; set; }
+        [JsonPropertyName("RefundAmount")]
+        public decimal RefundAmount { get; set; }
     }
 }

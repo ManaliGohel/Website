@@ -293,7 +293,7 @@ namespace Helperland.Controllers
             var oldPassword = System.Text.Encoding.UTF8.GetString(Base64EncodeBytes);
             if (tokendate < dateTime || oldPassword != _user.Password)
             {
-                ViewBag.errMsg = "Link is Expaired";
+                ViewBag.errMsg = "Link has been Expired";
                 return false;
             }
             return true;

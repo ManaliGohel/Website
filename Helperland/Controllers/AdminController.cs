@@ -61,7 +61,9 @@ namespace Helperland.Controllers
                             ServiceProviderProfile = usp.UserProfilePicture,
                             ServiceProviderName = usp.FirstName + ' ' + usp.LastName,
                             ServiceProviderRate = (decimal?)rt.Ratings,
-                            ServiceStatus = sr.Status
+                            ServiceStatus = sr.Status,
+                            TotalAmount = sr.TotalCost,
+                            RefundAmount = sr.RefundedAmount
                         }).ToList();
             return Json(data);
         }
@@ -141,6 +143,17 @@ namespace Helperland.Controllers
         public JsonResult userManagementUpdateActions(int userid, int actionid)
         {
             return Json(adminRepository.userManagementUpdateActions(userid, actionid));
+        }
+
+        [HttpPost]
+        public JsonResult refundAmount([FromBody] ServiceRequestViewModel model)
+        {
+            ServiceRequest serviceRequest = helperLandContext.ServiceRequests.Where(sr => sr.ServiceRequestId == model.ServiceRequestId).FirstOrDefault();
+            serviceRequest.RefundedAmount = model.RefundAmount;
+            serviceRequest.ModifiedBy = getLoggedinUserId();
+            serviceRequest.ModifiedDate = DateTime.Now;
+            helperLandContext.ServiceRequests.Update(serviceRequest);
+            return Json(helperLandContext.SaveChanges());
         }
     }
 }

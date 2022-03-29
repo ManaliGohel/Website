@@ -287,6 +287,70 @@
         </div>
     </div>
 
+    <!-- Modal 5 Refund Amount of Service -->
+    <div class="modal fade" id="refundAmountAdminPanelModal" aria-hidden="true" aria-labelledby="refundAmountAdminPanelModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="mdlheader">Refund Amount</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row row-cols-1 row-cols-md-2 g-4 mt-0">
+                        <div class="col mt-0">
+                            <div class="row">
+                                <div class="col">
+                                    <span>Paid Amount</span><br />
+                                    <label id="pamount">00</label> &euro;
+                                </div>
+                                <div class="col">
+                                    <span>Refunded Amount</span><br />
+                                    <label id="ramount">00</label> &euro;
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <span class="fw-bold">Amount</span><br />
+                                <div class="input-group amountcal">
+                                    <input type="number" id="txtAmountToRefund" class="form-control" />
+                                    <select class="form-select bg-grey select" id="ddlRefundType">
+                                        <option value="Percentage" selected>Percentage</option>
+                                        <option value="Fixed">Fixed</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col mt-0">
+                            <div class="row">
+                                <div class="col">
+                                    <span>In Balance Amount</span><br />
+                                    <label id="ibamount">00</label> &euro;
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <span class="fw-bold">Calculate</span><br />
+                                <div class="input-group">
+                                    <div class="input-group-prepend col">
+                                        <span class="input-group-text" id="">Calculate</span>
+                                    </div>
+                                    <input type="text" class="form-control col" id="idcalculate" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="text-danger w-100" id="spnerrorrefund"></span>
+                    </div>
+                    <div class="row row-cols-1 row-cols-auto g-4 mt-0">
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1" class="fw-bold">Why do you want to refund amount?</label>
+                            <textarea class="form-control textarea" id="admincommetforrefund" rows="3" placeholder="Why do you want to refund amount?"></textarea>
+                        </div>
+                    </div>
+                    <button class="btnExport2disable mt-2 fs1" disabled type="button" onclick="refund()" id="btnrefund">Refund</button>
+                    <input type="hidden" id="serReqIdtoRefund" />
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal 5 Cancel Service Request -->
     <div class="modal fade" id="cancelServiceRequestbyAdminModal" aria-hidden="true" aria-labelledby="cancelServiceRequestbyAdminModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">

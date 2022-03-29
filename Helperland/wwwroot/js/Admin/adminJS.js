@@ -76,7 +76,6 @@ function showAdminPanelServiceRequestsData() {
             $("#dvLoader").removeClass("is-active");
             var tblSerReq = $('#tblSerReq').DataTable();
             tblSerReq.clear().draw();
-            console.log(typeof (data));
             $.each(data, function (i, v) {
                 var SRId = v.serviceRequestId;
                 var serStartDate = new Date(v.serviceStartDateTime).toLocaleDateString('en-GB');
@@ -106,7 +105,12 @@ function showAdminPanelServiceRequestsData() {
                     colActions += "<a href='#' id='ddActions' role='button' data-bs-toggle='dropdown' aria-expanded='false'><div class='threeVerDotMenuLayer d-flex justify-content-center align-items-center'><div class='threeVerDotMenu'></div></div></a><ul class='dropdown-menu p-3 ddActions' aria-labelledby='ddActions'><li><a class='dropdown-item' href='#' onclick='openEditServiceRequestModal(" + SRId + ")'>Edit & Reschedule</a></li><li><a class='dropdown-item' href='#' onclick='openCancelServiceRequestModal(" + SRId + ")'>Cancel</a></li></ul></div>";
                 }
                 else {
-                    colActions += "<div class='onHover threeVerDotMenuLayer d-flex justify-content-center align-items-center'><div class='threeVerDotMenu'></div></div></div>";
+                    if (v.serviceStatus == enumServiceStatus.Completed && v.serviceProviderRate != null && v.serviceProviderRate <= 1) {
+                        colActions += "<a href='#' id='ddActions' role='button' data-bs-toggle='dropdown' aria-expanded='false'><div class='threeVerDotMenuLayer d-flex justify-content-center align-items-center'><div class='threeVerDotMenu'></div></div></a><ul class='dropdown-menu p-3 ddActions' aria-labelledby='ddActions'><li><a class='dropdown-item' href='#' onclick='openRefundAmountModal(" + SRId + ", " + v.totalAmount + ", " + v.refundAmount + ")' >Refund</a></li></ul></div>";
+                    }
+                    else {
+                        colActions += "<div class='onHover threeVerDotMenuLayer d-flex justify-content-center align-items-center'><div class='threeVerDotMenu'></div></div></div>";
+                    }                    
                 }
                 if (v.serviceStatus == enumServiceStatus.New) {
                     colStatus = "<label class='lblserstatus new py-1 px-3'>New</label>";
@@ -835,3 +839,84 @@ var enumAdminUserManagementActions = {
     'Deactivate': 2,
     'Approve': 3
 };
+
+function openRefundAmountModal(srId, totalamount, refundamount) {
+    var refundAmountAdminPanelModal = new bootstrap.Modal(document.getElementById('refundAmountAdminPanelModal'));
+    refundAmountAdminPanelModal.show(); 
+    $("#serReqIdtoRefund").val(srId);
+    $("#txtAmountToRefund").val("");
+    $("#idcalculate").val(""); 
+    $("#spnerrorrefund").html("");
+    $("#btnrefund").prop("disabled", true);
+    $("#btnrefund").removeClass("btnExport2");
+    $("#btnrefund").addClass("btnExport2disable");
+    $("#pamount").html(totalamount);
+    $("#ramount").html("00");
+    if (refundamount != null) {
+        $("#ramount").html(refundamount);
+    }
+    $("#ibamount").html(parseFloat(totalamount) - parseFloat($("#ramount").html()));
+}
+$(".amountcal").on("keyup change", function () {
+    $("#spnerrorrefund").html("");
+    $("#idcalculate").val("");
+    reflectrefund();
+});
+function reflectrefund() {
+    if ($("#txtAmountToRefund").val().length == 0) {
+        $("#idcalculate").val("");
+    }
+    else {
+        var refundamount = parseFloat($("#txtAmountToRefund").val());
+        var refundtype = $("#ddlRefundType").val();
+        var calculateamount;
+        if (refundtype == "Percentage") {
+            calculateamount = (parseFloat($("#pamount").html()) * refundamount) / 100;
+        }
+        else {
+            calculateamount = parseFloat($("#txtAmountToRefund").val());
+        }
+        if (calculateamount > (parseFloat($("#ibamount").html()))) {
+            $("#spnerrorrefund").html("Refund Amount is greater than the Paid Amount!");
+            $("#btnrefund").prop("disabled", true);
+            $("#btnrefund").removeClass("btnExport2");
+            $("#btnrefund").addClass("btnExport2disable");
+        }
+        else {
+            $("#spnerrorrefund").html("");
+            $("#idcalculate").val(calculateamount);
+            $("#btnrefund").prop("disabled", false);
+            $("#btnrefund").removeClass("btnExport2disable");
+            $("#btnrefund").addClass("btnExport2");
+        }
+    }
+}
+function refund() {
+    var data = {}
+    data.ServiceRequestId = $("#serReqIdtoRefund").val();
+    data.RefundAmount = parseFloat($("#ramount").html()) + parseFloat($("#idcalculate").val());
+    $("#dvLoader").addClass("is-active");
+    $.ajax({
+        type: 'post',
+        url: '/Admin/refundAmount',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (response) {
+            $("#dvLoader").removeClass("is-active");
+            if (response > 0) {
+                $("#refundAmountAdminPanelModal").modal("hide");
+                showAdminPanelServiceRequestsData();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Amout Refunded Successfully!!',
+                    text: 'Refunded Service Request Id: ' + $("#serReqIdtoRefund").val() + "!!"
+                });
+            }
+        },
+        error: function (response) {
+            $("#dvLoader").removeClass("is-active");
+            console.log("adminJS.js->refund error: " + response.responseText);
+        }
+    });
+}
