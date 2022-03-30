@@ -5,7 +5,14 @@
     showSPServiceHistoryData();
     showSPBlockedtbData();    
     showSPMyRatingsData();
+    showServiceScheduleData();    
 });
+function eventTitle(eventStartTime, eventEndTime) {
+    var start = new Date(eventStartTime);
+    var end = new Date(eventEndTime);
+    return AppendZero(start.getHours().toString()) + ":" + AppendZero(start.getMinutes().toString()) + " - " +
+        AppendZero(end.getHours().toString()) + ":" + AppendZero(end.getMinutes().toString());
+}
 function fillCitiesByPostalcodeofSPMySettings(postalcode) {
     if (postalcode.toString().trim().length == 0) {
         document.getElementById("spnPostalCodeSPAdd").innerHTML = "";
@@ -100,6 +107,46 @@ function showLoggedinSPDetails() {
         error: function (response) {
             $("#dvLoader").removeClass("is-active");
             console.log("MySettingsSP.js->showLoggedinSPDetails error: " + response.responseText);
+        }
+    });
+}
+function showServiceScheduleData(){
+    var events = [];
+    $.ajax({
+        url: '/ServiceProvider/getLoggedinSPUpcomingServicesData',
+        type: 'get',
+        dataType: 'json',
+        success: function (resp) {
+            console.log(resp);
+            resp.forEach((element) => {
+                events.push({
+                    id: element.serviceRequestId,
+                    title: eventTitle(element.serviceStartDate, element.vServiceEndTime),
+                    start: element.serviceStartDate,
+                    end: element.serviceStartDate,
+                    color: "#1d7a8c",
+                    allDay: true,
+                    className: "text-center fw-bold"
+                });
+            });
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next title',
+                    center: '',
+                    right: ''
+                },
+                events: events,
+                eventClick: function (calEvent, jsEvent, view) {
+                    openSPServiceRequestDetailsModal(calEvent.event.id, 0, 0);
+                },
+                contentHeight: 600
+            });
+            calendar.render();
+        },
+        error: function (response) {
+            console.log("MySettingsSP.js->calender Error: " + response.responseText);
         }
     });
 }
@@ -366,7 +413,7 @@ function showSPNewServiceRequestsData(hasPets) {
                     var Payment = v.payment;
                     tblspNewServiceRequests.row.add([
                         "<div class='onHover' onclick='openSPServiceRequestDetailsModal(" + v.serviceRequestId + ", 1, 0)'>" + ServiceId + "</div>",
-                        "<div class='onHover' onclick='openSPServiceRequestDetailsModal(" + v.serviceRequestId + ", 1, 0)'><div><img src='../../images/upcoming-service/calender.png' alt=''> <span class='fw-bold'>" + serStartDate + "</span></div><div><img src='../../images/upcoming-service/clock.png' alt=''> " + serStartTime + " - " + serEndTime + "</div></div>",
+                        "<div class='onHover' onclick='openSPServiceRequestDetailsModal(" + v.serviceRequestId + ", 1, 0)'><div><img src='../../images/upcoming-service/calender.png' alt=''><span class='d-none'>" + new Date(v.serviceStartDate).getFullYear().toString() + AppendZero((new Date(v.serviceStartDate).getMonth() + 1).toString()) + AppendZero(new Date(v.serviceStartDate).getDate().toString()) + "</span> <span class='fw-bold'>" + serStartDate + "</span></div><div><img src='../../images/upcoming-service/clock.png' alt=''> " + serStartTime + " - " + serEndTime + "</div></div>",
                         "<div class='d-flex align-items-center contentCenter'><div><img src='../../images/upcoming-service/place.png' class='me-1' alt=''></div><div><div>" + CustomerName + "</div><div>" + StreetName + ", " + HouseNumber + "</div><div>" + PostalCode + " " + City + "-" + State + "</div></div></div>",
                         "<span class='ms-md-3'>" + Payment + " &euro;</span>",
                         "",
@@ -409,6 +456,8 @@ function acceptServiceRequest(servicerequestid) {
                     text: 'Service Request Id: ' + servicerequestid + "!!"
                 });
                 showSPNewServiceRequestsData(document.getElementById("hasPetsForNewRequestsOfSP").checked);
+                showSPUpcomingServicesData();
+                showServiceScheduleData();
             }
             if (response.isSRConflict == true) {
                 Swal.fire({
@@ -469,7 +518,7 @@ function showSPUpcomingServicesData() {
                     }
                     tblspUpcomingServices.row.add([
                         "<div class='onHover' onclick='openSPServiceRequestDetailsModal(" + v.serviceRequestId + ", 0, 1)'>" + ServiceId + "</div>",
-                        "<div class='onHover' onclick='openSPServiceRequestDetailsModal(" + v.serviceRequestId + ", 0, 1)'><div><img src='../../images/upcoming-service/calender.png' alt=''> <span class='fw-bold'>" + serStartDate + "</span></div><div><img src='../../images/upcoming-service/clock.png' alt=''> " + serStartTime + " - " + serEndTime + "</div></div>",
+                        "<div class='onHover' onclick='openSPServiceRequestDetailsModal(" + v.serviceRequestId + ", 0, 1)'><div><img src='../../images/upcoming-service/calender.png' alt=''><span class='d-none'>" + new Date(v.serviceStartDate).getFullYear().toString() + AppendZero((new Date(v.serviceStartDate).getMonth() + 1).toString()) + AppendZero(new Date(v.serviceStartDate).getDate().toString()) + "</span> <span class='fw-bold'>" + serStartDate + "</span></div><div><img src='../../images/upcoming-service/clock.png' alt=''> " + serStartTime + " - " + serEndTime + "</div></div>",
                         "<div class='d-flex align-items-center contentCenter'><div><img src='../../images/upcoming-service/place.png' class='me-1' alt=''></div><div><div>" + CustomerName + "</div><div>" + StreetName + " " + HouseNumber + "</div><div>" + PostalCode + " " + City + "-" + State + "</div></div></div>",
                         "<span class='ms-md-3'>" + Payment + " &euro;</span>",
                         "<span class='ms-md-3'>" + Distance + " km</span>",
@@ -500,6 +549,7 @@ function completeServiceRequestBySP(srId) {
                     text: 'Service Request Id: ' + srId + "!!"
                 });
                 showSPUpcomingServicesData();
+                showSPServiceHistoryData();
             }
         },
         error: function (response) {
@@ -557,7 +607,7 @@ function showSPServiceHistoryData() {
                     var State = v.state;
                     tblSPServiceHistory.row.add([
                         "<div class='onHover' onclick='openSPServiceRequestDetailsModal(" + v.serviceRequestId + ", 0, 0)'>" + ServiceId + "</div>",
-                        "<div class='onHover' onclick='openSPServiceRequestDetailsModal(" + v.serviceRequestId + ", 0, 0)'><div><img src='../../images/upcoming-service/calender.png' alt=''> <span class='fw-bold'>" + serStartDate + "</span></div><div><img src='../../images/upcoming-service/clock.png' alt=''> " + serStartTime + " - " + serEndTime + "</div></div>",
+                        "<div class='onHover' onclick='openSPServiceRequestDetailsModal(" + v.serviceRequestId + ", 0, 0)'><div><img src='../../images/upcoming-service/calender.png' alt=''><span class='d-none'>" + new Date(v.serviceStartDate).getFullYear().toString() + AppendZero((new Date(v.serviceStartDate).getMonth() + 1).toString()) + AppendZero(new Date(v.serviceStartDate).getDate().toString()) + "</span> <span class='fw-bold'>" + serStartDate + "</span></div><div><img src='../../images/upcoming-service/clock.png' alt=''> " + serStartTime + " - " + serEndTime + "</div></div>",
                         "<div class='d-flex align-items-center contentCenter'><div><img src='../../images/upcoming-service/place.png' class='me-1' alt=''></div><div><div>" + CustomerName + "</div><div>" + StreetName + " " + HouseNumber + "</div><div>" + PostalCode + " " + City + "-" + State + "</div></div></div>",
                     ]).draw(false);
                 });

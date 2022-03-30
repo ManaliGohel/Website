@@ -24,12 +24,13 @@ namespace Helperland.Controllers
         private readonly IServiceRequestAddressRepository serviceRequestAddressRepository;
         private readonly IServiceRequestExtraRepository serviceRequestExtraRepository;
         private readonly IConfiguration configuration;
+        private readonly IServiceProviderRepository serviceProviderRepository;
 
         public BookServiceController(HelperLandContext helperLandContext, IUserAddressRepository userAddressRepository,
                                      IServiceRequestRepository serviceRequestRepository,
                                      IServiceRequestAddressRepository serviceRequestAddressRepository,
                                      IServiceRequestExtraRepository serviceRequestExtraRepository,
-                                     IConfiguration configuration)
+                                     IConfiguration configuration, IServiceProviderRepository serviceProviderRepository)
         {
             this.helperLandContext = helperLandContext;
             this.userAddressRepository = userAddressRepository;
@@ -37,6 +38,7 @@ namespace Helperland.Controllers
             this.serviceRequestAddressRepository = serviceRequestAddressRepository;
             this.serviceRequestExtraRepository = serviceRequestExtraRepository;
             this.configuration = configuration;
+            this.serviceProviderRepository = serviceProviderRepository;
         }
 
         [HttpPost]
@@ -127,6 +129,11 @@ namespace Helperland.Controllers
                 RecordVersion = Guid.NewGuid()
             };
             model.UserId = serviceRequest.UserId;
+            if (model.FavSPId != 0)
+            {
+                serviceRequest.ServiceProviderId = model.FavSPId;
+                serviceRequest.Status = (int)ServiceStatusEnum.Pending;
+            }
             if (serviceRequestRepository.saveServiceRequest(serviceRequest) > 0)
             {
                 UserAddress userAddress = userAddressRepository.GetAddressByAddressId(Convert.ToInt32(model.UserAddressID));
@@ -141,10 +148,10 @@ namespace Helperland.Controllers
                     Mobile = userAddress.Mobile,
                     Email = userAddress.Email
                 };
-                if (serviceRequestAddressRepository.saveServiceRequestAddress(serviceRequestAddress)>0)
+                if (serviceRequestAddressRepository.saveServiceRequestAddress(serviceRequestAddress) > 0)
                 {
                     ServiceRequestExtra serviceRequestExtra;
-                    foreach(string extraServiceId in model.ExtraServicesName)
+                    foreach (string extraServiceId in model.ExtraServicesName)
                     {
                         serviceRequestExtra = new ServiceRequestExtra
                         {
@@ -154,23 +161,38 @@ namespace Helperland.Controllers
                         serviceRequestExtraRepository.saveServiceRequestExtra(serviceRequestExtra);
                     }
                     //var availableSPsInGivenZipcode = helperLandContext.Users.Where(s => s.IsApproved == true && s.ZipCode == model.ZipCode && s.UserTypeId == (int)UserTypeIdEnum.ServiceProvider);
-                    List<User> availableSPsInGivenZipcode = (from u in helperLandContext.Users
-                                                             join fb in helperLandContext.FavoriteAndBlockeds on u.UserId equals fb.UserId into fb1
-                                                             from fb in fb1.DefaultIfEmpty()
-                                                             where u.ZipCode == serviceRequest.ZipCode && u.IsApproved == true && u.UserTypeId == (int)UserTypeIdEnum.ServiceProvider && Convert.ToInt16(model.UserId) != fb.TargetUserId
-                                                             select u).ToList();
                     EmailModel emailModel;
-                    foreach (var sps in availableSPsInGivenZipcode)
+                    if (model.FavSPId != 0)
                     {
                         emailModel = new EmailModel
                         {
-                            To = sps.Email,
-                            Subject = "Service Request Available!!",
+                            To = model.FavSPEmail,
+                            Subject = "Service Request Assign to You!!",
                             Body = "Service Request ID: " + serviceRequest.ServiceRequestId
                         };
                         MailHelper mailhelper = new MailHelper(configuration);
                         mailhelper.Send(emailModel);
                     }
+                    else
+                    {
+                        List<User> availableSPsInGivenZipcode = (from u in helperLandContext.Users
+                                                                 join fb in helperLandContext.FavoriteAndBlockeds on u.UserId equals fb.UserId into fb1
+                                                                 from fb in fb1.DefaultIfEmpty()
+                                                                 where u.ZipCode == serviceRequest.ZipCode && u.IsApproved == true && u.UserTypeId == (int)UserTypeIdEnum.ServiceProvider && Convert.ToInt16(model.UserId) != fb.TargetUserId
+                                                                 select u).ToList();
+                        
+                        foreach (var sps in availableSPsInGivenZipcode)
+                        {
+                            emailModel = new EmailModel
+                            {
+                                To = sps.Email,
+                                Subject = "Service Request Available!!",
+                                Body = "Service Request ID: " + serviceRequest.ServiceRequestId
+                            };
+                            MailHelper mailhelper = new MailHelper(configuration);
+                            mailhelper.Send(emailModel);
+                        }
+                    }                    
                 }
             }
             return Json(serviceRequest.ServiceRequestId);
@@ -181,6 +203,23 @@ namespace Helperland.Controllers
                 return Int32.Parse(HttpContext.Request.Cookies["UserId"]);
             else
                 return (int)HttpContext.Session.GetInt32("UserId");
+        }
+
+        [HttpGet]
+        public JsonResult getFavSPs()
+        {
+            var data = (from fb in helperLandContext.FavoriteAndBlockeds
+                        join u in helperLandContext.Users on fb.TargetUserId equals u.UserId into u1
+                        from u in u1.DefaultIfEmpty()
+                        where fb.UserId == getLoggedinUserId() && fb.IsFavorite == true
+                        select new
+                        {
+                            spId = u.UserId,
+                            spName = u.FirstName + " " + u.LastName,
+                            spEmail = u.Email,
+                            spProfile = u.UserProfilePicture
+                        }).ToList();
+            return Json(data);
         }
     }
 }

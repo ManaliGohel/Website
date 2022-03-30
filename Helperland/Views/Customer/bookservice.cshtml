@@ -201,6 +201,26 @@
                     </div>
                 </div>
             </div>
+            <div class="mt-4 d-none" id="bsDetailsFavSPsBlock">
+                <span class="fw-bold">Your Favourite Service Providers</span>
+                <hr class="hr-setup-ser my-2" />
+                <span>You can choose your favourite service provider from below list</span>
+                <div class="dvfavproscustomer">
+                    <input type="hidden" id="hdnFavSelectedSPId" value="0" />
+                    <input type="hidden" id="hdnFavSelectedSPEmail" value="" />
+                    <table id="bookserviceFavSPs" class="favpros mb-3" style="width:100%">
+                        <thead class="d-none">
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody class="row row-cols-1 row-cols-md-2 g-4 mt-0">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <hr class="hr-setup-ser" />
             <button class="btnContinueSetupSerProc px-4 py-2 float-end" id="btnContinuetoMakepayment" onclick="opentbMakePaymentBS();">Continue</button>
         </div>
@@ -229,13 +249,18 @@
                 </div>
             </div>
             <hr class="hr-setup-ser" />
-            <div class="d-flex justify-content-between">
-                <input class="form-check-input me-2 cbwidth onHover" type="checkbox">
-                <label class="form-check-label">
-                    I accepted terms and conditions, the cancellation policy and the privacy policy. I confirm that Helperland starts to execute the contract before the expiry of the withdrawal period and I lose my right of withdrawal as a consumer with full performance of the contract.
-                </label>
+            <div class="row">
+                <div class="col-md-12 d-flex justify-content-center">
+                    <div class="me-2">
+                        <input class="form-check-input onHover" type="checkbox" id="completeServiceBookingCheck">
+                    </div>
+                    <div>
+                        <label class="form-check-label" for="completeServiceBookingCheck">
+                            <span class="text-danger d-none me-1" id="requiredConfirmCompleteBooking">(*Required)</span>I accepted terms and conditions, the cancellation policy and the privacy policy. I confirm that Helperland starts to execute the contract before the expiry of the withdrawal period and I lose my right of withdrawal as a consumer with full performance of the contract.
+                        </label>
+                    </div>
+                </div>
             </div>
-            <span class="text-danger small">heloo</span>
             <hr class="hr-setup-ser" />
             <button class="btnContinueSetupSerProc px-4 py-2 float-end" onclick="bookService();">Complete Booking</button>
         </div>

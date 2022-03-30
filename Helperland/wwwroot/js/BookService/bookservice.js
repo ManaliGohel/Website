@@ -42,6 +42,7 @@ function opentbYourDetailsBS() {
     showDetailsBlock();
     setPostalCodeandCities();
     getAllUserAddressesbyPostalcode();
+    showFavSPs();
     document.getElementById("btnAddNewAddress").classList.remove("d-none");
     document.getElementById("btnAddNewAddress").classList.add("d-block");
     document.getElementById("dvAddNewAddress").classList.remove("d-block");
@@ -96,6 +97,8 @@ function showSetupServiceBlock() {
     document.getElementById("img-details-white").style.display = "none";
     document.getElementById("img-makepay").style.display = "block";
     document.getElementById("img-makepay-white").style.display = "none";
+    document.getElementById("hdnFavSelectedSPId").value = "0";
+    document.getElementById("hdnFavSelectedSPEmail").value = "";
 }
 
 function showSchedulePlanBlock() {
@@ -124,6 +127,8 @@ function showSchedulePlanBlock() {
     document.getElementById("img-details-white").style.display = "none";
     document.getElementById("img-makepay").style.display = "block";
     document.getElementById("img-makepay-white").style.display = "none";
+    document.getElementById("hdnFavSelectedSPId").value = "0";
+    document.getElementById("hdnFavSelectedSPEmail").value = "";
 }
 function showDetailsBlock() {
     document.getElementById("lnk-schedule-plan").setAttribute("onclick", "showSchedulePlanBlock();");
@@ -147,6 +152,8 @@ function showDetailsBlock() {
     document.getElementById("img-details-white").style.display = "block";
     document.getElementById("img-makepay").style.display = "block";
     document.getElementById("img-makepay-white").style.display = "none";
+    document.getElementById("hdnFavSelectedSPId").value = "0";
+    document.getElementById("hdnFavSelectedSPEmail").value = "";
 }
 function showPaymentBlock() {
     document.getElementById("lnk-details").setAttribute("onclick", "showDetailsBlock();");
@@ -490,6 +497,39 @@ function getAllUserAddressesbyPostalcode() {
     })
 }
 
+function showFavSPs() {
+    $("#dvLoader").addClass("is-active");
+    $.ajax({
+        type: "get",
+        url: "/BookService/getFavSPs",
+        dataType: "json",
+        success: function (data) {
+            $("#dvLoader").removeClass("is-active");
+            if (data.length > 0) {
+                console.log(data);
+                $("#bsDetailsFavSPsBlock").removeClass("d-none");
+                $("#bsDetailsFavSPsBlock").addClass("d-block");
+                $("#bookserviceFavSPs").find('tbody').empty();
+                $.each(data, function (i, v) {
+                    var spProfile ="<img src='../../images/upcoming-service/avatar-hat.png' />"
+                    if (v.spProfile != null) {
+                        spProfile = "<img src='../.." + v.spProfile + "' />";
+                    }
+                    $("#bookserviceFavSPs").find('tbody').append("<tr><td>" + spProfile + "</td>'<td class='fw-bold'>" + v.spName + "</td><td><button class='btnClear mt-3 w-105' onclick='selectFavSP(" + v.spId + ", "+"\""+"" + v.spEmail + ""+"\""+")'>Select</button></td></tr>");
+                });
+            }
+            else {
+                $("#bsDetailsFavSPsBlock").removeClass("d-block");
+                $("#bsDetailsFavSPsBlock").addClass("d-none");
+            }
+        },
+        error: function (response) {
+            $("#dvLoader").removeClass("is-active");
+            console.log("bookservice.js->showFavSPs error: " + response.responseText);
+        }
+    })
+}
+
 function saveUserNewAddress() {
     var count = 0;
     if (document.getElementById("txtStreetName").value.length > 0) {
@@ -555,43 +595,52 @@ function saveUserNewAddress() {
 }
 
 function bookService() {
-    var completeBooking = {};
-    completeBooking.ServiceStartDate = document.getElementById("dtSerDate").value;
-    var myarr = document.getElementById("seltimeforser").value.split(".");
-    if (myarr.length > 1) {
-        completeBooking.ServiceStartTime = myarr[0] + ":30";
+    if ($("#completeServiceBookingCheck").prop('checked')) {
+        var completeBooking = {};
+        completeBooking.ServiceStartDate = document.getElementById("dtSerDate").value;
+        var myarr = document.getElementById("seltimeforser").value.split(".");
+        if (myarr.length > 1) {
+            completeBooking.ServiceStartTime = myarr[0] + ":30";
+        }
+        else {
+            completeBooking.ServiceStartTime = myarr[0] + ":00";
+        }
+        completeBooking.ZipCode = document.getElementById("txtzipcode").value;
+        completeBooking.ServiceHourlyRate = _serviceHourlyRate;
+        completeBooking.ServiceHours = document.getElementById("totalSerHours").innerHTML;
+        completeBooking.ExtraHours = parseFloat(document.getElementById("totalSerHours").innerHTML) - parseFloat(document.getElementById("spnBasicSerHours").innerHTML);
+        completeBooking.ExtraServicesName = extraServices;
+        completeBooking.SubTotal = document.getElementById("spnpercleaningrate").innerHTML;
+        completeBooking.TotalCost = document.getElementById("spntotalpayment").innerHTML;
+        completeBooking.Comments = document.getElementById("txtareaComments").value;
+        completeBooking.HasPets = document.getElementById("cbhavePets").checked;
+        completeBooking.UserAddressID = $("input[type='radio'][name='rbuseradd']:checked").val();
+        completeBooking.FavSPId = parseInt(document.getElementById("hdnFavSelectedSPId").value);
+        completeBooking.FavSPEmail = document.getElementById("hdnFavSelectedSPEmail").value;
+        console.log(completeBooking);
+        $("#dvLoader").addClass("is-active");
+        $.ajax({
+            url: "/BookService/saveBookServiceRequest",
+            type: "post",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(completeBooking),
+            success: function (response) {
+                $("#dvLoader").removeClass("is-active");
+                if (response > 0) {
+                    showCompleteBooking(response);
+                }
+            },
+            error: function (response) {
+                $("#dvLoader").removeClass("is-active");
+                console.log("bookservice.js->bookService error: " + response.responseText);
+            }
+        });
     }
     else {
-        completeBooking.ServiceStartTime = myarr[0] + ":00";
+        $("#requiredConfirmCompleteBooking").removeClass("d-none");
+        $("#requiredConfirmCompleteBooking").addClass("d-inline-block");
     }
-    completeBooking.ZipCode = document.getElementById("txtzipcode").value;
-    completeBooking.ServiceHourlyRate = _serviceHourlyRate;
-    completeBooking.ServiceHours = document.getElementById("totalSerHours").innerHTML;
-    completeBooking.ExtraHours = parseFloat(document.getElementById("totalSerHours").innerHTML) - parseFloat(document.getElementById("spnBasicSerHours").innerHTML);
-    completeBooking.ExtraServicesName = extraServices; 
-    completeBooking.SubTotal = document.getElementById("spnpercleaningrate").innerHTML;
-    completeBooking.TotalCost = document.getElementById("spntotalpayment").innerHTML;
-    completeBooking.Comments = document.getElementById("txtareaComments").value;
-    completeBooking.HasPets = document.getElementById("cbhavePets").checked;
-    completeBooking.UserAddressID = $("input[type='radio'][name='rbuseradd']:checked").val();
-    $("#dvLoader").addClass("is-active");
-    $.ajax({
-        url: "/BookService/saveBookServiceRequest",
-        type: "post",
-        dataType: "json",
-        contentType: "application/json",
-        data: JSON.stringify(completeBooking),
-        success: function (response) {
-            $("#dvLoader").removeClass("is-active");
-            if (response > 0) {
-                showCompleteBooking(response);
-            }
-        },
-        error: function (response) {
-            $("#dvLoader").removeClass("is-active");
-            console.log("bookservice.js->bookService error: " + response.responseText);
-        }
-    });
 }
 
 function showCompleteBooking(servicereqid) {
@@ -603,3 +652,20 @@ function showCompleteBooking(servicereqid) {
         window.location = "/customer/servicehistory";
     });
 }
+
+function selectFavSP(spId, spEmail) {
+    document.getElementById("hdnFavSelectedSPId").value = spId;
+    document.getElementById("hdnFavSelectedSPEmail").value = spEmail;
+    opentbMakePaymentBS();    
+}
+
+$("#completeServiceBookingCheck").change(function () {
+    if (this.checked) {
+        $("#requiredConfirmCompleteBooking").removeClass("d-inline-block");
+        $("#requiredConfirmCompleteBooking").addClass("d-none");
+    }
+    else {
+        $("#requiredConfirmCompleteBooking").removeClass("d-none");
+        $("#requiredConfirmCompleteBooking").addClass("d-inline-block");
+    }
+});

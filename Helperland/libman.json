@@ -25,6 +25,11 @@
     {
       "library": "select2@4.0.13",
       "destination": "wwwroot/lib/select2/"
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "fullcalendar@5.10.2",
+      "destination": "wwwroot/lib/fullcalendar/"
     }
   ]
 }

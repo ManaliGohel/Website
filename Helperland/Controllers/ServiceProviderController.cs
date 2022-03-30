@@ -244,7 +244,8 @@ namespace Helperland.Controllers
                               HouseNumber = sra.AddressLine2,
                               PostalCode = sra.PostalCode,
                               City = sra.City,
-                              State = sra.State
+                              State = sra.State,
+                              vServiceEndTime = sr.ServiceStartDate.AddMinutes(sr.ServiceHours * 60)
                           }).ToList();
             return Json(result);
         }

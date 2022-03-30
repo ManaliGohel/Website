@@ -40,5 +40,9 @@ namespace Helperland.ViewModels
         public string UserAddressID { get; set; }
         [JsonPropertyName("RefundAmount")]
         public decimal RefundAmount { get; set; }
+        [JsonPropertyName("FavSPId")]
+        public int FavSPId { get; set; }
+        [JsonPropertyName("FavSPEmail")]
+        public string FavSPEmail { get; set; }
     }
 }

@@ -327,6 +327,6 @@ namespace Helperland.Controllers
                 Response.Cookies.Delete(cookie);
             HttpContext.Session.Clear();
             return RedirectToAction("index", "customer");
-        }
+        }        
     }
 }

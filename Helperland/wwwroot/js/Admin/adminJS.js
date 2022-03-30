@@ -322,11 +322,11 @@ function filterInAdminPanelServiceRequests() {
     else {
         tblSerReq.columns(0).search("").draw();
     }
-    if ($("#txtZipcodeAdminPanelSR").val().trim() != "" || $("#txtCustomerAdminPanelSR").val() != null) {
+    if ($("#txtCustomerAdminPanelSR").val() != null) {
         tblSerReq.columns(2).search($("#txtCustomerAdminPanelSR").val() +' '+ $("#txtZipcodeAdminPanelSR").val().trim()).draw();
     }
     else {
-        tblSerReq.columns(2).search("").draw(true);
+        tblSerReq.columns(2).search($("#txtZipcodeAdminPanelSR").val().trim()).draw(true);
     }
     if ($("#txtSPAdminPanelSR").val() != null) {
         tblSerReq.columns(3).search($("#txtSPAdminPanelSR").val()).draw();

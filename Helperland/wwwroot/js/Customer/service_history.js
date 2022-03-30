@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
     getCustomerDashboardData();
     getCustomerServiceHistoryData();
+    getCustomerFavouriteProsData();
     $("#dvCusUpdateSuccess").hide(); 
     $("#dvCusChangePassword").hide();
     fillselDate('selcusMyDetailsDOBDate');
@@ -730,7 +731,7 @@ function getCustomerDashboardData() {
                         }
                         tblcusDashboard.row.add([
                             "<div onclick='showServiceRequestDetails(" + data[i].serviceRequestId + ", " + 1 + ");' class='onHover'>" + data[i].serviceRequestId + "</div>",
-                            "<div onclick='showServiceRequestDetails(" + data[i].serviceRequestId + ", " + 1 + ");' class='onHover'><div><img src='../../images/upcoming-service/calender.png' alt=''> <span class='fw-bold'>" + serStartDate + "</span></div><div><img src='../../images/upcoming-service/clock.png' alt=''> " + serStartTime + " - " + serEndTime + "</div></div>",
+                            "<div onclick='showServiceRequestDetails(" + data[i].serviceRequestId + ", " + 1 + ");' class='onHover'><div><img src='../../images/upcoming-service/calender.png' alt=''><span class='d-none'>" + new Date(data[i].serviceDateTime).getFullYear().toString() + AppendZero((new Date(data[i].serviceDateTime).getMonth() + 1).toString()) + AppendZero(new Date(data[i].serviceDateTime).getDate().toString()) + "</span><span class='fw-bold'>" + serStartDate + "</span></div><div><img src='../../images/upcoming-service/clock.png' alt=''> " + serStartTime + " - " + serEndTime + "</div></div>",
                             "<div class='media-object'><div class='float-start dvProimgContainer d-flex justify-content-center align-items-center me-2'>" + serProviderProfile + "</div><div><label>" + serProviderName + "</label><div class='d-flex align-items-center'>" + serProviderRateImages + "<label class='ps-2'>" + spRate + "</label></div></div></div>",
                             "<label class='spnEuro'>&euro;&nbsp;" + data[i].payment + "</label>",
                             "<a href='#' class='btnratesp px-3 py-2 me-1' onclick='rescheduleServiceRequest(" + data[i].serviceRequestId + "," + "\"" + " " + data[i].serviceDateTime + "" + "\"" + ", " + data[i].serviceHours + ", " + data[i].serviceProviderId + " );'>Reschedule</a><a href='#' class='btnCancelService px-3 py-2' onclick='deleteServiceRequest(" + data[i].serviceRequestId + ");'>Cancel</a>"
@@ -739,7 +740,7 @@ function getCustomerDashboardData() {
                     else {
                         tblcusDashboard.row.add([
                             "<div onclick='showServiceRequestDetails(" + data[i].serviceRequestId + ", " + 1 + ");' class='onHover'>" + data[i].serviceRequestId + "</div>",
-                            "<div onclick='showServiceRequestDetails(" + data[i].serviceRequestId + ", " + 1 + ");' class='onHover'><div><img src='../../images/upcoming-service/calender.png' alt=''> <span class='fw-bold'>" + serStartDate + "</span></div><div><img src='../../images/upcoming-service/clock.png' alt=''> " + serStartTime + " - " + serEndTime + "</div></div>",
+                            "<div onclick='showServiceRequestDetails(" + data[i].serviceRequestId + ", " + 1 + ");' class='onHover'><div><img src='../../images/upcoming-service/calender.png' alt=''><span class='d-none'>" + new Date(data[i].serviceDateTime).getFullYear().toString() + AppendZero((new Date(data[i].serviceDateTime).getMonth() + 1).toString()) + AppendZero(new Date(data[i].serviceDateTime).getDate().toString()) + "</span> <span class='fw-bold'>" + serStartDate + "</span></div><div><img src='../../images/upcoming-service/clock.png' alt=''> " + serStartTime + " - " + serEndTime + "</div></div>",
                             "",
                             "<label class='spnEuro'>&euro;&nbsp;" + data[i].payment + "</label>",
                             "<a href='#' class='btnratesp px-3 py-2 me-1' onclick='rescheduleServiceRequest(" + data[i].serviceRequestId + "," + "\"" + " " + data[i].serviceDateTime + "" + "\"" + ", " + data[i].serviceHours + ", " + data[i].serviceProviderId + " );'>Reschedule</a><a href='#' class='btnCancelService px-3 py-2' onclick='deleteServiceRequest(" + data[i].serviceRequestId + ");'>Cancel</a>"
@@ -903,6 +904,7 @@ function cancelServiceRequest() {
                 });
                 document.getElementById("hdncancelServiceRequestId").value = "";
                 getCustomerDashboardData();
+                getCustomerServiceHistoryData();
             }
         },
         error: function (response) {
@@ -1156,7 +1158,7 @@ function getCustomerServiceHistoryData() {
                         }
                         tblcusServiceHistory.row.add([
                             "<div onclick='showServiceRequestDetails(" + data[i].serviceRequestId + ", " + 0 + ");' class='onHover'>" + data[i].serviceRequestId + "</div>",
-                            "<div onclick='showServiceRequestDetails(" + data[i].serviceRequestId + ", " + 0 + ");' class='onHover'><div><img src='../../images/upcoming-service/calender.png' alt=''> <span class='fw-bold'>" + serStartDate + "</span></div><div><img src='../../images/upcoming-service/clock.png' alt=''> " + serStartTime + " - " + serEndTime + "</div></div>",
+                            "<div onclick='showServiceRequestDetails(" + data[i].serviceRequestId + ", " + 0 + ");' class='onHover'><div><img src='../../images/upcoming-service/calender.png' alt=''><span class='d-none'>" + new Date(data[i].serviceDateTime).getFullYear().toString() + AppendZero((new Date(data[i].serviceDateTime).getMonth() + 1).toString()) + AppendZero(new Date(data[i].serviceDateTime).getDate().toString()) + "</span> <span class='fw-bold'>" + serStartDate + "</span></div><div><img src='../../images/upcoming-service/clock.png' alt=''> " + serStartTime + " - " + serEndTime + "</div></div>",
                             "<div class='media-object'><div class='float-start dvProimgContainer d-flex justify-content-center align-items-center me-2'>" + serProviderProfile + "</div><div><label>" + serProviderName + "</label><div class='d-flex align-items-center'>" + serProviderRateImages + "<label class='ps-2'>" + spRate + "</label></div></div></div>",
                             "<label class='spnEuro'>&euro;&nbsp;" + data[i].payment + "</label>",
                             statusCol,
@@ -1168,7 +1170,7 @@ function getCustomerServiceHistoryData() {
                         spRateBtnCol = "<a href='#' class='btnratespdisabled disabled px-3 py-2'>Rate SP</a>";
                         tblcusServiceHistory.row.add([
                             "<div onclick='showServiceRequestDetails(" + data[i].serviceRequestId + ", " + 0 + ");' class='onHover'>" + data[i].serviceRequestId + "</div>",
-                            "<div onclick='showServiceRequestDetails(" + data[i].serviceRequestId + ", " + 0 + ");' class='onHover'><div><img src='../../images/upcoming-service/calender.png' alt=''> <span class='fw-bold'>" + serStartDate + "</span></div><div><img src='../../images/upcoming-service/clock.png' alt=''> " + serStartTime + " - " + serEndTime + "</div></div>",
+                            "<div onclick='showServiceRequestDetails(" + data[i].serviceRequestId + ", " + 0 + ");' class='onHover'><div><img src='../../images/upcoming-service/calender.png' alt=''><span class='d-none'>" + new Date(data[i].serviceDateTime).getFullYear().toString() + AppendZero((new Date(data[i].serviceDateTime).getMonth() + 1).toString()) + AppendZero(new Date(data[i].serviceDateTime).getDate().toString()) + "</span> <span class='fw-bold'>" + serStartDate + "</span></div><div><img src='../../images/upcoming-service/clock.png' alt=''> " + serStartTime + " - " + serEndTime + "</div></div>",
                             "",
                             "<label class='spnEuro'>&euro;&nbsp;" + data[i].payment + "</label>",
                             statusCol,
@@ -1254,4 +1256,76 @@ function submitRateOfSP() {
 }
 function closeAreadyRatedSPModal() {
     $("#alreadyRatedSPModal").modal("hide");
+}
+
+function getCustomerFavouriteProsData() {
+    $("#dvLoader").addClass("is-active");
+    $.ajax({
+        type: "get",
+        url: "/CustomerMySettings/getFavouriteProsData",
+        dataType: "json",
+        success: function (response) {
+            $("#dvLoader").removeClass("is-active");
+            var tblFavProsCustomer = $('#tblFavProsCustomer').DataTable();
+            tblFavProsCustomer.clear().draw();    
+            response.forEach(function (e) {
+                var spProfile = "<img src='../../images/upcoming-service/avatar-hat.png' />";
+                var serProviderRateImages = "";
+                var spRate = e.spRating;
+                var actions = "";
+                if (e.spRating == null) {
+                    serProviderRateImages = getSPRateImages(0);
+                    spRate = 0;
+                }
+                else {
+                    serProviderRateImages = getSPRateImages(parseFloat(e.spRating).toFixed(1));
+                    spRate = parseFloat(spRate).toFixed(1);
+                }                
+                if (e.spProfile != null) {
+                    spProfile = "<img src='../.." + e.spProfile + "' />";
+                }
+                if ((e.spBlock == null && e.spFav == null) || (e.spBlock == false && e.spFav == false)) {
+                    actions = "<button class='tblCancel px-4 py-2 me-1 w-105' onclick='favProsAction(" + e.spId + ", 1, true)'>Favourite</button><button class='tblCancel px-4 py-2 me-1 w-105' onclick='favProsAction(" + e.spId + ", 2, true)'>Block</button>";
+                }
+                else {                    
+                    if (e.spFav == true) {
+                        actions = "<button class='btnratesp px-4 py-2 me-1 w-120' onclick='favProsAction(" + e.spId + ", 3, false)'>Unfavourite</button>";
+                    }
+                    if (e.spBlock == true) {
+                        actions = "<button class='btnratesp px-4 py-2 me-1 w-120' onclick='favProsAction(" + e.spId + ", 4, false)'>Unblock</button>";
+                    }
+                }
+                tblFavProsCustomer.row.add([
+                    spProfile,
+                    "<span class='fw-bold'>" + e.spName + "</span>",
+                    "<div class='d-flex justify-content-center align-items-center mt-m15'>" + serProviderRateImages + "<label class='ps-2 fw-bold'>" + spRate + "</label></div>",
+                    e.spCleaningCount + " Cleaning(s)",
+                    actions
+                ]).draw(false);
+            });
+        },
+        error: function (response) {
+            $("#dvLoader").removeClass("is-active");
+            console.log("service_history.js->getCustomerFavouriteProsData error: " + response.responseText);
+        }
+    });
+}
+function favProsAction(spId, favProsActionId, favProsAction) {
+    $("#dvLoader").addClass("is-active");
+    $.ajax({
+        type: "post",
+        dataType: "JSON",
+        data: { "spId": spId, "favProsActionId": favProsActionId, "favProsAction": favProsAction },
+        url: "/CustomerMySettings/favProsActions",
+        success: function (response) {
+            $("#dvLoader").removeClass("is-active");
+            if (response > 0) {
+                getCustomerFavouriteProsData();
+            }
+        },
+        error: function (response) {
+            $("#dvLoader").removeClass("is-active");
+            console.log("service_history.js->favProsAction error: " + response.responseText);
+        }
+    })
 }

@@ -323,5 +323,54 @@ namespace Helperland.Controllers
             };
             return Json(serviceRequestRepository.saveRatingsForSP(rating));
         }
+
+        [HttpGet]
+        public JsonResult getFavouriteProsData()
+        {
+            var sps = (from sr in helperLandContext.ServiceRequests
+                       join u in helperLandContext.Users on sr.ServiceProviderId equals u.UserId
+                       join fb in helperLandContext.FavoriteAndBlockeds on (int?)sr.ServiceProviderId equals (int?)fb.TargetUserId into fb1
+                       from fb in fb1.DefaultIfEmpty()
+                       where sr.UserId == getLoggedinUserId()
+                       select new
+                       {
+                           spId = sr.ServiceProviderId,
+                           spProfile = u.UserProfilePicture,
+                           spCleaningCount = helperLandContext.ServiceRequests.Where(c => c.UserId == getLoggedinUserId() && c.ServiceProviderId == sr.ServiceProviderId && c.Status == (int)ServiceStatusEnum.Completed).Count(),
+                           spRating = (decimal?)helperLandContext.Ratings.Where(r => r.RatingTo == sr.ServiceProviderId && r.RatingFrom == getLoggedinUserId()).Average(r => r.Ratings),
+                           spName = u.FirstName + " " + u.LastName,
+                           spBlock = (bool?)fb.IsBlocked,
+                           spFav = (bool?)fb.IsFavorite
+                       }).Distinct().ToList();
+            return Json(sps);
+        }
+
+        [HttpPost]
+        public JsonResult favProsActions(int spId, int favProsActionId, bool favProsAction)
+        {
+            FavoriteAndBlocked fb = helperLandContext.FavoriteAndBlockeds.Where(x => x.UserId == getLoggedinUserId() && x.TargetUserId == spId).FirstOrDefault();
+            var isFavourite = false;
+            var isBlock = false;
+            if (favProsActionId == 1 || favProsActionId == 3)
+                isFavourite = favProsAction;
+            else if(favProsActionId == 2 || favProsActionId == 4)
+                isBlock = favProsAction;
+            if (fb != null)
+            {
+                fb.IsFavorite = isFavourite;
+                fb.IsBlocked = isBlock;
+                helperLandContext.FavoriteAndBlockeds.Update(fb);
+            }
+            else
+            {
+                FavoriteAndBlocked fb1 = new FavoriteAndBlocked();
+                fb1.UserId = getLoggedinUserId();
+                fb1.TargetUserId = spId;
+                fb1.IsFavorite = isFavourite;
+                fb1.IsBlocked = isBlock;                
+                helperLandContext.FavoriteAndBlockeds.Add(fb1);
+            }
+            return Json(helperLandContext.SaveChanges());
+        }
     }
 }
